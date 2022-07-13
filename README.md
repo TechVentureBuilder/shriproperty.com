@@ -6,8 +6,8 @@ Shri Property is committed to delivering a high level of expertise, customer ser
 
 ## Features
 
-- People can list properties on website for free
-- Every listing will be reviewed before every update
+-   People can list properties on website for free
+-   Every listing will be reviewed before every update
 
 ## Tech Stack
 
@@ -15,10 +15,12 @@ Shri Property is committed to delivering a high level of expertise, customer ser
 
 **Server:** Node, Typescript, Express, Zod, Mongodb
 
+**Admin App:** React Native, Typescript
+
 ## Authors
 
-- [@aayushchugh](https://www.github.com/aayushchugh)
-- [@arpitchugh](https://www.github.com/arpitchugh)
+-   [@aayushchugh](https://www.github.com/aayushchugh)
+-   [@arpitchugh](https://www.github.com/arpitchugh)
 
 ## Feedback
 
