@@ -7,8 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import getRequest from '../../../api/get';
 import Loader from '../../../components/util/loader/Loader';
-import moment from 'moment';
 import { Helmet } from 'react-helmet-async';
+import FormattedDate from '../../../components/util/date/FormattedDate';
 
 interface User {
 	_id: string;
@@ -97,9 +97,7 @@ const Users: FC = () => {
 									className="contact-table__cell"
 									align="right"
 								>
-									{moment(new Date(user.createdAt)).format(
-										'DD/MM/YY'
-									)}
+									<FormattedDate date={user.createdAt} />
 								</TableCell>
 							</TableRow>
 						))}
