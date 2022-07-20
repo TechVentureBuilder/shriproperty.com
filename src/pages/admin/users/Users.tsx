@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import getRequest from '../../../api/get';
 import Loader from '../../../components/util/loader/Loader';
 import { Helmet } from 'react-helmet-async';
-import FormattedDate from '../../../components/util/date/FormattedDate';
+import useFormatDate from '../../../hooks/useFormatDate';
 
 interface User {
 	_id: string;
@@ -19,6 +19,7 @@ interface User {
 }
 
 const Users: FC = () => {
+	const formatDate = useFormatDate();
 	const [response, setResponse] = useState<User[]>([]);
 	const [loading, setLoading] = useState(true);
 
@@ -97,7 +98,7 @@ const Users: FC = () => {
 									className="contact-table__cell"
 									align="right"
 								>
-									<FormattedDate date={user.createdAt} />
+									{formatDate(user.createdAt)}
 								</TableCell>
 							</TableRow>
 						))}

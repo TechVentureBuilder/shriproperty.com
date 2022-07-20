@@ -17,10 +17,9 @@ import { patchRequest } from '../../../api/patch';
 import { TextField } from '@mui/material';
 import { BPrimary } from '../../../components/util/button/Button';
 import deleteRequest from '../../../api/delete';
-import FormattedDate from '../../../components/util/date/FormattedDate';
-
 import './tempUsers.scss';
 import { Helmet } from 'react-helmet-async';
+import useFormatDate from '../../../hooks/useFormatDate';
 
 interface TempUser {
 	_id: string;
@@ -34,6 +33,7 @@ interface TempUser {
 }
 
 const TempUsers = () => {
+	const formatDate = useFormatDate();
 	const [response, setResponse] = useState<TempUser[]>([]);
 	const [callingStatus, setCallingStatus] = useState('');
 	const [callAgainDate, setCallAgainDate] = useState('');
@@ -186,7 +186,7 @@ const TempUsers = () => {
 								className="user-table__cell"
 								align="right"
 							>
-								{<FormattedDate date={user.createdAt} />}
+								{formatDate(user.createdAt)}
 							</TableCell>
 							<TableCell
 								className="user-table__cell"
@@ -198,12 +198,7 @@ const TempUsers = () => {
 								className="user-table__cell"
 								align="right"
 							>
-								{/* format date */}
-								{user.callAgainDate ? (
-									<FormattedDate date={user.callAgainDate} />
-								) : (
-									'----'
-								)}
+								{formatDate(user.callAgainDate)}
 							</TableCell>
 							<TableCell
 								className="user-table__cell"
