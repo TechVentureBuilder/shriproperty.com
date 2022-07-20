@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import getRequest from '../../api/get';
 import deleteRequest from '../../api/delete';
 import { BPrimary } from '../../components/util/button/Button';
-import { HPrimary, SSecondary } from '../../components/util/typography/Typography';
+import {
+	HPrimary,
+	SSecondary,
+} from '../../components/util/typography/Typography';
 import { AError, ASuccess } from '../../components/util/alert/Alert';
 import Modal from '../../components/util/modal/Modal';
 import Loader from '../../components/util/loader/Loader';
@@ -212,7 +215,7 @@ const AdminPage: FC = () => {
 					/>
 				</div>
 
-				{response.maxPrice && (
+				{/* {!propertyLoading && response.maxPrice && (
 					<Box sx={{ width: 900 }} className="filter-container">
 						<h1>Price</h1>
 						<Slider
@@ -233,7 +236,7 @@ const AdminPage: FC = () => {
 							}
 						/>
 					</Box>
-				)}
+				)} */}
 			</div>
 
 			{propertyLoading ? (
