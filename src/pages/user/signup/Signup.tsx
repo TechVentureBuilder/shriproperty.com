@@ -89,6 +89,22 @@ const Signup: FC = () => {
 			setErrorVerifyModalMessage(res.message);
 		}
 	};
+	/**
+	 * return true if any field in user state is empty
+	 * else false
+	 * also check if password == cpassword
+	 * @return {boolean} isDisabled
+	 */
+	const isDisabled = () => {
+		return user.cpassword.length > 0 &&
+			user.password.length > 0 &&
+			user.phone.length > 0 &&
+			user.email.length > 0 &&
+			user.name.length > 0 &&
+			user.password === user.cpassword
+			? false
+			: true;
+	};
 
 	return (
 		<section className="signup-section">
@@ -224,6 +240,7 @@ const Signup: FC = () => {
 						className="signup-section__btn"
 						type="submit"
 						loading={btnLoading}
+						disabled={isDisabled()}
 					/>
 				</form>
 			</div>

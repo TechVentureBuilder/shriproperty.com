@@ -11,6 +11,7 @@ interface BPrimaryProps {
 	loading?: boolean;
 	style?: ObjectWithAnyKeys;
 	onClick?: any;
+	disabled?: boolean;
 }
 
 /**
@@ -27,10 +28,14 @@ export const BPrimary: FC<BPrimaryProps> = props => {
 	return (
 		<Button
 			style={props.style}
-			className={`${props.className} btn-primary`}
+			className={`${props.className} btn-primary ${
+				!props.disabled && 'btn-primary--enabled'
+			}
+				`}
 			type={props.type ? props.type : 'submit'}
 			variant="contained"
 			onClick={props.onClick}
+			disabled={props.disabled}
 		>
 			{props.loading ? <CircularProgress /> : props.title}
 		</Button>

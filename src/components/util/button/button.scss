@@ -1,7 +1,6 @@
 @import '../../../styles/variable.scss';
 
 .btn-primary {
-	background-color: $color-primary !important;
 	font-size: 1.2rem !important;
 	padding: 1.3rem 3rem !important;
 	@media screen and (max-width: 600px) {
@@ -11,5 +10,9 @@
 
 	svg {
 		color: $color-background !important;
+	}
+
+	&--enabled {
+		background-color: $color-primary !important;
 	}
 }

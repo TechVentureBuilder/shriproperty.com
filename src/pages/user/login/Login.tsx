@@ -118,6 +118,14 @@ const Login: FC = () => {
 		}
 	};
 
+	/**
+	 * return true if email and password is empty
+	 * else false
+	 * @return {boolean} isDisabled
+	 */
+	const isDisabled = () => {
+		return email.length > 0 && password.length > 0 ? false : true;
+	};
 	return (
 		<section className="login-section">
 			<Helmet>
@@ -186,7 +194,7 @@ const Login: FC = () => {
 						className="login-section__modal-input"
 						onChange={e => setOtp(e.target.value)}
 						fullWidth
-					/>
+					></TextField>
 
 					<BPrimary
 						title="Verify"
@@ -248,6 +256,7 @@ const Login: FC = () => {
 						className="login-section__btn"
 						type="submit"
 						loading={btnLoading}
+						disabled={isDisabled()}
 					/>
 				</form>
 			</div>
