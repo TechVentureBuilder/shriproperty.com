@@ -4,6 +4,8 @@ import { CircularProgress } from '@mui/material';
 import './button.scss';
 import { FC } from 'react';
 
+type ButtonTypes = 'submit' | 'reset' | 'button';
+
 interface BPrimaryProps {
 	title: string | JSX.Element;
 	className?: string;

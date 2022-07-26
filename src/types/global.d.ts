@@ -5,8 +5,6 @@ declare global {
 		[key: string]: string;
 	};
 
-	type ButtonTypes = 'submit' | 'reset' | 'button';
-
 	type ApiResponse =
 		| ObjectWithAnyKeys
 		| {
