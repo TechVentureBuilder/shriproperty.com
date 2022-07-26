@@ -18,7 +18,7 @@ const postRequest = async (url: string, body: any, file: boolean) => {
 					Accept: 'application/json',
 					'x-api-key': apiKey,
 			  },
-		body: JSON.stringify(body),
+		body: file ? body : JSON.stringify(body),
 	});
 
 	return res.json();

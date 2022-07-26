@@ -44,7 +44,9 @@ const Form: FC = () => {
 
 		// append data to body to send
 		for (const key in property) {
-			body.append(key, property[key]);
+			if (key !== 'furnishingDetails' && key !== 'facilities') {
+				body.append(key, property[key]);
+			}
 		}
 
 		// append image to body in array
