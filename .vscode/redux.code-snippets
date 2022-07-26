@@ -1,0 +1,20 @@
+{
+	"createSlice": {
+		"prefix": "sp-create-redux-slice",
+		"body": [
+			"const initialState: { value: ${3:value type} } = {",
+			"   value: ${4:[]},",
+			"};",
+			"",
+			"const ${2:title}Slice = createSlice({",
+			"   name: '${1:state name}',",
+			"   initialState,",
+			"   reducers: {},",
+			"});",
+			"",
+			"export const ${2:title}Actions = ${2:title}Slice.actions;",
+			"export default ${2:title}Slice;"
+		],
+		"description": "Creates redux slice"
+	}
+}
