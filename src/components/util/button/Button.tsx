@@ -64,7 +64,7 @@ export const BUpload: FC<BUploadProps> = props => {
 		<Button
 			variant="contained"
 			component="label"
-			className={`${props.className} btn-primary`}
+			className={`${props.className} btn-primary btn-primary--enabled`}
 			onChange={props.onChange}
 		>
 			{props.title}
