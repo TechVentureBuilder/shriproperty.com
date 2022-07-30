@@ -71,22 +71,22 @@ const AdminRoutes: FC = () => {
 		<>
 			<AdminNav />
 			<Routes>
-				<Route path={`/`} element={<Admin />} />
+				<Route path="/" element={<Admin />} />
 
-				<Route path={`temp-users`} element={<TempUsers />} />
+				<Route path="temp-users" element={<TempUsers />} />
 
-				<Route path={`property/add`} element={<AddProperty />} />
+				<Route path="property/add" element={<AddProperty />} />
 
-				<Route path={`property/update/:id`} element={<UpdateProperty />} />
+				<Route path="property/update/:id" element={<UpdateProperty />} />
 
-				<Route path={`users`} element={<Users />} />
-				<Route path={`users/:id`} element={<User />} />
+				<Route path="users" element={<Users />} />
+				<Route path="users/:id" element={<User />} />
 
-				<Route path={`contacts`} element={<Contacts />} />
+				<Route path="contacts" element={<Contacts />} />
 
-				<Route path={`listings`} element={<Listings />} />
+				<Route path="listings" element={<Listings />} />
 
-				<Route path={`listings/:id`} element={<AdminListing />} />
+				<Route path="listings/:id" element={<AdminListing />} />
 			</Routes>
 		</>
 	);
