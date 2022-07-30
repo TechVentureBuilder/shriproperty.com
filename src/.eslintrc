@@ -1,0 +1,86 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"jest": true
+	},
+	"parser": "@typescript-eslint/parser",
+	"plugins": [
+		"react",
+		"@typescript-eslint",
+		"react-hooks",
+		"prettier",
+		"sonarjs",
+		"no-secrets",
+		"jsonc",
+		"pii",
+		"no-unsanitized",
+		"prettier"
+	],
+	"extends": [
+		"plugin:react/recommended",
+		"google",
+		"prettier",
+		"plugin:jsonc/base",
+		"plugin:pii/recommended",
+		"plugin:no-unsanitized/DOM",
+		"plugin:prettier/recommended",
+		"plugin:sonarjs/recommended"
+	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"settings": {
+		"import/resolver": {
+			"typescript": {}
+		}
+	},
+
+	"rules": {
+		"semi": "error",
+		"no-console": "error",
+		"max-len": ["error", { "code": 100 }],
+		"linebreak-style": ["error", "windows"],
+		"object-curly-spacing": "off",
+		"indent": ["error", "tab"],
+		"jsx-quotes": ["error", "prefer-double"],
+		"no-tabs": "off",
+		"space-infix-ops": "off",
+		"no-trailing-spaces": "error",
+		"space-before-blocks": "off",
+		"react/react-in-jsx-scope": "off",
+		"camelcase": "error",
+		"quotes": "off",
+		"no-duplicate-imports": "error",
+		"no-secrets/no-secrets": "error",
+		"pii/no-email": "error",
+		"pii/no-dob": "warn",
+		"pii/no-ip": "error",
+		"pii/no-phone-number": "error",
+		"spaced-comment": "off",
+		"prefer-destructuring": ["error", { "object": true, "array": true }],
+		"no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next" }],
+		"comma-dangle": "off",
+		"new-cap": "off",
+		"require-await": "error",
+		"require-jsdoc": "error",
+		"sonarjs/cognitive-complexity": "off",
+		"sonarjs/no-duplicate-string": "off",
+		"sonarjs/no-identical-functions": "off",
+		"react-hooks/rules-of-hooks": "error",
+		"@typescript-eslint/quotes": ["error", "double"],
+		"react-hooks/exhaustive-deps": "warn",
+		"@typescript-eslint/explicit-function-return-type": "off",
+		"prettier/prettier": [
+			"error",
+			{
+				"endOfLine": "auto",
+				"useTabs": true
+			}
+		]
+	}
+}

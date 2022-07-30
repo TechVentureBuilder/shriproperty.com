@@ -1,83 +1,51 @@
-import { CssBaseline } from '@mui/material';
-import { FC, lazy, Suspense, useEffect, useState } from 'react';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import {
-	BrowserRouter as Router,
-	Navigate,
-	Route,
-	Routes,
-} from 'react-router-dom';
-import get from './api/get';
-import './app.scss';
-import Loader from './components/util/loader/Loader';
+import { CssBaseline } from "@mui/material";
+import { FC, lazy, Suspense, useEffect, useState } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+import get from "./api/get";
+import "./app.scss";
+import Loader from "./components/util/loader/Loader";
 
-import Contacts from './pages/admin/contacts/Contacts';
-import AddProperty from './pages/admin/property/form/Form';
+import Contacts from "./pages/admin/contacts/Contacts";
+import AddProperty from "./pages/admin/property/form/Form";
 
-import { AuthFormSubmitContext, UserContext } from './helpers/Context';
+import { AuthFormSubmitContext, UserContext } from "./helpers/Context";
 
-const Account = lazy(() => import('./pages/user/account/Account'));
+const Account = lazy(() => import("./pages/user/account/Account"));
 
-const TempUsers = lazy(
-	() => import('./pages/admin/tempUsers/TempUsers')
-);
-const UserUpdateProperty = lazy(
-	() => import('./pages/user/updateProperty/UpdateProperty')
-);
-const NotFound = lazy(() => import('./pages/notFound/NotFound'));
-const Listings = lazy(
-	() => import('./pages/admin/listings/Listings')
-);
-const AdminListing = lazy(
-	() => import('./pages/admin/listing/Listing')
-);
-const Signup = lazy(() => import('./pages/user/signup/Signup'));
-const Login = lazy(() => import('./pages/user/login/Login'));
-const Form = lazy(() => import('./pages/user/home/form/Form'));
-const Users = lazy(() => import('./pages/admin/users/Users'));
-const User = lazy(() => import('./pages/admin/user/User'));
-const PendingListings = lazy(
-	() => import('./pages/user/pendingListings/PendingListings')
-);
+const TempUsers = lazy(() => import("./pages/admin/tempUsers/TempUsers"));
+const UserUpdateProperty = lazy(() => import("./pages/user/updateProperty/UpdateProperty"));
+const NotFound = lazy(() => import("./pages/notFound/NotFound"));
+const Listings = lazy(() => import("./pages/admin/listings/Listings"));
+const AdminListing = lazy(() => import("./pages/admin/listing/Listing"));
+const Signup = lazy(() => import("./pages/user/signup/Signup"));
+const Login = lazy(() => import("./pages/user/login/Login"));
+const Form = lazy(() => import("./pages/user/home/form/Form"));
+const Users = lazy(() => import("./pages/admin/users/Users"));
+const User = lazy(() => import("./pages/admin/user/User"));
+const PendingListings = lazy(() => import("./pages/user/pendingListings/PendingListings"));
 const UpdatePendingListing = lazy(
-	() =>
-		import(
-			'./pages/user/updatePendingListings/UpdatePendingListing'
-		)
+	() => import("./pages/user/updatePendingListings/UpdatePendingListing"),
 );
 
-const Admin = lazy(() => import('./pages/admin/Admin'));
-const UpdateProperty = lazy(
-	() => import('./pages/admin/property/update/Update')
-);
-const Listing = lazy(() => import('./pages/user/listing/Listing'));
+const Admin = lazy(() => import("./pages/admin/Admin"));
+const UpdateProperty = lazy(() => import("./pages/admin/property/update/Update"));
+const Listing = lazy(() => import("./pages/user/listing/Listing"));
 
-const UserNav = lazy(() => import('./components/layout/userNav/UserNav'));
+const UserNav = lazy(() => import("./components/layout/userNav/UserNav"));
 
-const AdminNav = lazy(() => import('./components/layout/adminNav/AdminNav'));
+const AdminNav = lazy(() => import("./components/layout/adminNav/AdminNav"));
 
-const Footer = lazy(() => import('./components/layout/footer/Footer'));
+const Footer = lazy(() => import("./components/layout/footer/Footer"));
 
-const Properties = lazy(
-	() => import('./pages/user/properties/Properties')
-);
-const AllImages = lazy(
-	() => import('./pages/user/allimages/Images')
-);
-const Hero = lazy(() => import('./pages/user/home/hero/Hero'));
-const PropertiesSection = lazy(
-	() => import('./pages/user/home/properties/Properties')
-);
-const Category = lazy(
-	() => import('./pages/user/home/category/Category')
-);
-const ListingSection = lazy(
-	() => import('./pages/user/home/listing/Listing')
-);
+const Properties = lazy(() => import("./pages/user/properties/Properties"));
+const AllImages = lazy(() => import("./pages/user/allimages/Images"));
+const Hero = lazy(() => import("./pages/user/home/hero/Hero"));
+const PropertiesSection = lazy(() => import("./pages/user/home/properties/Properties"));
+const Category = lazy(() => import("./pages/user/home/category/Category"));
+const ListingSection = lazy(() => import("./pages/user/home/listing/Listing"));
 
-const Property = lazy(
-	() => import('./pages/user/property/Property')
-);
+const Property = lazy(() => import("./pages/user/property/Property"));
 
 const App: FC = () => {
 	return (
@@ -109,10 +77,7 @@ const AdminRoutes: FC = () => {
 
 				<Route path={`property/add`} element={<AddProperty />} />
 
-				<Route
-					path={`property/update/:id`}
-					element={<UpdateProperty />}
-				/>
+				<Route path={`property/update/:id`} element={<UpdateProperty />} />
 
 				<Route path={`users`} element={<Users />} />
 				<Route path={`users/:id`} element={<User />} />
@@ -139,7 +104,7 @@ const UserRoutes: FC = () => {
 	const [userUpdated, setUserUpdated] = useState(false);
 
 	useEffect(() => {
-		get('/auth/is-logged-in')
+		get("/auth/is-logged-in")
 			.then((res: any) => {
 				setUser({
 					loaded: true,
@@ -157,9 +122,7 @@ const UserRoutes: FC = () => {
 	}, [authFormSubmit, userUpdated]);
 
 	return (
-		<AuthFormSubmitContext.Provider
-			value={{ authFormSubmit, setAuthFormSubmit }}
-		>
+		<AuthFormSubmitContext.Provider value={{ authFormSubmit, setAuthFormSubmit }}>
 			<UserContext.Provider
 				value={{
 					update: userUpdated,
@@ -176,16 +139,12 @@ const UserRoutes: FC = () => {
 						element={
 							<main>
 								<Helmet>
-									<title>
-										Shri Property | live in your dreams
-									</title>
-									<link
-										rel="canonical"
-										href="https://shriproperty.com"
-									/>
+									<title>Shri Property | live in your dreams</title>
+									<link rel="canonical" href="https://shriproperty.com" />
 									<meta
 										name="description"
-										content="Shri Property is committed to delivering a high level of
+										content="Shri Property is committed to delivering a
+										 high level of
 								expertise, customer service, and attention to detail to
 								sales of real estate, and rental
 								properties."
@@ -205,9 +164,7 @@ const UserRoutes: FC = () => {
 						element={
 							<Property
 								propertyOtpModelOpened={propertyOtpModelOpened}
-								setPropertyOtpModelOpened={
-									setPropertyOtpModelOpened
-								}
+								setPropertyOtpModelOpened={setPropertyOtpModelOpened}
 							/>
 						}
 					/>
@@ -217,14 +174,8 @@ const UserRoutes: FC = () => {
 					<Route path="/signup" element={<Signup />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/account" element={<Account />} />
-					<Route
-						path="/account/pending-listings"
-						element={<PendingListings />}
-					/>
-					<Route
-						path="/property/update/:id"
-						element={<UserUpdateProperty />}
-					/>
+					<Route path="/account/pending-listings" element={<PendingListings />} />
+					<Route path="/property/update/:id" element={<UserUpdateProperty />} />
 					<Route
 						path="/account/pending-listings/:id"
 						element={<UpdatePendingListing />}
