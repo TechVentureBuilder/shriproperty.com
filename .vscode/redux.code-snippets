@@ -2,6 +2,8 @@
 	"createSlice": {
 		"prefix": "sp-create-redux-slice",
 		"body": [
+			"import { createSlice } from '@reduxjs/toolkit';",
+			"",
 			"const initialState: { value: ${3:value type} } = {",
 			"   value: ${4:[]},",
 			"};",
