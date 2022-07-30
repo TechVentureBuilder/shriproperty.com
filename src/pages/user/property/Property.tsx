@@ -1,53 +1,54 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import TextField from '@mui/material/TextField';
-import { useState, useEffect, FC, FormEvent } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { BPrimary } from '../../../components/util/button/Button';
-import get from '../../../api/get';
-import postRequest from '../../../api/post';
-import './property.scss';
-import { HPrimary, SPrimary } from '../../../components/util/typography/Typography';
-import { AError } from '../../../components/util/alert/Alert';
-import Loader from '../../../components/util/loader/Loader';
-import Modal from '../../../components/util/modal/Modal';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import StraightenIcon from '@mui/icons-material/Straighten';
-import { Helmet } from 'react-helmet-async';
-import { fakeProperty } from '../../../helpers/fakeData';
+import TextField from "@mui/material/TextField";
+import { useState, useEffect, FC, FormEvent } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { BPrimary } from "../../../components/util/button/Button";
+import get from "../../../api/get";
+import postRequest from "../../../api/post";
+import "./property.scss";
+import { HPrimary, SPrimary } from "../../../components/util/typography/Typography";
+import { AError } from "../../../components/util/alert/Alert";
+import Loader from "../../../components/util/loader/Loader";
+import Modal from "../../../components/util/modal/Modal";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import StraightenIcon from "@mui/icons-material/Straighten";
+import { Helmet } from "react-helmet-async";
+import { fakeProperty } from "../../../helpers/fakeData";
 
 interface PropertyProps {
 	propertyOtpModelOpened: boolean;
+	// eslint-disable-next-line no-unused-vars
 	setPropertyOtpModelOpened(otpModelOpenState: boolean): any;
 }
 
-const Property: FC<PropertyProps> = props => {
+const Property: FC<PropertyProps> = ({ propertyOtpModelOpened, setPropertyOtpModelOpened }) => {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const [modal, setModal] = useState(false);
 	const [verifyOtpModel, setVerifyOtpModel] = useState(false);
 	const [response, setResponse] = useState<Property>(fakeProperty);
-	const [mainImage, setMainImage] = useState({ type: '', url: '' });
+	const [mainImage, setMainImage] = useState({ type: "", url: "" });
 	const [loading, setLoading] = useState(true);
 	const [btnLoading, setBtnLoading] = useState(false);
-	const [phone, setPhone] = useState('');
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
-	const [otp, setOtp] = useState('');
+	const [phone, setPhone] = useState("");
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [otp, setOtp] = useState("");
 	const [errorModalOpen, setErrorModalOpen] = useState(false);
-	const [errorModalMessage, setErrorModalMessage] = useState('');
+	const [errorModalMessage, setErrorModalMessage] = useState("");
 	const [errorVerifyModalOpen, setErrorVerifyModalOpen] = useState(false);
-	const [errorVerifyModalMessage, setErrorVerifyModalMessage] = useState('');
+	const [errorVerifyModalMessage, setErrorVerifyModalMessage] = useState("");
 
 	useEffect(() => {
 		// Verify token
-		get('/temp-users/verify').catch(err => {
-			if (!props.propertyOtpModelOpened) {
+		get("/temp-users/verify").catch(() => {
+			if (!propertyOtpModelOpened) {
 				setTimeout(() => {
 					setModal(true);
-					props.setPropertyOtpModelOpened(true);
+					setPropertyOtpModelOpened(true);
 					// 10 seconds
 				}, 10000);
-			} else if (props.propertyOtpModelOpened) {
+			} else if (propertyOtpModelOpened) {
 				setModal(true);
 			}
 		});
@@ -58,17 +59,17 @@ const Property: FC<PropertyProps> = props => {
 
 				data.data.videos.length > 0
 					? setMainImage({
-							type: 'video',
+							type: "video",
 							url: data.data.videos[0].url,
 					  })
 					: setMainImage({
-							type: 'image',
+							type: "image",
 							url: data.data.images[0].url,
 					  });
 				setLoading(false);
 			})
-			.catch(err => {
-				navigate('/404');
+			.catch((err) => {
+				navigate("/404");
 			});
 	}, [id]);
 
@@ -78,21 +79,21 @@ const Property: FC<PropertyProps> = props => {
 
 		// validate user
 		if (name.length < 3 || name.length > 20) {
-			setErrorModalMessage('name must be 3 - 20 characters');
+			setErrorModalMessage("name must be 3 - 20 characters");
 			return setErrorModalOpen(true);
 		}
 
 		if (phone.length !== 10) {
-			setErrorModalMessage('Phone should be 10 digits');
+			setErrorModalMessage("Phone should be 10 digits");
 			return setErrorModalOpen(true);
 		}
 
 		const sendOtpResponse = (await postRequest(
-			'/otp/send',
+			"/otp/send",
 			{
 				email,
 			},
-			false
+			false,
 		)) as ApiResponse;
 
 		setBtnLoading(false);
@@ -111,25 +112,25 @@ const Property: FC<PropertyProps> = props => {
 		setBtnLoading(true);
 
 		const verifyOtpResponse = (await postRequest(
-			'/otp/verify',
+			"/otp/verify",
 			{
 				email,
 				otp,
 			},
-			false
+			false,
 		)) as ApiResponse;
 
 		setBtnLoading(false);
 		// if otp is valid than create new user
 		if (verifyOtpResponse.success) {
 			const newUserResponse = (await postRequest(
-				'/temp-users/add',
+				"/temp-users/add",
 				{
 					name,
 					email,
 					phone,
 				},
-				false
+				false,
 			)) as ApiResponse;
 
 			// if user is created successfully than save token and hide modal
@@ -152,10 +153,7 @@ const Property: FC<PropertyProps> = props => {
 		<main className="property-section">
 			<Helmet>
 				<title>Property | Shri Property</title>
-				<link
-					rel="canonical"
-					href="https://shriproperty.com/property/"
-				/>
+				<link rel="canonical" href="https://shriproperty.com/property/" />
 				<meta name="description" content="Check this Property Out!" />
 			</Helmet>
 
@@ -172,7 +170,7 @@ const Property: FC<PropertyProps> = props => {
 						variant="outlined"
 						required
 						className="model-container__input"
-						onChange={e => setName(e.target.value)}
+						onChange={(e) => setName(e.target.value)}
 						fullWidth
 					/>
 
@@ -182,7 +180,7 @@ const Property: FC<PropertyProps> = props => {
 						required
 						variant="outlined"
 						className="model-container__input"
-						onChange={e => setEmail(e.target.value)}
+						onChange={(e) => setEmail(e.target.value)}
 						fullWidth
 					/>
 
@@ -192,15 +190,11 @@ const Property: FC<PropertyProps> = props => {
 						variant="outlined"
 						required
 						className="model-container__input"
-						onChange={e => setPhone(e.target.value)}
+						onChange={(e) => setPhone(e.target.value)}
 						fullWidth
 					/>
 
-					<BPrimary
-						title="Submit"
-						type="submit"
-						loading={btnLoading}
-					/>
+					<BPrimary title="Submit" type="submit" loading={btnLoading} />
 				</form>
 			</Modal>
 
@@ -220,7 +214,7 @@ const Property: FC<PropertyProps> = props => {
 						type="number"
 						variant="outlined"
 						className="model-container__input"
-						onChange={e => setOtp(e.target.value)}
+						onChange={(e) => setOtp(e.target.value)}
 						fullWidth
 					/>
 
@@ -241,9 +235,7 @@ const Property: FC<PropertyProps> = props => {
 				<section
 					// hide other content if any model is opened
 					style={{
-						visibility: `${
-							modal || verifyOtpModel ? 'hidden' : 'visible'
-						}`,
+						visibility: `${modal || verifyOtpModel ? "hidden" : "visible"}`,
 					}}
 				>
 					{/* /* ---------------------------- ANCHOR Image Grid --------------------------- */}
@@ -264,15 +256,12 @@ const Property: FC<PropertyProps> = props => {
 						{response.videos.length > 0 ? (
 							<>
 								{/* item 1 */}
-								{mainImage.type === 'video' ? (
+								{mainImage.type === "video" ? (
 									<video
 										controls
 										className="image-grid__image image-grid__image--1"
 									>
-										<source
-											src={mainImage.url}
-											type="video/mp4"
-										/>
+										<source src={mainImage.url} type="video/mp4" />
 										there is no video :(
 									</video>
 								) : (
@@ -294,10 +283,7 @@ const Property: FC<PropertyProps> = props => {
 									controls
 									className="image-grid__image image-grid__image--2 hidden"
 								>
-									<source
-										src={mainImage.url}
-										type="video/mp4"
-									/>
+									<source src={mainImage.url} type="video/mp4" />
 									there is no video :(
 								</video>
 
@@ -312,10 +298,7 @@ const Property: FC<PropertyProps> = props => {
 									controls
 									className="image-grid__image image-grid__image--3 hidden"
 								>
-									<source
-										src={mainImage.url}
-										type="video/mp4"
-									/>
+									<source src={mainImage.url} type="video/mp4" />
 									there is no video :(
 								</video>
 							</>
@@ -341,10 +324,7 @@ const Property: FC<PropertyProps> = props => {
 							</>
 						)}
 
-						<Link
-							to={`/allimages/${response._id}`}
-							className="allimages"
-						>
+						<Link to={`/allimages/${response._id}`} className="allimages">
 							<BPrimary title="All Images" />
 						</Link>
 					</section>
@@ -354,28 +334,19 @@ const Property: FC<PropertyProps> = props => {
 							<div className="heading-section_sub">
 								<HPrimary title={response.title} />
 
-								<h2 className="heading-section_addr">
-									{response.locality}
-								</h2>
+								<h2 className="heading-section_addr">{response.locality}</h2>
 							</div>
 						</section>
 
 						<section className="pricing-section">
-							<h1 className="pricing-section_heading">
-								Pricing and Size
-							</h1>
+							<h1 className="pricing-section_heading">Pricing and Size</h1>
 
 							<div className="pricing-section__prices">
 								<div className="pricing-section_item space">
 									<div className="sell-icon">
 										<LocalOfferIcon />
 									</div>
-									<h3
-										className={
-											response.specialPrice &&
-											'line-through'
-										}
-									>
+									<h3 className={response.specialPrice && "line-through"}>
 										₹ {response.price}
 									</h3>
 
@@ -391,9 +362,7 @@ const Property: FC<PropertyProps> = props => {
 										</div>
 										<h3>Security: </h3>
 
-										<h3 className="special-price">
-											₹ {response.security}
-										</h3>
+										<h3 className="special-price">₹ {response.security}</h3>
 									</div>
 								)}
 
@@ -404,9 +373,7 @@ const Property: FC<PropertyProps> = props => {
 										</div>
 										<h3>Maintenance: </h3>
 
-										<h3 className="special-price">
-											₹ {response.maintenance}
-										</h3>
+										<h3 className="special-price">₹ {response.maintenance}</h3>
 									</div>
 								)}
 
@@ -424,9 +391,7 @@ const Property: FC<PropertyProps> = props => {
 						{/* /* -------------------------- ANCHOR Configurations ------------------------- */}
 
 						<section className="facilities-section">
-							<h1 className="facilities-section_heading">
-								Configuration
-							</h1>
+							<h1 className="facilities-section_heading">Configuration</h1>
 							<div className="facilities-section__facilities">
 								{response.bedroom && (
 									<div className="facilities-section_item">
@@ -470,8 +435,7 @@ const Property: FC<PropertyProps> = props => {
 										<h3>{response.floor}</h3>
 									</div>
 								)}
-								{(response.type === 'Sale' ||
-									response.type === 'Rental') && (
+								{(response.type === "Sale" || response.type === "Rental") && (
 									<>
 										{response.poojaRoom && (
 											<div className="facilities-section_item">
@@ -505,15 +469,11 @@ const Property: FC<PropertyProps> = props => {
 										)}
 									</>
 								)}
-								{response.type === 'Sale' && (
+								{response.type === "Sale" && (
 									<>
 										{response.constructionStatus && (
 											<div className="facilities-section_item">
-												<h3>
-													{
-														response.constructionStatus
-													}
-												</h3>
+												<h3>{response.constructionStatus}</h3>
 											</div>
 										)}
 
@@ -536,12 +496,10 @@ const Property: FC<PropertyProps> = props => {
 
 						{/* /* --------------------------- ANCHOR Furnishing Details ---------------------------  */}
 
-						{(response.status === 'Furnished' ||
-							response.status === 'Semifurnished') && (
+						{(response.status === "Furnished" ||
+							response.status === "Semifurnished") && (
 							<>
-								<h1 className="amenities-section__heading">
-									Furnishing Details
-								</h1>
+								<h1 className="amenities-section__heading">Furnishing Details</h1>
 
 								<section className="amenities-section">
 									{response.furnishingDetails.ac > 0 && (
@@ -568,19 +526,13 @@ const Property: FC<PropertyProps> = props => {
 													alt="Stove"
 												/>
 											</div>
-											<h3 className="amenities-section__name">
-												Stove
-											</h3>
+											<h3 className="amenities-section__name">Stove</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.stove
-												}
+												{response.furnishingDetails.stove}
 											</div>
 										</div>
 									)}
-									{response.furnishingDetails.modularKitchen >
-										0 && (
+									{response.furnishingDetails.modularKitchen > 0 && (
 										<div className="amenities-container">
 											<div>
 												<img
@@ -592,29 +544,18 @@ const Property: FC<PropertyProps> = props => {
 												Modular Kitchen
 											</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.modularKitchen
-												}
+												{response.furnishingDetails.modularKitchen}
 											</div>
 										</div>
 									)}
 									{response.furnishingDetails.fans > 0 && (
 										<div className="amenities-container">
 											<div>
-												<img
-													src="/images/amenities/fan.png"
-													alt="fan"
-												/>
+												<img src="/images/amenities/fan.png" alt="fan" />
 											</div>
-											<h3 className="amenities-section__name">
-												Fan
-											</h3>
+											<h3 className="amenities-section__name">Fan</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.fans
-												}
+												{response.furnishingDetails.fans}
 											</div>
 										</div>
 									)}
@@ -626,57 +567,35 @@ const Property: FC<PropertyProps> = props => {
 													alt="Fridge"
 												/>
 											</div>
-											<h3 className="amenities-section__name">
-												Fridge
-											</h3>
+											<h3 className="amenities-section__name">Fridge</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.fridge
-												}
+												{response.furnishingDetails.fridge}
 											</div>
 										</div>
 									)}
 									{response.furnishingDetails.light > 0 && (
 										<div className="amenities-container">
 											<div>
-												<img
-													src="/images/amenities/bulb.png"
-													alt="light"
-												/>
+												<img src="/images/amenities/bulb.png" alt="light" />
 											</div>
-											<h3 className="amenities-section__name">
-												Light
-											</h3>
+											<h3 className="amenities-section__name">Light</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.light
-												}
+												{response.furnishingDetails.light}
 											</div>
 										</div>
 									)}
 									{response.furnishingDetails.beds > 0 && (
 										<div className="amenities-container">
 											<div>
-												<img
-													src="/images/amenities/bed.png"
-													alt="bed"
-												/>
+												<img src="/images/amenities/bed.png" alt="bed" />
 											</div>
-											<h3 className="amenities-section__name">
-												Bed
-											</h3>
+											<h3 className="amenities-section__name">Bed</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.beds
-												}
+												{response.furnishingDetails.beds}
 											</div>
 										</div>
 									)}
-									{response.furnishingDetails.microwave >
-										0 && (
+									{response.furnishingDetails.microwave > 0 && (
 										<div className="amenities-container">
 											<div>
 												<img
@@ -684,19 +603,13 @@ const Property: FC<PropertyProps> = props => {
 													alt="microwave"
 												/>
 											</div>
-											<h3 className="amenities-section__name">
-												Microwave
-											</h3>
+											<h3 className="amenities-section__name">Microwave</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.microwave
-												}
+												{response.furnishingDetails.microwave}
 											</div>
 										</div>
 									)}
-									{response.furnishingDetails.dinningTable >
-										0 && (
+									{response.furnishingDetails.dinningTable > 0 && (
 										<div className="amenities-container">
 											<div>
 												<img
@@ -708,31 +621,22 @@ const Property: FC<PropertyProps> = props => {
 												Dinning Table
 											</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.dinningTable
-												}
+												{response.furnishingDetails.dinningTable}
 											</div>
 										</div>
 									)}
 									{response.furnishingDetails.tv > 0 && (
 										<div className="amenities-container">
 											<div>
-												<img
-													src="/images/amenities/TV.png"
-													alt="tv"
-												/>
+												<img src="/images/amenities/TV.png" alt="tv" />
 											</div>
-											<h3 className="amenities-section__name">
-												TV
-											</h3>
+											<h3 className="amenities-section__name">TV</h3>
 											<div className="amenities-section__number">
 												{response.furnishingDetails.tv}
 											</div>
 										</div>
 									)}
-									{response.furnishingDetails.dressingTable >
-										0 && (
+									{response.furnishingDetails.dressingTable > 0 && (
 										<div className="amenities-container">
 											<div>
 												<img
@@ -744,15 +648,11 @@ const Property: FC<PropertyProps> = props => {
 												Dressing Table
 											</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.dressingTable
-												}
+												{response.furnishingDetails.dressingTable}
 											</div>
 										</div>
 									)}
-									{response.furnishingDetails.tvWallPanel >
-										0 && (
+									{response.furnishingDetails.tvWallPanel > 0 && (
 										<div className="amenities-container">
 											<div>
 												<img
@@ -764,15 +664,11 @@ const Property: FC<PropertyProps> = props => {
 												Tv Wall Panel
 											</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.tvWallPanel
-												}
+												{response.furnishingDetails.tvWallPanel}
 											</div>
 										</div>
 									)}
-									{response.furnishingDetails.wardrobe >
-										0 && (
+									{response.furnishingDetails.wardrobe > 0 && (
 										<div className="amenities-container">
 											<div>
 												<img
@@ -780,19 +676,13 @@ const Property: FC<PropertyProps> = props => {
 													alt="Wardrobe"
 												/>
 											</div>
-											<h3 className="amenities-section__name">
-												Wardrobe
-											</h3>
+											<h3 className="amenities-section__name">Wardrobe</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.wardrobe
-												}
+												{response.furnishingDetails.wardrobe}
 											</div>
 										</div>
 									)}
-									{response.furnishingDetails.washingMachine >
-										0 && (
+									{response.furnishingDetails.washingMachine > 0 && (
 										<div className="amenities-container">
 											<div>
 												<img
@@ -804,10 +694,7 @@ const Property: FC<PropertyProps> = props => {
 												Washing Machine
 											</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.washingMachine
-												}
+												{response.furnishingDetails.washingMachine}
 											</div>
 										</div>
 									)}
@@ -819,19 +706,13 @@ const Property: FC<PropertyProps> = props => {
 													alt="water-heater"
 												/>
 											</div>
-											<h3 className="amenities-section__name">
-												Geyser
-											</h3>
+											<h3 className="amenities-section__name">Geyser</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.geyser
-												}
+												{response.furnishingDetails.geyser}
 											</div>
 										</div>
 									)}
-									{response.furnishingDetails.curtains >
-										0 && (
+									{response.furnishingDetails.curtains > 0 && (
 										<div className="amenities-container">
 											<div>
 												<img
@@ -839,14 +720,9 @@ const Property: FC<PropertyProps> = props => {
 													alt="open-curtains"
 												/>
 											</div>
-											<h3 className="amenities-section__name">
-												Curtains
-											</h3>
+											<h3 className="amenities-section__name">Curtains</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.curtains
-												}
+												{response.furnishingDetails.curtains}
 											</div>
 										</div>
 									)}
@@ -858,19 +734,13 @@ const Property: FC<PropertyProps> = props => {
 													alt="three-seater-sofa"
 												/>
 											</div>
-											<h3 className="amenities-section__name">
-												Sofa
-											</h3>
+											<h3 className="amenities-section__name">Sofa</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.sofa
-												}
+												{response.furnishingDetails.sofa}
 											</div>
 										</div>
 									)}
-									{response.furnishingDetails.waterPurifier >
-										0 && (
+									{response.furnishingDetails.waterPurifier > 0 && (
 										<div className="amenities-container">
 											<div>
 												<img
@@ -882,10 +752,7 @@ const Property: FC<PropertyProps> = props => {
 												Water Purifier
 											</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.waterPurifier
-												}
+												{response.furnishingDetails.waterPurifier}
 											</div>
 										</div>
 									)}
@@ -897,14 +764,9 @@ const Property: FC<PropertyProps> = props => {
 													alt="Exhaust"
 												/>
 											</div>
-											<h3 className="amenities-section__name">
-												Exhaust
-											</h3>
+											<h3 className="amenities-section__name">Exhaust</h3>
 											<div className="amenities-section__number">
-												{
-													response.furnishingDetails
-														.exhaust
-												}
+												{response.furnishingDetails.exhaust}
 											</div>
 										</div>
 									)}
@@ -915,16 +777,11 @@ const Property: FC<PropertyProps> = props => {
 						{/* ------------------------------- ANCHOR Facilities ------------------------------- */}
 
 						<section className="amenities-section">
-							<h1 className="amenities-section__heading">
-								Facilities
-							</h1>
+							<h1 className="amenities-section__heading">Facilities</h1>
 
 							{response.facilities &&
-								response.facilities.map(facility => (
-									<div
-										className="amenities-container"
-										key={facility.title}
-									>
+								response.facilities.map((facility) => (
+									<div className="amenities-container" key={facility.title}>
 										<div>
 											<img
 												src={`/images/amenities/${facility.icon}`}
@@ -940,18 +797,17 @@ const Property: FC<PropertyProps> = props => {
 
 						{/* /* --------------------------------- ANCHOR Other Features ---------------------------------  */}
 
-						{response.otherFeatures &&
-							response.otherFeatures.length > 0 && (
-								<section className="other-facilities-section">
-									<h1>Other Features</h1>
+						{response.otherFeatures && response.otherFeatures.length > 0 && (
+							<section className="other-facilities-section">
+								<h1>Other Features</h1>
 
-									<ul>
-										{response.otherFeatures.map(feature => (
-											<li key={feature}>{feature}</li>
-										))}
-									</ul>
-								</section>
-							)}
+								<ul>
+									{response.otherFeatures.map((feature) => (
+										<li key={feature}>{feature}</li>
+									))}
+								</ul>
+							</section>
+						)}
 
 						<section className="description-section">
 							<h1>About</h1>

@@ -1,26 +1,23 @@
 /* eslint-disable array-callback-return */
-import { useState, useEffect, FC, FormEvent } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { BPrimary, BUpload } from '../../../components/util/button/Button';
-import { ASuccess, AError } from '../../../components/util/alert/Alert';
-import Loader from '../../../components/util/loader/Loader';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { useState, useEffect, FC, FormEvent } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { BPrimary, BUpload } from "../../../components/util/button/Button";
+import { ASuccess, AError } from "../../../components/util/alert/Alert";
+import Loader from "../../../components/util/loader/Loader";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-import { patchFile } from '../../../api/patch';
-import putRequest from '../../../api/put';
-import get from '../../../api/get';
-import deleteRequest from '../../../api/delete';
-import { CheckBox } from '../../../components/util/input/Input';
-import { Helmet } from 'react-helmet-async';
-import {
-	fakeFurnishingDetails,
-	fakeProperty,
-} from '../../../helpers/fakeData';
+import { patchFile } from "../../../api/patch";
+import putRequest from "../../../api/put";
+import get from "../../../api/get";
+import deleteRequest from "../../../api/delete";
+import { CheckBox } from "../../../components/util/input/Input";
+import { Helmet } from "react-helmet-async";
+import { fakeFurnishingDetails, fakeProperty } from "../../../helpers/fakeData";
 
 //NOTE: Sass is coming from form.scss file in ../form folder
 
@@ -40,8 +37,8 @@ const Listing: FC = () => {
 
 	const [openSuccess, setOpenSuccess] = useState(false);
 	const [openError, setOpenError] = useState(false);
-	const [successMessage, setSuccessMessage] = useState('');
-	const [errorMessage, setErrorMessage] = useState('');
+	const [successMessage, setSuccessMessage] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const [loading, setLoading] = useState(false);
 	const [deleteFile, setDeleteFile] = useState(false);
@@ -49,21 +46,18 @@ const Listing: FC = () => {
 
 	useEffect(() => {
 		get(`/listings/single/${id}`)
-			.then(res => {
+			.then((res) => {
 				setProperty(res.data);
 				setOtherFeatures(res.data.otherFeatures);
 				setFurnishingDetails(res.data.furnishingDetails);
 				res.data.facilities.forEach((facility: string) => {
-					setFacilities(prevState => [
-						...prevState,
-						JSON.stringify(facility),
-					]);
+					setFacilities((prevState) => [...prevState, JSON.stringify(facility)]);
 				});
 				setLoadingPage(false);
 				setDeleteFile(false);
 			})
-			.catch(err => {
-				navigate('/404');
+			.catch(() => {
+				navigate("/404");
 			});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id, deleteFile]);
@@ -77,43 +71,39 @@ const Listing: FC = () => {
 
 		// append data to body to send
 		for (const key in property) {
-			if (
-				key !== 'otherFeatures' &&
-				key !== 'facilities' &&
-				key !== 'furnishingDetails'
-			) {
+			if (key !== "otherFeatures" && key !== "facilities" && key !== "furnishingDetails") {
 				body.append(key, property[key]);
 			}
 		}
 
 		// append image to body in array
-		for (let img in images) {
-			body.append('images', images[img]);
+		for (const img in images) {
+			body.append("images", images[img]);
 		}
 
 		// append video to body
-		for (let video in videos) {
-			body.append('videos', videos[video]);
+		for (const video in videos) {
+			body.append("videos", videos[video]);
 		}
 
 		// append documents to body
-		for (let doc in documents) {
-			body.append('documents', documents[doc]);
+		for (const doc in documents) {
+			body.append("documents", documents[doc]);
 		}
 
 		// append other Features to body
-		for (let feature in otherFeatures) {
-			body.append('otherFeatures', otherFeatures[feature]);
+		for (const feature in otherFeatures) {
+			body.append("otherFeatures", otherFeatures[feature]);
 		}
 
 		body.append(
-			'furnishingDetails',
-			JSON.stringify(furnishingDetails ? furnishingDetails : {})
+			"furnishingDetails",
+			JSON.stringify(furnishingDetails ? furnishingDetails : {}),
 		);
 
 		//  append Facilities to body
-		for (let facility in facilities) {
-			body.append('facilities', facilities[facility]);
+		for (const facility in facilities) {
+			body.append("facilities", facilities[facility]);
 		}
 
 		// post to server
@@ -139,20 +129,16 @@ const Listing: FC = () => {
 		return (e: FormEvent) => {
 			e.preventDefault();
 
-			putRequest(`/listings/approve/${property._id}`).then(
-				(data: any) => {
-					if (data.success) {
-						setSuccessMessage(data.message);
-						setOpenSuccess(true);
-						navigate(
-							`${process.env.REACT_APP_ADMIN_ROUTE}/listings`
-						);
-					} else {
-						setErrorMessage(data.message);
-						setOpenError(true);
-					}
+			putRequest(`/listings/approve/${property._id}`).then((data: any) => {
+				if (data.success) {
+					setSuccessMessage(data.message);
+					setOpenSuccess(true);
+					navigate(`${process.env.REACT_APP_ADMIN_ROUTE}/listings`);
+				} else {
+					setErrorMessage(data.message);
+					setOpenError(true);
 				}
-			);
+			});
 		};
 	};
 
@@ -161,17 +147,11 @@ const Listing: FC = () => {
 	 * @param {string} type type of file `image` | `video`
 	 * @param {string} key key of file
 	 */
-	const deleteFileHandler = (
-		id: string,
-		type: 'images' | 'videos',
-		key: string
-	) => {
+	const deleteFileHandler = (id: string, type: "images" | "videos", key: string) => {
 		return () => {
-			deleteRequest(`/listings/delete-file/${id}/${type}/${key}`).then(
-				data => {
-					setDeleteFile(true);
-				}
-			);
+			deleteRequest(`/listings/delete-file/${id}/${type}/${key}`).then((data) => {
+				setDeleteFile(true);
+			});
 		};
 	};
 
@@ -205,7 +185,7 @@ const Listing: FC = () => {
 	 */
 	const checkboxHandler = (checked: string, title: string, icon: string) => {
 		if (checked && !facilities.includes(JSON.stringify({ title, icon }))) {
-			setFacilities(prevState => [
+			setFacilities((prevState) => [
 				...prevState,
 				JSON.stringify({
 					title,
@@ -213,8 +193,8 @@ const Listing: FC = () => {
 				}),
 			]);
 		} else {
-			setFacilities(prevState =>
-				prevState.filter(item => JSON.parse(item).title !== title)
+			setFacilities((prevState) =>
+				prevState.filter((item) => JSON.parse(item).title !== title),
 			);
 		}
 	};
@@ -225,9 +205,7 @@ const Listing: FC = () => {
 	 * @param {string} title The title of the facility
 	 */
 	const facilityChecker = (title: string) => {
-		return facilities.some(
-			facility => JSON.parse(facility).title === title
-		);
+		return facilities.some((facility) => JSON.parse(facility).title === title);
 	};
 
 	return (
@@ -247,9 +225,7 @@ const Listing: FC = () => {
 						value={property.title}
 						fullWidth
 						required
-						onChange={e =>
-							setProperty({ ...property, title: e.target.value })
-						}
+						onChange={(e) => setProperty({ ...property, title: e.target.value })}
 					/>
 					<TextField
 						className="admin-property-form__input"
@@ -259,7 +235,7 @@ const Listing: FC = () => {
 						fullWidth
 						required
 						multiline
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								description: e.target.value,
@@ -273,7 +249,7 @@ const Listing: FC = () => {
 						value={property.address}
 						required
 						fullWidth
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								address: e.target.value,
@@ -288,7 +264,7 @@ const Listing: FC = () => {
 						value={property.locality}
 						required
 						fullWidth
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								locality: e.target.value,
@@ -303,7 +279,7 @@ const Listing: FC = () => {
 						value={property.location}
 						helperText="Paste google maps url here"
 						fullWidth
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								location: e.target.value,
@@ -317,9 +293,7 @@ const Listing: FC = () => {
 						value={property.owner}
 						required
 						fullWidth
-						onChange={e =>
-							setProperty({ ...property, owner: e.target.value })
-						}
+						onChange={(e) => setProperty({ ...property, owner: e.target.value })}
 					/>
 					<TextField
 						className="admin-property-form__input"
@@ -328,7 +302,7 @@ const Listing: FC = () => {
 						value={property.commission}
 						required
 						fullWidth
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								commission: e.target.value,
@@ -342,7 +316,7 @@ const Listing: FC = () => {
 						value={property.ownerContact}
 						required
 						fullWidth
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								ownerContact: e.target.value,
@@ -354,12 +328,10 @@ const Listing: FC = () => {
 						variant="outlined"
 						label="Other Features"
 						helperText="Separate with enter"
-						value={otherFeatures.join('\n')}
+						value={otherFeatures.join("\n")}
 						fullWidth
 						multiline
-						onChange={e =>
-							setOtherFeatures(e.target.value.split('\n'))
-						}
+						onChange={(e) => setOtherFeatures(e.target.value.split("\n"))}
 					/>
 					<TextField
 						className="admin-property-form__input"
@@ -368,9 +340,7 @@ const Listing: FC = () => {
 						type="number"
 						value={property.price}
 						required
-						onChange={e =>
-							setProperty({ ...property, price: e.target.value })
-						}
+						onChange={(e) => setProperty({ ...property, price: e.target.value })}
 					/>
 					<TextField
 						className="admin-property-form__input"
@@ -378,7 +348,7 @@ const Listing: FC = () => {
 						label="Special Price"
 						type="number"
 						value={property.specialPrice}
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								specialPrice: e.target.value,
@@ -392,7 +362,7 @@ const Listing: FC = () => {
 							required
 							label="Type"
 							value={property.type}
-							onChange={e =>
+							onChange={(e) =>
 								setProperty({
 									...property,
 									type: e.target.value,
@@ -405,14 +375,14 @@ const Listing: FC = () => {
 						</Select>
 					</FormControl>
 
-					{(property.type === 'Rental' || property.type === 'PG') && (
+					{(property.type === "Rental" || property.type === "PG") && (
 						<>
 							<TextField
 								className="admin-property-form__input"
 								variant="outlined"
 								label="Security"
 								value={property.security}
-								onChange={e =>
+								onChange={(e) =>
 									setProperty({
 										...property,
 										security: e.target.value,
@@ -425,7 +395,7 @@ const Listing: FC = () => {
 								variant="outlined"
 								label="Maintenance"
 								value={property.maintenance}
-								onChange={e =>
+								onChange={(e) =>
 									setProperty({
 										...property,
 										maintenance: e.target.value,
@@ -442,9 +412,7 @@ const Listing: FC = () => {
 						type="number"
 						value={property.size}
 						required
-						onChange={e =>
-							setProperty({ ...property, size: e.target.value })
-						}
+						onChange={(e) => setProperty({ ...property, size: e.target.value })}
 					/>
 					<FormControl className="admin-property-form__select">
 						<InputLabel>Unit</InputLabel>
@@ -452,36 +420,27 @@ const Listing: FC = () => {
 							required
 							label="Unit"
 							value={property.unit}
-							onChange={e =>
+							onChange={(e) =>
 								setProperty({
 									...property,
 									unit: e.target.value,
 								})
 							}
 						>
-							<MenuItem value={'Sq. Ft.'}>Sq. Ft</MenuItem>
-							<MenuItem value={'Acre'}>Acre</MenuItem>
-							<MenuItem value={'Gaj'}>Gaj</MenuItem>
-							<MenuItem value={'Marla'}>Marla</MenuItem>
-							<MenuItem value={'Bigha'}>Bigha</MenuItem>
-							<MenuItem value={'Bigha-Pucca'}>
-								Bigha-Pucca
-							</MenuItem>
-							<MenuItem value={'Bigha-Kachha'}>
-								Bigha-Kachha
-							</MenuItem>
-							<MenuItem value={'Bigha-Kachha'}>
-								Bigha-Kachha
-							</MenuItem>
-							<MenuItem value={'Biswa'}>Biswa</MenuItem>
-							<MenuItem value={'Biswa'}>Biswa</MenuItem>
-							<MenuItem value={'Biswa-Pucca'}>
-								Biswa-Pucca
-							</MenuItem>
-							<MenuItem value={'Kanal'}>Kanal</MenuItem>
-							<MenuItem value={'Killa'}>Killa</MenuItem>
-							<MenuItem value={'Kattha'}>Kattha</MenuItem>
-							<MenuItem value={'Ghumaon'}>Ghumaon</MenuItem>
+							<MenuItem value={"Sq. Ft."}>Sq. Ft</MenuItem>
+							<MenuItem value={"Acre"}>Acre</MenuItem>
+							<MenuItem value={"Gaj"}>Gaj</MenuItem>
+							<MenuItem value={"Marla"}>Marla</MenuItem>
+							<MenuItem value={"Bigha"}>Bigha</MenuItem>
+							<MenuItem value={"Bigha-Pucca"}>Bigha-Pucca</MenuItem>
+							<MenuItem value={"Bigha-Kachha"}>Bigha-Kachha</MenuItem>
+							<MenuItem value={"Bigha-Kachha"}>Bigha-Kachha</MenuItem>
+							<MenuItem value={"Biswa"}>Biswa</MenuItem>
+							<MenuItem value={"Biswa-Pucca"}>Biswa-Pucca</MenuItem>
+							<MenuItem value={"Kanal"}>Kanal</MenuItem>
+							<MenuItem value={"Killa"}>Killa</MenuItem>
+							<MenuItem value={"Kattha"}>Kattha</MenuItem>
+							<MenuItem value={"Ghumaon"}>Ghumaon</MenuItem>
 						</Select>
 					</FormControl>
 					<TextField
@@ -489,9 +448,7 @@ const Listing: FC = () => {
 						variant="outlined"
 						label="Floor"
 						value={property.floor}
-						onChange={e =>
-							setProperty({ ...property, floor: e.target.value })
-						}
+						onChange={(e) => setProperty({ ...property, floor: e.target.value })}
 					/>
 					<TextField
 						className="admin-property-form__input"
@@ -499,7 +456,7 @@ const Listing: FC = () => {
 						label="Bedrooms"
 						type="number"
 						value={property.bedroom}
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								bedroom: e.target.value,
@@ -512,15 +469,14 @@ const Listing: FC = () => {
 						label="Bathroom"
 						type="number"
 						value={property.bathroom}
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								bathroom: e.target.value,
 							})
 						}
 					/>
-					{(property.type === 'Rental' ||
-						property.type === 'Sale') && (
+					{(property.type === "Rental" || property.type === "Sale") && (
 						<>
 							<TextField
 								className="admin-property-form__input"
@@ -528,7 +484,7 @@ const Listing: FC = () => {
 								label="Living Room"
 								type="number"
 								value={property.livingRoom}
-								onChange={e =>
+								onChange={(e) =>
 									setProperty({
 										...property,
 										livingRoom: e.target.value,
@@ -542,7 +498,7 @@ const Listing: FC = () => {
 								label="Lobby"
 								type="number"
 								value={property.lobby}
-								onChange={e =>
+								onChange={(e) =>
 									setProperty({
 										...property,
 										lobby: e.target.value,
@@ -556,7 +512,7 @@ const Listing: FC = () => {
 								label="Dinning Room"
 								type="number"
 								value={property.dinningRoom}
-								onChange={e =>
+								onChange={(e) =>
 									setProperty({
 										...property,
 										dinningRoom: e.target.value,
@@ -569,7 +525,7 @@ const Listing: FC = () => {
 								label="Store Room"
 								type="number"
 								value={property.store}
-								onChange={e =>
+								onChange={(e) =>
 									setProperty({
 										...property,
 										store: e.target.value,
@@ -582,7 +538,7 @@ const Listing: FC = () => {
 								label="Pooja Room"
 								type="number"
 								value={property.poojaRoom}
-								onChange={e =>
+								onChange={(e) =>
 									setProperty({
 										...property,
 										poojaRoom: e.target.value,
@@ -591,14 +547,14 @@ const Listing: FC = () => {
 							/>
 						</>
 					)}
-					{property.type === 'Sale' && (
+					{property.type === "Sale" && (
 						<>
 							<TextField
 								className="admin-property-form__input"
 								variant="outlined"
 								label="Property Age"
 								value={property.age}
-								onChange={e =>
+								onChange={(e) =>
 									setProperty({
 										...property,
 										age: e.target.value,
@@ -613,7 +569,7 @@ const Listing: FC = () => {
 						label="Kitchen"
 						type="number"
 						value={property.kitchen}
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								kitchen: e.target.value,
@@ -627,7 +583,7 @@ const Listing: FC = () => {
 						label="Open Parking"
 						type="number"
 						value={property.openParking}
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								openParking: e.target.value,
@@ -640,7 +596,7 @@ const Listing: FC = () => {
 						label="Covered Parking"
 						type="number"
 						value={property.closeParking}
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								closeParking: e.target.value,
@@ -653,7 +609,7 @@ const Listing: FC = () => {
 						label="Balcony"
 						type="number"
 						value={property.balcony}
-						onChange={e =>
+						onChange={(e) =>
 							setProperty({
 								...property,
 								balcony: e.target.value,
@@ -670,16 +626,14 @@ const Listing: FC = () => {
 							required
 							label="category"
 							value={property.category}
-							onChange={e =>
+							onChange={(e) =>
 								setProperty({
 									...property,
 									category: e.target.value,
 								})
 							}
 						>
-							<MenuItem value="Residential Apartment">
-								Residential Apartment
-							</MenuItem>
+							<MenuItem value="Residential Apartment">Residential Apartment</MenuItem>
 
 							<MenuItem value="Independent House/Villa">
 								Independent House/Villa
@@ -687,17 +641,11 @@ const Listing: FC = () => {
 
 							<MenuItem value="Plot">Plot</MenuItem>
 
-							<MenuItem value="Commercial Office">
-								Commercial Office
-							</MenuItem>
+							<MenuItem value="Commercial Office">Commercial Office</MenuItem>
 
-							<MenuItem value="Commercial Office">
-								Commercial Plot
-							</MenuItem>
+							<MenuItem value="Commercial Office">Commercial Plot</MenuItem>
 
-							<MenuItem value="Serviced Apartments">
-								Serviced Apartments
-							</MenuItem>
+							<MenuItem value="Serviced Apartments">Serviced Apartments</MenuItem>
 
 							<MenuItem value="1 RK/ Studio Apartment">
 								1 RK/ Studio Apartment
@@ -716,7 +664,7 @@ const Listing: FC = () => {
 							required
 							label="Status"
 							value={property.status}
-							onChange={e =>
+							onChange={(e) =>
 								setProperty({
 									...property,
 									status: e.target.value,
@@ -724,9 +672,7 @@ const Listing: FC = () => {
 							}
 						>
 							<MenuItem value="Unfurnished">Unfurnished</MenuItem>
-							<MenuItem value="Semifurnished">
-								Semifurnished
-							</MenuItem>
+							<MenuItem value="Semifurnished">Semifurnished</MenuItem>
 							<MenuItem value="Furnished">Furnished</MenuItem>
 						</Select>
 					</FormControl>
@@ -736,15 +682,15 @@ const Listing: FC = () => {
 							required
 							label="Featured"
 							value={property.featured}
-							onChange={e =>
+							onChange={(e) =>
 								setProperty({
 									...property,
 									featured: e.target.value,
 								})
 							}
 						>
-							<MenuItem value={'true'}>True</MenuItem>
-							<MenuItem value={'false'}>False</MenuItem>
+							<MenuItem value={"true"}>True</MenuItem>
+							<MenuItem value={"false"}>False</MenuItem>
 						</Select>
 					</FormControl>
 					<FormControl className="admin-property-form__select">
@@ -753,7 +699,7 @@ const Listing: FC = () => {
 							required
 							label="Direction"
 							value={property.direction}
-							onChange={e =>
+							onChange={(e) =>
 								setProperty({
 									...property,
 									direction: e.target.value,
@@ -770,7 +716,7 @@ const Listing: FC = () => {
 							<MenuItem value="South-West">South-West</MenuItem>
 						</Select>
 					</FormControl>
-					{property.type === 'Sale' && (
+					{property.type === "Sale" && (
 						<>
 							<FormControl className="admin-property-form__select">
 								<InputLabel>Purchase Type</InputLabel>
@@ -778,16 +724,14 @@ const Listing: FC = () => {
 									required
 									label="Purchase Type"
 									value={property.purchaseType}
-									onChange={e =>
+									onChange={(e) =>
 										setProperty({
 											...property,
 											purchaseType: e.target.value,
 										})
 									}
 								>
-									<MenuItem value="New Booking">
-										New Booking
-									</MenuItem>
+									<MenuItem value="New Booking">New Booking</MenuItem>
 									<MenuItem value="Resale">Resale</MenuItem>
 								</Select>
 							</FormControl>
@@ -797,7 +741,7 @@ const Listing: FC = () => {
 									required
 									label="Construction Status"
 									value={property.constructionStatus}
-									onChange={e =>
+									onChange={(e) =>
 										setProperty({
 											...property,
 											constructionStatus: e.target.value,
@@ -807,23 +751,20 @@ const Listing: FC = () => {
 									<MenuItem value="Under Construction">
 										Under Construction
 									</MenuItem>
-									<MenuItem value="Ready to Move">
-										Ready to Move
-									</MenuItem>
+									<MenuItem value="Ready to Move">Ready to Move</MenuItem>
 								</Select>
 							</FormControl>
 						</>
 					)}
 
-					{(property.type === 'Sale' ||
-						property.type === 'Rental') && (
+					{(property.type === "Sale" || property.type === "Rental") && (
 						<FormControl className="admin-property-form__select">
 							<InputLabel>Possession</InputLabel>
 							<Select
 								required
 								label="Possession"
 								value={property.possession}
-								onChange={e =>
+								onChange={(e) =>
 									setProperty({
 										...property,
 										possession: e.target.value,
@@ -832,21 +773,13 @@ const Listing: FC = () => {
 							>
 								<MenuItem value="Immediate">Immediate</MenuItem>
 
-								<MenuItem value="Between 1 Month">
-									Between 1 Month
-								</MenuItem>
+								<MenuItem value="Between 1 Month">Between 1 Month</MenuItem>
 
-								<MenuItem value="Between 2 Month">
-									Between 2 Month
-								</MenuItem>
+								<MenuItem value="Between 2 Month">Between 2 Month</MenuItem>
 
-								<MenuItem value="Between 3 Month">
-									Between 3 Month
-								</MenuItem>
+								<MenuItem value="Between 3 Month">Between 3 Month</MenuItem>
 
-								<MenuItem value="Between 6 Months">
-									Between 6 Months
-								</MenuItem>
+								<MenuItem value="Between 6 Months">Between 6 Months</MenuItem>
 
 								<MenuItem value="2023">2023</MenuItem>
 
@@ -868,13 +801,9 @@ const Listing: FC = () => {
 					)}
 
 					{/*  --------------------------- ANCHOR Furnishing Details --------------------------- */}
-					{(property.status === 'Furnished' ||
-						property.status === 'Semifurnished') && (
+					{(property.status === "Furnished" || property.status === "Semifurnished") && (
 						<>
-							<h1>
-								Add Furnishing Details (Add amount of things
-								eg:- fans = 5)
-							</h1>
+							<h1>Add Furnishing Details (Add amount of things eg:- fans = 5)</h1>
 
 							<TextField
 								className="admin-property-form__input"
@@ -882,7 +811,7 @@ const Listing: FC = () => {
 								label="AC"
 								type="number"
 								value={furnishingDetails.ac}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										ac: +e.target.value,
@@ -896,7 +825,7 @@ const Listing: FC = () => {
 								label="stove"
 								type="number"
 								value={furnishingDetails.stove}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										stove: +e.target.value,
@@ -910,7 +839,7 @@ const Listing: FC = () => {
 								label="Modular Kitchen"
 								type="number"
 								value={furnishingDetails.modularKitchen}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										modularKitchen: +e.target.value,
@@ -924,7 +853,7 @@ const Listing: FC = () => {
 								label="Fans"
 								type="number"
 								value={furnishingDetails.fans}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										fans: +e.target.value,
@@ -938,7 +867,7 @@ const Listing: FC = () => {
 								label="Fridge"
 								type="number"
 								value={furnishingDetails.fridge}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										fridge: +e.target.value,
@@ -952,7 +881,7 @@ const Listing: FC = () => {
 								label="Light"
 								type="number"
 								value={furnishingDetails.light}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										light: +e.target.value,
@@ -966,7 +895,7 @@ const Listing: FC = () => {
 								label="Bed"
 								type="number"
 								value={furnishingDetails.beds}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										beds: +e.target.value,
@@ -980,7 +909,7 @@ const Listing: FC = () => {
 								label="microwave"
 								type="number"
 								value={furnishingDetails.microwave}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										microwave: +e.target.value,
@@ -994,7 +923,7 @@ const Listing: FC = () => {
 								label="dinning table"
 								type="number"
 								value={furnishingDetails.dinningTable}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										dinningTable: +e.target.value,
@@ -1008,7 +937,7 @@ const Listing: FC = () => {
 								label="TV"
 								type="number"
 								value={furnishingDetails.tv}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										tv: +e.target.value,
@@ -1022,7 +951,7 @@ const Listing: FC = () => {
 								label="Dressing Table"
 								type="number"
 								value={furnishingDetails.dressingTable}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										dressingTable: +e.target.value,
@@ -1036,7 +965,7 @@ const Listing: FC = () => {
 								label="TV Wall Panel"
 								type="number"
 								value={furnishingDetails.tvWallPanel}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										tvWallPanel: +e.target.value,
@@ -1050,7 +979,7 @@ const Listing: FC = () => {
 								label="wardrobe"
 								type="number"
 								value={furnishingDetails.wardrobe}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										wardrobe: +e.target.value,
@@ -1064,7 +993,7 @@ const Listing: FC = () => {
 								label="washing machine"
 								type="number"
 								value={furnishingDetails.washingMachine}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										washingMachine: +e.target.value,
@@ -1078,7 +1007,7 @@ const Listing: FC = () => {
 								label="Geyser"
 								type="number"
 								value={furnishingDetails.geyser}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										geyser: +e.target.value,
@@ -1092,7 +1021,7 @@ const Listing: FC = () => {
 								label="Curtains"
 								type="number"
 								value={furnishingDetails.curtains}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										curtains: +e.target.value,
@@ -1106,7 +1035,7 @@ const Listing: FC = () => {
 								label="Sofa"
 								type="number"
 								value={furnishingDetails.sofa}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										sofa: +e.target.value,
@@ -1120,7 +1049,7 @@ const Listing: FC = () => {
 								label="water purifier"
 								type="number"
 								value={furnishingDetails.waterPurifier}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										waterPurifier: +e.target.value,
@@ -1134,7 +1063,7 @@ const Listing: FC = () => {
 								label="Exhaust"
 								type="number"
 								value={furnishingDetails.exhaust}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										exhaust: +e.target.value,
@@ -1149,251 +1078,183 @@ const Listing: FC = () => {
 					<div className="admin-property-form__facilities">
 						<CheckBox
 							label="Fire/Security Alarm"
-							checked={facilityChecker('Fire/Security Alarm')}
-							onChange={e =>
+							checked={facilityChecker("Fire/Security Alarm")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Fire/Security Alarm',
-									'alarm.png'
+									"Fire/Security Alarm",
+									"alarm.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="Power Backup"
-							checked={facilityChecker('Power Backup')}
-							onChange={e =>
+							checked={facilityChecker("Power Backup")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Power Backup',
-									'power-backup.png'
+									"Power Backup",
+									"power-backup.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="Intercome"
-							checked={facilityChecker('Intercome')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Intercome',
-									'intercome.png'
-								)
+							checked={facilityChecker("Intercome")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Intercome", "intercome.png")
 							}
 						/>
 
 						<CheckBox
 							label="Lift"
-							checked={facilityChecker('Lift')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Lift',
-									'lift.png'
-								)
-							}
+							checked={facilityChecker("Lift")}
+							onChange={(e) => checkboxHandler(e.target.checked, "Lift", "lift.png")}
 						/>
 
 						<CheckBox
 							label="Maintenance Staff"
-							checked={facilityChecker('Maintenance Staff')}
-							onChange={e =>
+							checked={facilityChecker("Maintenance Staff")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Maintenance Staff',
-									'maintenance.png'
+									"Maintenance Staff",
+									"maintenance.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="Park"
-							checked={facilityChecker('Park')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Park',
-									'park.png'
-								)
-							}
+							checked={facilityChecker("Park")}
+							onChange={(e) => checkboxHandler(e.target.checked, "Park", "park.png")}
 						/>
 
 						<CheckBox
 							label="Swimming Pool"
-							checked={facilityChecker('Swimming Pool')}
-							onChange={e =>
+							checked={facilityChecker("Swimming Pool")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Swimming Pool',
-									'swimming-pool.png'
+									"Swimming Pool",
+									"swimming-pool.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="Gym"
-							checked={facilityChecker('Gym')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Gym',
-									'gym.png'
-								)
-							}
+							checked={facilityChecker("Gym")}
+							onChange={(e) => checkboxHandler(e.target.checked, "Gym", "gym.png")}
 						/>
 
 						<CheckBox
 							label="Market"
-							checked={facilityChecker('Market')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Market',
-									'market.png'
-								)
+							checked={facilityChecker("Market")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Market", "market.png")
 							}
 						/>
 
 						<CheckBox
 							label="Water Storage"
-							checked={facilityChecker('Water Storage')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Water Storage',
-									'water-tank.png'
-								)
+							checked={facilityChecker("Water Storage")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Water Storage", "water-tank.png")
 							}
 						/>
 
 						<CheckBox
 							label="Piped Gas"
-							checked={facilityChecker('Piped Gas')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Piped Gas',
-									'piped-gas.png'
-								)
+							checked={facilityChecker("Piped Gas")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Piped Gas", "piped-gas.png")
 							}
 						/>
 
 						<CheckBox
 							label="Visitor Parking"
-							checked={facilityChecker('Visitor Parking')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Visitor Parking',
-									'parking.png'
-								)
+							checked={facilityChecker("Visitor Parking")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Visitor Parking", "parking.png")
 							}
 						/>
 
 						<CheckBox
 							label="Water supply 24/7"
-							checked={facilityChecker('Water supply 24/7')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Water supply 24/7',
-									'water.png'
-								)
+							checked={facilityChecker("Water supply 24/7")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Water supply 24/7", "water.png")
 							}
 						/>
 
 						<CheckBox
 							label="Security Guard"
-							checked={facilityChecker('Security Guard')}
-							onChange={e =>
+							checked={facilityChecker("Security Guard")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Security Guard',
-									'security-guard.png'
+									"Security Guard",
+									"security-guard.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="CCTV"
-							checked={facilityChecker('CCTV')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'CCTV',
-									'cctv.png'
-								)
-							}
+							checked={facilityChecker("CCTV")}
+							onChange={(e) => checkboxHandler(e.target.checked, "CCTV", "cctv.png")}
 						/>
 
 						<CheckBox
 							label="Gated Society"
-							checked={facilityChecker('Gated Society')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Gated Society',
-									'gate.png'
-								)
+							checked={facilityChecker("Gated Society")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Gated Society", "gate.png")
 							}
 						/>
 
 						<CheckBox
 							label="Street Light"
-							checked={facilityChecker('Street Light')}
-							onChange={e =>
+							checked={facilityChecker("Street Light")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Street Light',
-									'street-light.png'
+									"Street Light",
+									"street-light.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="WiFi"
-							checked={facilityChecker('WiFi')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'WiFi',
-									'wifi.png'
-								)
-							}
+							checked={facilityChecker("WiFi")}
+							onChange={(e) => checkboxHandler(e.target.checked, "WiFi", "wifi.png")}
 						/>
 						<CheckBox
 							label="Club House"
-							checked={facilityChecker('Club House')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Club House',
-									'club-house.png'
-								)
+							checked={facilityChecker("Club House")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Club House", "club-house.png")
 							}
 						/>
 
 						<CheckBox
 							label="STP"
-							checked={facilityChecker('STP')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'STP',
-									'STP.png'
-								)
-							}
+							checked={facilityChecker("STP")}
+							onChange={(e) => checkboxHandler(e.target.checked, "STP", "STP.png")}
 						/>
 
 						<CheckBox
 							label="Ceiling Light"
-							checked={facilityChecker('Ceiling Light')}
-							onChange={e =>
+							checked={facilityChecker("Ceiling Light")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Ceiling Light',
-									'ceiling-light.png'
+									"Ceiling Light",
+									"ceiling-light.png",
 								)
 							}
 						/>
@@ -1404,10 +1265,7 @@ const Listing: FC = () => {
 					<h1>Images</h1>
 					{property.images.length > 0 ? (
 						property.images.map((img: S3File) => (
-							<div
-								className="admin-property-form__preview-container"
-								key={img.key}
-							>
+							<div className="admin-property-form__preview-container" key={img.key}>
 								<img
 									className="admin-property-form__preview"
 									src={img.url}
@@ -1415,11 +1273,7 @@ const Listing: FC = () => {
 								/>
 								<BPrimary
 									title={<DeleteIcon />}
-									onClick={deleteFileHandler(
-										property._id,
-										'images',
-										img.key
-									)}
+									onClick={deleteFileHandler(property._id, "images", img.key)}
 								/>
 							</div>
 						))
@@ -1429,10 +1283,7 @@ const Listing: FC = () => {
 					<h1>Videos</h1>
 					{property.videos.length > 0 ? (
 						property.videos.map((vid: S3File) => (
-							<div
-								className="admin-property-form__preview-container"
-								key={vid.key}
-							>
+							<div className="admin-property-form__preview-container" key={vid.key}>
 								<video
 									controls
 									autoPlay
@@ -1445,11 +1296,7 @@ const Listing: FC = () => {
 
 								<BPrimary
 									title={<DeleteIcon />}
-									onClick={deleteFileHandler(
-										property._id,
-										'videos',
-										vid.key
-									)}
+									onClick={deleteFileHandler(property._id, "videos", vid.key)}
 								/>
 							</div>
 						))
@@ -1460,19 +1307,14 @@ const Listing: FC = () => {
 					<BUpload
 						title="Image"
 						className="admin-property-form__upload-btn"
-						onChange={(e: any) =>
-							setImages([...images, ...e.target.files])
-						}
+						onChange={(e: any) => setImages([...images, ...e.target.files])}
 						accept="image/*"
 					/>
 					{images.map((img, i) => {
 						if (img instanceof File) {
 							const objectURL = URL.createObjectURL(img);
 							return (
-								<div
-									className="admin-property-form__preview-container"
-									key={i}
-								>
+								<div className="admin-property-form__preview-container" key={i}>
 									<img
 										className="admin-property-form__preview"
 										src={objectURL}
@@ -1481,11 +1323,7 @@ const Listing: FC = () => {
 									<BPrimary
 										title={<DeleteIcon />}
 										onClick={() =>
-											setImages(
-												images.filter(
-													(_, index) => index !== i
-												)
-											)
+											setImages(images.filter((_, index) => index !== i))
 										}
 									/>
 								</div>
@@ -1496,19 +1334,14 @@ const Listing: FC = () => {
 					<BUpload
 						title="Videos"
 						className="admin-property-form__upload-btn"
-						onChange={(e: any) =>
-							setVideos([...videos, ...e.target.files])
-						}
+						onChange={(e: any) => setVideos([...videos, ...e.target.files])}
 						accept="video/*"
 					/>
 					{videos.map((vid, i) => {
 						if (vid instanceof File) {
 							const objectURL = URL.createObjectURL(vid);
 							return (
-								<div
-									className="admin-property-form__preview-container"
-									key={i}
-								>
+								<div className="admin-property-form__preview-container" key={i}>
 									<video
 										controls
 										autoPlay
@@ -1516,20 +1349,13 @@ const Listing: FC = () => {
 										loop
 										className="admin-property-form__preview"
 									>
-										<source
-											src={objectURL}
-											type="video/mp4"
-										/>
+										<source src={objectURL} type="video/mp4" />
 									</video>
 
 									<BPrimary
 										title={<DeleteIcon />}
 										onClick={() =>
-											setVideos(
-												videos.filter(
-													(_, index) => index !== i
-												)
-											)
+											setVideos(videos.filter((_, index) => index !== i))
 										}
 									/>
 								</div>
@@ -1540,19 +1366,14 @@ const Listing: FC = () => {
 					<BUpload
 						title="Documents"
 						className="admin-property-form__upload-btn"
-						onChange={(e: any) =>
-							setDocuments([...documents, ...e.target.files])
-						}
+						onChange={(e: any) => setDocuments([...documents, ...e.target.files])}
 						accept="application/pdf"
 					/>
 					{documents.map((doc, i) => {
 						if (doc instanceof File) {
 							const objectURL = URL.createObjectURL(doc);
 							return (
-								<div
-									className="admin-property-form__preview-container"
-									key={i}
-								>
+								<div className="admin-property-form__preview-container" key={i}>
 									<iframe
 										src={objectURL}
 										title={objectURL}
@@ -1564,9 +1385,7 @@ const Listing: FC = () => {
 										title={<DeleteIcon />}
 										onClick={() =>
 											setDocuments(
-												documents.filter(
-													(_, index) => index !== i
-												)
+												documents.filter((_, index) => index !== i),
 											)
 										}
 									/>
@@ -1575,16 +1394,8 @@ const Listing: FC = () => {
 						}
 					})}
 					<br />
-					<ASuccess
-						title={successMessage}
-						open={openSuccess}
-						setOpen={setOpenSuccess}
-					/>
-					<AError
-						title={errorMessage}
-						open={openError}
-						setOpen={setOpenError}
-					/>
+					<ASuccess title={successMessage} open={openSuccess} setOpen={setOpenSuccess} />
+					<AError title={errorMessage} open={openError} setOpen={setOpenError} />
 					<BPrimary
 						title="Submit"
 						className="admin-property-form__submit-btn"
