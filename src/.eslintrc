@@ -14,8 +14,7 @@
 		"no-secrets",
 		"jsonc",
 		"pii",
-		"no-unsanitized",
-		"prettier"
+		"no-unsanitized"
 	],
 	"extends": [
 		"plugin:react/recommended",
@@ -43,15 +42,14 @@
 	"rules": {
 		"semi": "error",
 		"no-console": "error",
-		"max-len": ["error", { "code": 100 }],
-		"linebreak-style": ["error", "windows"],
+		"linebreak-style": "off",
 		"object-curly-spacing": "off",
 		"indent": ["error", "tab"],
 		"jsx-quotes": ["error", "prefer-double"],
 		"no-tabs": "off",
 		"space-infix-ops": "off",
 		"no-trailing-spaces": "error",
-		"space-before-blocks": "off",
+		"space-before-blocks": "error",
 		"react/react-in-jsx-scope": "off",
 		"camelcase": "error",
 		"quotes": "off",
