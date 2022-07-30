@@ -1,10 +1,9 @@
-import { Button } from '@mui/material';
-import { CircularProgress } from '@mui/material';
+import { Button, CircularProgress } from "@mui/material";
 
-import './button.scss';
-import { FC } from 'react';
+import "./button.scss";
+import { FC } from "react";
 
-type ButtonTypes = 'submit' | 'reset' | 'button';
+type ButtonTypes = "submit" | "reset" | "button";
 
 interface BPrimaryProps {
 	title: string | JSX.Element;
@@ -26,15 +25,13 @@ interface BPrimaryProps {
  * @param {string} props.style type of style eg-padding: '0'
  * @param {Function} props.onClick function to call on click
  */
-export const BPrimary: FC<BPrimaryProps> = props => {
+export const BPrimary: FC<BPrimaryProps> = (props) => {
 	return (
 		<Button
 			style={props.style}
-			className={`${props.className} btn-primary ${
-				!props.disabled && 'btn-primary--enabled'
-			}
+			className={`${props.className} btn-primary ${!props.disabled && "btn-primary--enabled"}
 				`}
-			type={props.type ? props.type : 'submit'}
+			type={props.type ? props.type : "submit"}
 			variant="contained"
 			onClick={props.onClick}
 			disabled={props.disabled}
@@ -59,7 +56,7 @@ interface BUploadProps {
  * @param {string} props.onChange` onChange event handler
  * @param {string} props.accept specify which type of files to accept eg:- `png` `jpg`
  */
-export const BUpload: FC<BUploadProps> = props => {
+export const BUpload: FC<BUploadProps> = (props) => {
 	return (
 		<Button
 			variant="contained"

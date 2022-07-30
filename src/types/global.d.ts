@@ -175,7 +175,7 @@ declare global {
 		name: string;
 		email: string;
 		phone: string;
-		status: 'Pending' | 'In Progress' | 'Completed';
+		status: "Pending" | "In Progress" | "Completed";
 		subject: string;
 		message: string;
 	}
