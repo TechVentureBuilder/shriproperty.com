@@ -75,6 +75,15 @@
 		"@typescript-eslint/quotes": ["error", "double"],
 		"react-hooks/exhaustive-deps": "warn",
 		"@typescript-eslint/explicit-function-return-type": "off",
+		"react/boolean-prop-naming": "error",
+		"react/hook-use-state": "error",
+		"react/no-access-state-in-setstate": "error",
+		"react/no-children-prop": "error",
+		"react/no-unknown-property": "error",
+		"react/no-unused-prop-types": "error",
+		"react/no-unused-state": "error",
+		"react/prop-types": "error",
+		"react/require-default-props": "error",
 		"prettier/prettier": [
 			"error",
 			{
