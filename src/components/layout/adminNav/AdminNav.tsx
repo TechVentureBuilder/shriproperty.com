@@ -15,8 +15,8 @@ const AdminNav: FC = () => {
 				<BPrimary title="Users" className="admin-page__button" />
 			</Link>
 
-			<Link to={`${process.env.REACT_APP_ADMIN_ROUTE}/temp-users`}>
-				<BPrimary title="Temporary Users" className="admin-page__button" />
+			<Link to={`${process.env.REACT_APP_ADMIN_ROUTE}/guests`}>
+				<BPrimary title="Guests" className="admin-page__button" />
 			</Link>
 
 			<Link to={`${process.env.REACT_APP_ADMIN_ROUTE}/contacts`}>

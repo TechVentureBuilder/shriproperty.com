@@ -44,7 +44,7 @@ const TempUsers = () => {
 
 	useEffect(() => {
 		setSubmit(false);
-		getRequest("/temp-users/all").then((data: any) => {
+		getRequest("/guests/all").then((data: any) => {
 			// sort data.data by date
 
 			data.data.sort(
@@ -69,7 +69,7 @@ const TempUsers = () => {
 		return (e: FormEvent) => {
 			e.preventDefault();
 
-			patchRequest(`/temp-users/update-calling-status/${id}`, {
+			patchRequest(`/guests/update-calling-status/${id}`, {
 				callingStatus,
 				talkProgress,
 				// set data to null if there is no date
@@ -93,7 +93,7 @@ const TempUsers = () => {
 		return (e: FormEvent) => {
 			e.preventDefault();
 
-			deleteRequest(`/temp-users/delete/${id}`).then((data: any) => {
+			deleteRequest(`/guests/delete/${id}`).then((data: any) => {
 				if (data.success === false) {
 					setErrorMessage(data.message);
 					return setOpenError(true);

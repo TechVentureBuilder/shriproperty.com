@@ -41,7 +41,7 @@ const Property: FC<PropertyProps> = ({ propertyOtpModelOpened, setPropertyOtpMod
 
 	useEffect(() => {
 		// Verify token
-		get("/temp-users/verify").catch(() => {
+		get("/guests/verify").catch(() => {
 			if (!propertyOtpModelOpened) {
 				setTimeout(() => {
 					setModal(true);
@@ -124,7 +124,7 @@ const Property: FC<PropertyProps> = ({ propertyOtpModelOpened, setPropertyOtpMod
 		// if otp is valid than create new user
 		if (verifyOtpResponse.success) {
 			const newUserResponse = (await postRequest(
-				"/temp-users/add",
+				"/guests/add",
 				{
 					name,
 					email,

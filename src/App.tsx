@@ -73,7 +73,7 @@ const AdminRoutes: FC = () => {
 			<Routes>
 				<Route path="/" element={<Admin />} />
 
-				<Route path="temp-users" element={<TempUsers />} />
+				<Route path="guests" element={<TempUsers />} />
 
 				<Route path="property/add" element={<AddProperty />} />
 
