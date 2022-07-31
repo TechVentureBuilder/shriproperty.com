@@ -122,24 +122,21 @@ const Listing: FC = () => {
 	};
 
 	/**
-	 * Approve Listing
-	 * @param {string} id id of listing which is to be approved
+	 * Approve current Listing
 	 */
-	const approveHandler = () => {
-		return (e: FormEvent) => {
-			e.preventDefault();
+	const approveHandler = (e: FormEvent) => {
+		e.preventDefault();
 
-			putRequest(`/listings/approve/${property._id}`).then((data: any) => {
-				if (data.success) {
-					setSuccessMessage(data.message);
-					setOpenSuccess(true);
-					navigate(`${process.env.REACT_APP_ADMIN_ROUTE}/listings`);
-				} else {
-					setErrorMessage(data.message);
-					setOpenError(true);
-				}
-			});
-		};
+		putRequest(`/listings/approve/${property._id}`).then((data: any) => {
+			if (data.success) {
+				setSuccessMessage(data.message);
+				setOpenSuccess(true);
+				navigate(`${process.env.REACT_APP_ADMIN_ROUTE}/listings`);
+			} else {
+				setErrorMessage(data.message);
+				setOpenError(true);
+			}
+		});
 	};
 
 	/**
@@ -1407,7 +1404,7 @@ const Listing: FC = () => {
 						title="Approve"
 						className="admin-property-form__submit-btn"
 						loading={loading}
-						onClick={approveHandler(property._id)}
+						onClick={approveHandler}
 					/>
 
 					<BPrimary
