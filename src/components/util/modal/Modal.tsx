@@ -1,35 +1,51 @@
-import ModalFromMui from '@mui/material/Modal/Modal';
-import { FC } from 'react';
+import ModalFromMui from "@mui/material/Modal/Modal";
+import { FC } from "react";
 
-import './modal.scss';
+import "./modal.scss";
 
 interface ModalProps {
+	/**
+	 * Content to show inside modal
+	 *
+	 * @type {(string | JSX.Element)}
+	 */
 	children: string | JSX.Element;
+
+	/**
+	 * If modal should be open or not
+	 *
+	 * @type {boolean}
+	 */
 	open: boolean;
+
+	/**
+	 * This function will be executed every time modal is closed
+	 * If this function is node defined than user can't close modal
+	 */
 	onClose?(): any;
+
+	/**
+	 * Additional class names for styling
+	 *
+	 * @type {string}
+	 */
 	className?: string;
 }
 
 /**
- * Modal component
- * @param {{}} props Props
- * @param {any} props.children children
- * @param {boolean} props.open open state if `true` modal will open otherwise it will be closed
- * @param {string} props.onClose this function will run when clicked on body outside modal
- * @param {string} props.className additional classNames for extra styling
+ * This component renders a modal
  */
-const Modal: FC<ModalProps> = props => {
+const Modal: FC<ModalProps> = ({ open, onClose, className, children }) => {
 	return (
-		<ModalFromMui
-			className="modal"
-			open={props.open}
-			onClose={props.onClose}
-		>
-			<div className={`modal__content ${props.className}`}>
-				{props.children}
-			</div>
+		<ModalFromMui className="modal" open={open} onClose={onClose}>
+			<div className={`modal__content ${className}`}>{children}</div>
 		</ModalFromMui>
 	);
+};
+
+Modal.defaultProps = {
+	className: "",
+	onClose: () => {},
 };
 
 export default Modal;

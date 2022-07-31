@@ -5,67 +5,146 @@ import "./button.scss";
 
 type ButtonTypes = "submit" | "reset" | "button";
 
+/* --------------------------------- ANCHOR Button Primary --------------------------------- */
+
 interface BPrimaryProps {
+	/**
+	 * Text/Component to show on button
+	 *
+	 * @type {(string | JSX.Element)}
+	 */
 	title: string | JSX.Element;
+
+	/**
+	 * Additional class names for styling
+	 *
+	 * @type {string}
+	 */
 	className?: string;
+
+	/**
+	 * This prop defines that what type of styling should button have
+	 *
+	 * @type {ButtonTypes}
+	 */
 	type?: ButtonTypes;
+
+	/**
+	 * This prop defines if shows loading indicator or not
+	 *
+	 * @type {boolean}
+	 */
 	loading?: boolean;
+
+	/**
+	 * This prop defines inline style for button
+	 *
+	 * @type {ObjectWithAnyKeys}
+	 */
 	style?: ObjectWithAnyKeys;
+
+	/**
+	 * This function will be executed every time button is clicked
+	 *
+	 * @type {*}
+	 */
 	onClick?: any;
+
+	/**
+	 * This prop defines if button should be disabled or not
+	 *
+	 * @type {boolean}
+	 */
 	disabled?: boolean;
 }
 
 /**
- * Button primary component
- * @param {{}} props props
- * @param {string} props.title text to show on button
- * @param {string} props.className additional classNames to add to button
- * @param {string} props.type type of button eg-submit
- * @param {boolean} props.loading if true button will show loading indicator
- * @param {string} props.style type of style eg-padding: '0'
- * @param {Function} props.onClick function to call on click
+ * This component renders a primary button with primary color background
  */
-export const BPrimary: FC<BPrimaryProps> = (props) => {
+export const BPrimary: FC<BPrimaryProps> = ({
+	title,
+	className,
+	style,
+	type,
+	disabled,
+	loading,
+	onClick,
+}) => {
 	return (
 		<Button
-			style={props.style}
-			className={`${props.className} btn-primary ${!props.disabled && "btn-primary--enabled"}
+			style={style}
+			className={`${className} btn-primary ${!disabled && "btn-primary--enabled"}
 				`}
-			type={props.type ? props.type : "submit"}
+			type={type ? type : "submit"}
 			variant="contained"
-			onClick={props.onClick}
-			disabled={props.disabled}
+			onClick={onClick}
+			disabled={disabled}
 		>
-			{props.loading ? <CircularProgress /> : props.title}
+			{loading ? <CircularProgress /> : title}
 		</Button>
 	);
 };
 
+BPrimary.defaultProps = {
+	className: "",
+	loading: false,
+	disabled: false,
+	type: "submit",
+	style: {},
+	onClick: () => {},
+};
+
+/* --------------------------------- ANCHOR Button Upload --------------------------------- */
+
 interface BUploadProps {
+	/**
+	 * Text/Component to show on button
+	 *
+	 * @type {string}
+	 */
 	title: string;
+
+	/**
+	 * Additional class names for styling
+	 *
+	 * @type {string}
+	 */
 	className?: string;
+
+	/**
+	 * What type of files should be uploaded
+	 *
+	 * @type {string}
+	 */
 	accept: string;
+
+	/**
+	 * This function will be executed every time
+	 *  new file is uploaded to this button
+	 *
+	 * @type {*}
+	 */
 	onChange?: any;
 }
 
 /**
- * Button to upload files
- * @param {{}} props Props
- * @param {string} props.title text to show on button
- * @param {string} props.className additional classNames to add to button
- * @param {string} props.onChange` onChange event handler
- * @param {string} props.accept specify which type of files to accept eg:- `png` `jpg`
+ * This component renders a upload button
  */
-export const BUpload: FC<BUploadProps> = (props) => {
+export const BUpload: FC<BUploadProps> = ({ title, className, onChange, accept }) => {
 	return (
 		<Button
 			variant="contained"
 			component="label"
-			className={`${props.className} btn-primary btn-primary--enabled`}
-			onChange={props.onChange}
+			className={`${className} btn-primary btn-primary--enabled`}
+			onChange={onChange}
 		>
-			{props.title}
-			<input type="file" multiple hidden accept={props.accept} />
+			{title}
+			<input type="file" multiple hidden accept={accept} />
 		</Button>
 	);
+};
+
+BUpload.defaultProps = {
+	className: "",
+	onChange: () => {},
 };

@@ -1,31 +1,54 @@
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
-import './input.scss';
-import { FC } from 'react';
+import "./input.scss";
+import { FC } from "react";
 
 interface CheckBoxProps {
+	/**
+	 * Text to show with checkbox
+	 *
+	 * @type {string}
+	 */
 	label: string;
+
+	/**
+	 * Additional class names for styling
+	 *
+	 * @type {string}
+	 */
 	className?: string;
+
+	/**
+	 * This function will be executed every time checkbox is checked or unchecked
+	 *
+	 * @param {*} event
+	 */
 	onChange(event: any): any;
+
+	/**
+	 * This prop defines if checkbox should be checked or not
+	 *
+	 * @type {boolean}
+	 */
 	checked?: boolean;
 }
 
 /**
  * Check Box with label
- * @param {{}} props Props
- * @param {string} props.label  The label of the input
- * @param {string} props.className  The name of the input
- * @param {string} props.onChange The function to be called when the check box is checked or unchecked
- * @param {boolean} props.checked  If `true` the checkbox will be checked
  */
-export const CheckBox: FC<CheckBoxProps> = props => {
+export const CheckBox: FC<CheckBoxProps> = ({ checked, onChange, label, className }) => {
 	return (
 		<FormControlLabel
-			checked={props.checked}
-			control={<Checkbox onChange={props.onChange} />}
-			label={props.label}
-			className={`${props.className} checkbox`}
+			checked={checked}
+			control={<Checkbox onChange={onChange} />}
+			label={label}
+			className={`${className} checkbox`}
 		/>
 	);
+};
+
+CheckBox.defaultProps = {
+	className: "",
+	checked: false,
 };
