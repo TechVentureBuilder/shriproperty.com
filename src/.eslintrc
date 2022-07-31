@@ -44,7 +44,7 @@
 		"linebreak-style": "off",
 		"react/destructuring-assignment": "error",
 		"object-curly-spacing": "off",
-		"indent": ["error", "tab"],
+		"indent": "off",
 		"jsx-quotes": ["error", "prefer-double"],
 		"no-tabs": "off",
 		"space-infix-ops": "off",
