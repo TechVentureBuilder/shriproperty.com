@@ -1,32 +1,32 @@
-import { useState, useEffect, FormEvent } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import DoneIcon from '@mui/icons-material/Done';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { useState, useEffect, FormEvent } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import DoneIcon from "@mui/icons-material/Done";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-import { AError } from '../../../components/util/alert/Alert';
-import getRequest from '../../../api/get';
-import { patchRequest } from '../../../api/patch';
-import { TextField } from '@mui/material';
-import { BPrimary } from '../../../components/util/button/Button';
-import deleteRequest from '../../../api/delete';
-import './tempUsers.scss';
-import { Helmet } from 'react-helmet-async';
-import useFormatDate from '../../../hooks/useFormatDate';
+import { AError } from "../../../components/util/alert/Alert";
+import getRequest from "../../../api/get";
+import { patchRequest } from "../../../api/patch";
+import { TextField } from "@mui/material";
+import { BPrimary } from "../../../components/util/button/Button";
+import deleteRequest from "../../../api/delete";
+import "./tempUsers.scss";
+import { Helmet } from "react-helmet-async";
+import useFormatDate from "../../../hooks/useFormatDate";
 
 interface TempUser {
 	_id: string;
 	name: string;
 	email: string;
 	phone: string;
-	callingStatus: 'Pending' | 'Rejected' | 'Call Again' | 'Done';
+	callingStatus: "Pending" | "Rejected" | "Call Again" | "Done";
 	callAgainDate: string;
 	talkProgress: string;
 	createdAt: string;
@@ -35,30 +35,26 @@ interface TempUser {
 const TempUsers = () => {
 	const formatDate = useFormatDate();
 	const [response, setResponse] = useState<TempUser[]>([]);
-	const [callingStatus, setCallingStatus] = useState('');
-	const [callAgainDate, setCallAgainDate] = useState('');
-	const [talkProgress, setTalkProgress] = useState('');
-	const [errorMessage, setErrorMessage] = useState('');
+	const [callingStatus, setCallingStatus] = useState("");
+	const [callAgainDate, setCallAgainDate] = useState("");
+	const [talkProgress, setTalkProgress] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
 	const [openError, setOpenError] = useState(false);
 	const [submit, setSubmit] = useState(false);
 
 	useEffect(() => {
 		setSubmit(false);
-		getRequest('/temp-users/all').then((data: any) => {
+		getRequest("/temp-users/all").then((data: any) => {
 			// sort data.data by date
 
 			data.data.sort(
 				(a: TempUser, b: TempUser) =>
-					+new Date(a.callAgainDate) - +new Date(b.callAgainDate)
+					+new Date(a.callAgainDate) - +new Date(b.callAgainDate),
 			);
 
 			// sort data.data by status
 			data.data.sort((a: TempUser, b: TempUser) =>
-				a.callingStatus > b.callingStatus
-					? 1
-					: b.callingStatus > a.callingStatus
-					? -1
-					: 0
+				a.callingStatus > b.callingStatus ? 1 : b.callingStatus > a.callingStatus ? -1 : 0,
 			);
 
 			setResponse(data.data);
@@ -114,11 +110,7 @@ const TempUsers = () => {
 				<meta name="robots" content="noindex" />
 			</Helmet>
 
-			<AError
-				title={errorMessage}
-				open={openError}
-				setOpen={setOpenError}
-			/>
+			<AError title={errorMessage} open={openError} setOpen={setOpenError} />
 
 			<Table className="user-table">
 				<TableHead>
@@ -162,55 +154,30 @@ const TempUsers = () => {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{response.map(user => (
+					{response.map((user) => (
 						<TableRow key={user._id}>
-							<TableCell
-								className="user-table__cell"
-								align="right"
-							>
+							<TableCell className="user-table__cell" align="right">
 								{user.name}
 							</TableCell>
-							<TableCell
-								className="user-table__cell"
-								align="right"
-							>
+							<TableCell className="user-table__cell" align="right">
 								{user.email}
 							</TableCell>
-							<TableCell
-								className="user-table__cell"
-								align="right"
-							>
+							<TableCell className="user-table__cell" align="right">
 								{user.phone}
 							</TableCell>
-							<TableCell
-								className="user-table__cell"
-								align="right"
-							>
+							<TableCell className="user-table__cell" align="right">
 								{formatDate(user.createdAt)}
 							</TableCell>
-							<TableCell
-								className="user-table__cell"
-								align="right"
-							>
+							<TableCell className="user-table__cell" align="right">
 								{user.callingStatus}
 							</TableCell>
-							<TableCell
-								className="user-table__cell"
-								align="right"
-							>
+							<TableCell className="user-table__cell" align="right">
 								{formatDate(user.callAgainDate)}
 							</TableCell>
-							<TableCell
-								className="user-table__cell"
-								align="right"
-								width="20%"
-							>
+							<TableCell className="user-table__cell" align="right" width="20%">
 								{user.talkProgress}
 							</TableCell>
-							<TableCell
-								className="user-table__cell"
-								align="right"
-							>
+							<TableCell className="user-table__cell" align="right">
 								<FormControl sx={{ m: 1, minWidth: 80 }}>
 									<InputLabel>Update Call Status</InputLabel>
 									<Select
@@ -218,70 +185,40 @@ const TempUsers = () => {
 										id="demo-simple-select"
 										value={callingStatus}
 										label="Update Call Status"
-										onChange={e =>
-											setCallingStatus(e.target.value)
-										}
+										onChange={(e) => setCallingStatus(e.target.value)}
 									>
-										<MenuItem value="Pending">
-											Pending
-										</MenuItem>
+										<MenuItem value="Pending">Pending</MenuItem>
 										<MenuItem value="Done">Done</MenuItem>
-										<MenuItem value="Rejected">
-											Rejected
-										</MenuItem>
-										<MenuItem value="Call Again">
-											Call Again
-										</MenuItem>
+										<MenuItem value="Rejected">Rejected</MenuItem>
+										<MenuItem value="Call Again">Call Again</MenuItem>
 									</Select>
 								</FormControl>
 							</TableCell>
 
-							<TableCell
-								align="right"
-								className="user-table__cell"
-							>
+							<TableCell align="right" className="user-table__cell">
 								<input
 									type="date"
-									onChange={e =>
-										setCallAgainDate(e.target.value)
-									}
+									onChange={(e) => setCallAgainDate(e.target.value)}
 								/>
 							</TableCell>
-							<TableCell
-								className="user-table__cell"
-								align="right"
-							>
+							<TableCell className="user-table__cell" align="right">
 								<TextField
 									multiline
 									label="Talk Progress"
 									value={talkProgress}
-									onChange={e =>
-										setTalkProgress(e.target.value)
-									}
+									onChange={(e) => setTalkProgress(e.target.value)}
 								/>
 							</TableCell>
 
-							<TableCell
-								className="user-table__cell"
-								align="right"
-							>
+							<TableCell className="user-table__cell" align="right">
 								<form onSubmit={updateHandler(user._id)}>
-									<BPrimary
-										type="submit"
-										title={<DoneIcon />}
-									/>
+									<BPrimary type="submit" title={<DoneIcon />} />
 								</form>
 							</TableCell>
 
-							<TableCell
-								className="user-table__cell"
-								align="right"
-							>
+							<TableCell className="user-table__cell" align="right">
 								<form onSubmit={deleteHandler(user._id)}>
-									<BPrimary
-										type="submit"
-										title={<DeleteIcon />}
-									/>
+									<BPrimary type="submit" title={<DeleteIcon />} />
 								</form>
 							</TableCell>
 						</TableRow>

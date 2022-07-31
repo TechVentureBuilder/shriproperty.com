@@ -1,52 +1,52 @@
-import { useState, useContext, FC, FormEvent, ChangeEvent } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { TextField } from '@mui/material';
-import { BPrimary } from '../../../components/util/button/Button';
-import postRequest from '../../../api/post';
-import { SPrimary } from '../../../components/util/typography/Typography';
-import { AError } from '../../../components/util/alert/Alert';
-import Modal from '../../../components/util/modal/Modal';
-import { AuthFormSubmitContext } from '../../../helpers/Context';
+import { useState, useContext, FC, FormEvent, ChangeEvent } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { TextField } from "@mui/material";
+import { BPrimary } from "../../../components/util/button/Button";
+import postRequest from "../../../api/post";
+import { SPrimary } from "../../../components/util/typography/Typography";
+import { AError } from "../../../components/util/alert/Alert";
+import Modal from "../../../components/util/modal/Modal";
+import { AuthFormSubmitContext } from "../../../helpers/Context";
 
-import './signup.scss';
-import { Helmet } from 'react-helmet-async';
+import "./signup.scss";
+import { Helmet } from "react-helmet-async";
 
 const Signup: FC = () => {
 	const navigate = useNavigate();
 	const { setAuthFormSubmit } = useContext(AuthFormSubmitContext);
 
 	const [user, setUser] = useState({
-		name: 'Your Name',
-		email: 'example@gmail.com',
-		phone: '123456789',
-		password: '',
-		cpassword: '',
+		name: "Your Name",
+		email: "example@gmail.com",
+		phone: "123456789",
+		password: "",
+		cpassword: "",
 	});
 
 	const [errorOpen, setErrorOpen] = useState(false);
-	const [errorMessage, setErrorMessage] = useState('');
+	const [errorMessage, setErrorMessage] = useState("");
 	const [verifyOtpModel, setVerifyOtpModel] = useState(false);
 	const [errorVerifyModalOpen, setErrorVerifyModalOpen] = useState(false);
-	const [errorVerifyModalMessage, setErrorVerifyModalMessage] = useState('');
-	const [otp, setOtp] = useState('');
+	const [errorVerifyModalMessage, setErrorVerifyModalMessage] = useState("");
+	const [otp, setOtp] = useState("");
 	const [btnLoading, setBtnLoading] = useState(false);
 
 	const sendOtpHandler = async (e: FormEvent) => {
 		e.preventDefault();
 
 		if (user.password !== user.cpassword) {
-			setErrorMessage('Password and Confirm Password does not match');
+			setErrorMessage("Password and Confirm Password does not match");
 			return setErrorOpen(true);
 		}
 
 		setBtnLoading(true);
 
 		const res = (await postRequest(
-			'/otp/send',
+			"/otp/send",
 			{
 				email: user.email,
 			},
-			false
+			false,
 		)) as ApiResponse;
 
 		setBtnLoading(false);
@@ -62,23 +62,19 @@ const Signup: FC = () => {
 		e.preventDefault();
 
 		const res = (await postRequest(
-			'/otp/verify',
+			"/otp/verify",
 			{
 				email: user.email,
 				otp,
 			},
-			false
+			false,
 		)) as ApiResponse;
 
 		if (res.success) {
-			const signupRes = (await postRequest(
-				'/auth/signup',
-				user,
-				false
-			)) as ApiResponse;
+			const signupRes = (await postRequest("/auth/signup", user, false)) as ApiResponse;
 			setAuthFormSubmit(true);
 
-			if (signupRes.success) navigate('/');
+			if (signupRes.success) navigate("/");
 			else {
 				setErrorMessage(signupRes.message);
 				setVerifyOtpModel(false);
@@ -118,10 +114,7 @@ const Signup: FC = () => {
 			</Helmet>
 
 			<Modal open={verifyOtpModel} className="model">
-				<form
-					className="signup-section__modal"
-					onSubmit={verifyOtpHandler}
-				>
+				<form className="signup-section__modal" onSubmit={verifyOtpHandler}>
 					<h2>Verify Otp</h2>
 					<SPrimary title="Please check your email" />
 
@@ -136,17 +129,13 @@ const Signup: FC = () => {
 						type="number"
 						variant="outlined"
 						className="model-form__input"
-						onChange={e => setOtp(e.target.value)}
+						onChange={(e) => setOtp(e.target.value)}
 						fullWidth
 					/>
 
 					<span onClick={sendOtpHandler}>Resend OTP</span>
 
-					<BPrimary
-						title="Verify"
-						type="submit"
-						loading={btnLoading}
-					/>
+					<BPrimary title="Verify" type="submit" loading={btnLoading} />
 				</form>
 			</Modal>
 
@@ -157,15 +146,8 @@ const Signup: FC = () => {
 					className="signup-section__image"
 				/>
 
-				<form
-					className="signup-section__form"
-					onSubmit={sendOtpHandler}
-				>
-					<AError
-						title={errorMessage}
-						open={errorOpen}
-						setOpen={setErrorOpen}
-					/>
+				<form className="signup-section__form" onSubmit={sendOtpHandler}>
+					<AError title={errorMessage} open={errorOpen} setOpen={setErrorOpen} />
 
 					<TextField
 						className="signup-section__input"

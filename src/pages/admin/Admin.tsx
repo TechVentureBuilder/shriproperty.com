@@ -1,47 +1,37 @@
-import { useState, useEffect, FC, FormEvent } from 'react';
-import { Link } from 'react-router-dom';
-import getRequest from '../../api/get';
-import deleteRequest from '../../api/delete';
-import { BPrimary } from '../../components/util/button/Button';
-import {
-	HPrimary,
-	SSecondary,
-} from '../../components/util/typography/Typography';
-import { AError, ASuccess } from '../../components/util/alert/Alert';
-import Modal from '../../components/util/modal/Modal';
-import Loader from '../../components/util/loader/Loader';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import ClearIcon from '@mui/icons-material/Clear';
+import { useState, useEffect, FC, FormEvent } from "react";
+import { Link } from "react-router-dom";
+import getRequest from "../../api/get";
+import deleteRequest from "../../api/delete";
+import { BPrimary } from "../../components/util/button/Button";
+import { HPrimary, SSecondary } from "../../components/util/typography/Typography";
+import { AError, ASuccess } from "../../components/util/alert/Alert";
+import Modal from "../../components/util/modal/Modal";
+import Loader from "../../components/util/loader/Loader";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import ClearIcon from "@mui/icons-material/Clear";
 
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
-import {
-	Table,
-	TableRow,
-	TableBody,
-	TableCell,
-	TableHead,
-	TextField,
-} from '@mui/material';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+// import Box from "@mui/material/Box";
+// import Slider from "@mui/material/Slider";
+import { Table, TableRow, TableBody, TableCell, TableHead, TextField } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
-import './admin.scss';
-import { Helmet } from 'react-helmet-async';
+import "./admin.scss";
+import { Helmet } from "react-helmet-async";
 
 const AdminPage: FC = () => {
 	const [response, setResponse] = useState<ApiResponse>({});
 	const [openModal, setOpenModal] = useState(false);
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [propertyLoading, setPropertyLoading] = useState(true);
-	const [errorMessage, setErrorMessage] = useState('');
+	const [errorMessage, setErrorMessage] = useState("");
 	const [openError, setOpenError] = useState(false);
-	const [successMessage, setSuccessMessage] = useState('');
+	const [successMessage, setSuccessMessage] = useState("");
 	const [openSuccess, setOpenSuccess] = useState(false);
-	const [sliderValue, setSliderValue] = useState(0);
+	// const [sliderValue, setSliderValue] = useState(0);
 	const [submit, setSubmit] = useState(false);
 
 	const [filters, setFilters] = useState<Filters>({});
@@ -54,8 +44,8 @@ const AdminPage: FC = () => {
 				filters.category && `&category=${filters.category}`
 			}${filters.featured && `&featured=${filters.featured}`}${
 				filters.price && `&price=0,${filters.price}`
-			}${filters.title && `&title=${filters.title}`}`
-		).then(data => {
+			}${filters.title && `&title=${filters.title}`}`,
+		).then((data) => {
 			setResponse(data);
 			setPropertyLoading(false);
 			setSubmit(false);
@@ -95,8 +85,7 @@ const AdminPage: FC = () => {
 				label="Search"
 				variant="outlined"
 				onKeyUp={(e: any) =>
-					e.key === 'Enter' &&
-					setFilters({ ...filters, title: e.target.value })
+					e.key === "Enter" && setFilters({ ...filters, title: e.target.value })
 				}
 			/>
 
@@ -128,7 +117,7 @@ const AdminPage: FC = () => {
 							required
 							label="Type"
 							value={filters.featured}
-							onChange={e =>
+							onChange={(e) =>
 								setFilters({
 									...filters,
 									featured: e.target.value,
@@ -142,7 +131,7 @@ const AdminPage: FC = () => {
 
 					<BPrimary
 						title={<ClearIcon />}
-						onClick={() => setFilters({ ...filters, featured: '' })}
+						onClick={() => setFilters({ ...filters, featured: "" })}
 					/>
 				</div>
 
@@ -153,7 +142,7 @@ const AdminPage: FC = () => {
 							required
 							label="Type"
 							value={filters.type}
-							onChange={e =>
+							onChange={(e) =>
 								setFilters({
 									...filters,
 									type: e.target.value,
@@ -168,7 +157,7 @@ const AdminPage: FC = () => {
 
 					<BPrimary
 						title={<ClearIcon />}
-						onClick={() => setFilters({ ...filters, type: '' })}
+						onClick={() => setFilters({ ...filters, type: "" })}
 					/>
 				</div>
 
@@ -179,23 +168,17 @@ const AdminPage: FC = () => {
 							required
 							label="category"
 							value={filters.category}
-							onChange={e =>
+							onChange={(e) =>
 								setFilters({
 									...filters,
 									category: e.target.value,
 								})
 							}
 						>
-							<MenuItem value="Residential Apartment">
-								Residential Apartment
-							</MenuItem>
-							<MenuItem value="Commercial Office">
-								Commercial Plot
-							</MenuItem>
+							<MenuItem value="Residential Apartment">Residential Apartment</MenuItem>
+							<MenuItem value="Commercial Office">Commercial Plot</MenuItem>
 
-							<MenuItem value="Serviced Apartments">
-								Serviced Apartments
-							</MenuItem>
+							<MenuItem value="Serviced Apartments">Serviced Apartments</MenuItem>
 
 							<MenuItem value="1 RK/ Studio Apartment">
 								1 RK/ Studio Apartment
@@ -211,7 +194,7 @@ const AdminPage: FC = () => {
 
 					<BPrimary
 						title={<ClearIcon />}
-						onClick={() => setFilters({ ...filters, category: '' })}
+						onClick={() => setFilters({ ...filters, category: "" })}
 					/>
 				</div>
 
@@ -246,45 +229,25 @@ const AdminPage: FC = () => {
 					<Table className="admin-page__table">
 						<TableHead>
 							<TableRow>
-								<TableCell className="contact-table__cell">
-									Title
-								</TableCell>
+								<TableCell className="contact-table__cell">Title</TableCell>
 
-								<TableCell className="contact-table__cell">
-									Type
-								</TableCell>
+								<TableCell className="contact-table__cell">Type</TableCell>
 
-								<TableCell className="contact-table__cell">
-									Address
-								</TableCell>
+								<TableCell className="contact-table__cell">Address</TableCell>
 
-								<TableCell className="contact-table__cell">
-									Locality
-								</TableCell>
+								<TableCell className="contact-table__cell">Locality</TableCell>
 
-								<TableCell className="contact-table__cell">
-									Price
-								</TableCell>
+								<TableCell className="contact-table__cell">Price</TableCell>
 
-								<TableCell className="contact-table__cell">
-									Special Price
-								</TableCell>
+								<TableCell className="contact-table__cell">Special Price</TableCell>
 
-								<TableCell className="contact-table__cell">
-									Owner
-								</TableCell>
+								<TableCell className="contact-table__cell">Owner</TableCell>
 
-								<TableCell className="contact-table__cell">
-									Owner Contact
-								</TableCell>
+								<TableCell className="contact-table__cell">Owner Contact</TableCell>
 
-								<TableCell className="contact-table__cell">
-									Delete
-								</TableCell>
+								<TableCell className="contact-table__cell">Delete</TableCell>
 
-								<TableCell className="contact-table__cell">
-									Update
-								</TableCell>
+								<TableCell className="contact-table__cell">Update</TableCell>
 							</TableRow>
 						</TableHead>
 
@@ -314,7 +277,7 @@ const AdminPage: FC = () => {
 
 									<TableCell
 										className={`contact-table__cell ${
-											item.location && 'table_address'
+											item.location && "table_address"
 										}`}
 									>
 										{item.location && (
@@ -334,7 +297,7 @@ const AdminPage: FC = () => {
 									</TableCell>
 
 									<TableCell className="contact-table__cell">
-										{item.locality || '---'}
+										{item.locality || "---"}
 									</TableCell>
 
 									<TableCell className="contact-table__cell">
@@ -366,9 +329,7 @@ const AdminPage: FC = () => {
 										>
 											<BPrimary
 												title={<EditIcon />}
-												onClick={() =>
-													setOpenModal(true)
-												}
+												onClick={() => setOpenModal(true)}
 											/>
 										</Link>
 									</TableCell>

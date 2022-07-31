@@ -1,8 +1,8 @@
-import { FC } from 'react';
-import { Link } from 'react-router-dom';
-import { BPrimary } from '../../../../components/util/button/Button';
+import { FC } from "react";
+import { Link } from "react-router-dom";
+import { BPrimary } from "../../../../components/util/button/Button";
 
-import './hero.scss';
+import "./hero.scss";
 
 const Hero: FC = () => {
 	return (
@@ -12,9 +12,8 @@ const Hero: FC = () => {
 			</div>
 
 			<p className="hero-section__para">
-				We are recognized for exceeding client expectations and
-				delivering great results through dedication, ease of process,
-				and extraordinary services.
+				We are recognized for exceeding client expectations and delivering great results
+				through dedication, ease of process, and extraordinary services.
 			</p>
 
 			<Link to="/properties" className="hero-section__link">

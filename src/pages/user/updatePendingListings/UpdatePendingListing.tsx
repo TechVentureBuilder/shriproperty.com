@@ -1,25 +1,22 @@
 /* eslint-disable array-callback-return */
-import { useState, useEffect, useContext, FC, FormEvent } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { BPrimary, BUpload } from '../../../components/util/button/Button';
-import { ASuccess, AError } from '../../../components/util/alert/Alert';
-import Loader from '../../../components/util/loader/Loader';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { useState, useEffect, useContext, FC, FormEvent } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { BPrimary, BUpload } from "../../../components/util/button/Button";
+import { ASuccess, AError } from "../../../components/util/alert/Alert";
+import Loader from "../../../components/util/loader/Loader";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-import { patchFile } from '../../../api/patch';
-import deleteRequest from '../../../api/delete';
-import { CheckBox } from '../../../components/util/input/Input';
-import { Helmet } from 'react-helmet-async';
-import { UserContext } from '../../../helpers/Context';
-import {
-	fakeFurnishingDetails,
-	fakeListing,
-} from '../../../helpers/fakeData';
+import { patchFile } from "../../../api/patch";
+import deleteRequest from "../../../api/delete";
+import { CheckBox } from "../../../components/util/input/Input";
+import { Helmet } from "react-helmet-async";
+import { UserContext } from "../../../helpers/Context";
+import { fakeFurnishingDetails, fakeListing } from "../../../helpers/fakeData";
 
 //NOTE Sass is coming from form.scss file in ../form folder
 
@@ -31,9 +28,7 @@ const UpdatePendingListing: FC = () => {
 	/* --------------------------------- ANCHOR States --------------------------------- */
 
 	const [listing, setListing] = useState<any>(fakeListing);
-	const [otherFeatures, setOtherFeatures] = useState<
-		Listing['otherFeatures']
-	>([]);
+	const [otherFeatures, setOtherFeatures] = useState<Listing["otherFeatures"]>([]);
 	const [furnishingDetails, setFurnishingDetails] =
 		useState<FurnishingDetails>(fakeFurnishingDetails);
 	const [facilities, setFacilities] = useState<string[]>([]);
@@ -43,8 +38,8 @@ const UpdatePendingListing: FC = () => {
 
 	const [openSuccess, setOpenSuccess] = useState(false);
 	const [openError, setOpenError] = useState(false);
-	const [successMessage, setSuccessMessage] = useState('');
-	const [errorMessage, setErrorMessage] = useState('');
+	const [successMessage, setSuccessMessage] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const [loading, setLoading] = useState(false);
 	const [loadingPage, setLoadingPage] = useState(true);
@@ -52,12 +47,10 @@ const UpdatePendingListing: FC = () => {
 	/* ------------------------------- ANCHOR Use Effect ------------------------------- */
 	useEffect(() => {
 		if (user.loaded) {
-			const listingFromUser = user.data.listings.find(
-				listing => listing._id === id
-			);
+			const listingFromUser = user.data.listings.find((listing) => listing._id === id);
 
 			if (!listingFromUser) {
-				navigate('/404');
+				navigate("/404");
 			}
 
 			if (listingFromUser) {
@@ -65,11 +58,8 @@ const UpdatePendingListing: FC = () => {
 				setOtherFeatures(listingFromUser?.otherFeatures);
 				setFurnishingDetails(listingFromUser?.furnishingDetails);
 
-				listingFromUser.facilities.forEach(facility =>
-					setFacilities(prevState => [
-						...prevState,
-						JSON.stringify(facility),
-					])
+				listingFromUser.facilities.forEach((facility) =>
+					setFacilities((prevState) => [...prevState, JSON.stringify(facility)]),
 				);
 
 				setLoadingPage(false);
@@ -86,49 +76,46 @@ const UpdatePendingListing: FC = () => {
 		setLoading(true);
 
 		// append data to body to send
-		for (let key in listing) {
+		for (const key in listing) {
 			if (
-				key !== '_id' &&
-				key !== '__v' &&
-				key !== 'otherFeatures' &&
-				key !== 'facilities' &&
-				key !== 'furnishingDetails'
+				key !== "_id" &&
+				key !== "__v" &&
+				key !== "otherFeatures" &&
+				key !== "facilities" &&
+				key !== "furnishingDetails"
 			) {
 				body.append(key, listing[key]);
 			}
 		}
 
 		// append image to body in array
-		for (let img in images) {
-			body.append('images', images[img]);
+		for (const img in images) {
+			body.append("images", images[img]);
 		}
 
 		// append video to body
-		for (let video in videos) {
-			body.append('videos', videos[video]);
+		for (const video in videos) {
+			body.append("videos", videos[video]);
 		}
 
 		// append documents to body
-		for (let doc in documents) {
-			body.append('documents', documents[doc]);
+		for (const doc in documents) {
+			body.append("documents", documents[doc]);
 		}
 
 		// append other Features to body
-		for (let feature in otherFeatures) {
-			body.append('otherFeatures', otherFeatures[feature]);
+		for (const feature in otherFeatures) {
+			body.append("otherFeatures", otherFeatures[feature]);
 		}
 
 		body.append(
-			'furnishingDetails',
-			JSON.stringify(furnishingDetails ? furnishingDetails : {})
+			"furnishingDetails",
+			JSON.stringify(furnishingDetails ? furnishingDetails : {}),
 		);
 
 		//  append Facilities to body
-		for (let facility in facilities) {
-			body.append(
-				'facilities',
-				facilities[facility] as unknown as string
-			);
+		for (const facility in facilities) {
+			body.append("facilities", facilities[facility] as unknown as string);
 		}
 
 		// post to server
@@ -138,7 +125,7 @@ const UpdatePendingListing: FC = () => {
 			if (data.success) {
 				setOpenSuccess(true);
 				setSuccessMessage(data.message);
-				navigate('/account');
+				navigate("/account");
 			} else {
 				setOpenError(true);
 				setErrorMessage(data.message);
@@ -146,17 +133,11 @@ const UpdatePendingListing: FC = () => {
 		});
 	};
 
-	const deleteFileHandler = (
-		id: string,
-		type: 'images' | 'videos',
-		key: string
-	) => {
-		return (e: FormEvent) => {
-			deleteRequest(`/listings/delete-file/${id}/${type}/${key}`).then(
-				data => {
-					user.setUpdate(true);
-				}
-			);
+	const deleteFileHandler = (id: string, type: "images" | "videos", key: string) => {
+		return () => {
+			deleteRequest(`/listings/delete-file/${id}/${type}/${key}`).then(() => {
+				user.setUpdate(true);
+			});
 		};
 	};
 
@@ -169,7 +150,7 @@ const UpdatePendingListing: FC = () => {
 	 */
 	const checkboxHandler = (checked: boolean, title: string, icon: string) => {
 		if (checked && !facilities.includes(JSON.stringify({ title, icon }))) {
-			setFacilities(prevState => [
+			setFacilities((prevState) => [
 				...prevState,
 				JSON.stringify({
 					title,
@@ -177,8 +158,8 @@ const UpdatePendingListing: FC = () => {
 				}),
 			]);
 		} else {
-			setFacilities(prevState =>
-				prevState.filter(item => JSON.parse(item).title !== title)
+			setFacilities((prevState) =>
+				prevState.filter((item) => JSON.parse(item).title !== title),
 			);
 		}
 	};
@@ -191,9 +172,7 @@ const UpdatePendingListing: FC = () => {
 	 * `title` The title of the facility
 	 */
 	const facilityChecker = (title: string) => {
-		return facilities.some(
-			facility => JSON.parse(facility).title === title
-		);
+		return facilities.some((facility) => JSON.parse(facility).title === title);
 	};
 
 	/* ---------------------------- ANCHOR Facility Checker ---------------------------- */
@@ -202,30 +181,16 @@ const UpdatePendingListing: FC = () => {
 		<section>
 			<Helmet>
 				<title>Update Pending Listing | Shri Property</title>
-				<link
-					rel="canonical"
-					href="https://shriproperty.com/account/pending-listings/"
-				/>
-				<meta
-					name="description"
-					content="Update your pending Listing"
-				/>
+				<link rel="canonical" href="https://shriproperty.com/account/pending-listings/" />
+				<meta name="description" content="Update your pending Listing" />
 			</Helmet>
 
 			{loadingPage ? (
 				<Loader fullScreen />
 			) : (
 				<form onSubmit={submitHandler} className="admin-property-form">
-					<ASuccess
-						title={successMessage}
-						open={openSuccess}
-						setOpen={setOpenSuccess}
-					/>
-					<AError
-						title={errorMessage}
-						open={openError}
-						setOpen={setOpenError}
-					/>
+					<ASuccess title={successMessage} open={openSuccess} setOpen={setOpenSuccess} />
+					<AError title={errorMessage} open={openError} setOpen={setOpenError} />
 					<TextField
 						className="admin-property-form__input"
 						variant="outlined"
@@ -233,9 +198,7 @@ const UpdatePendingListing: FC = () => {
 						value={listing.title}
 						fullWidth
 						required
-						onChange={e =>
-							setListing({ ...listing, title: e.target.value })
-						}
+						onChange={(e) => setListing({ ...listing, title: e.target.value })}
 					/>
 					<TextField
 						className="admin-property-form__input"
@@ -245,7 +208,7 @@ const UpdatePendingListing: FC = () => {
 						fullWidth
 						required
 						multiline
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								description: e.target.value,
@@ -260,7 +223,7 @@ const UpdatePendingListing: FC = () => {
 						value={listing.address}
 						required
 						fullWidth
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								address: e.target.value,
@@ -275,7 +238,7 @@ const UpdatePendingListing: FC = () => {
 						value={listing.locality}
 						required
 						fullWidth
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								locality: e.target.value,
@@ -290,7 +253,7 @@ const UpdatePendingListing: FC = () => {
 						value={listing.location}
 						helperText="Paste google maps url here"
 						fullWidth
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								location: e.target.value,
@@ -304,9 +267,7 @@ const UpdatePendingListing: FC = () => {
 						value={listing.owner}
 						required
 						fullWidth
-						onChange={e =>
-							setListing({ ...listing, owner: e.target.value })
-						}
+						onChange={(e) => setListing({ ...listing, owner: e.target.value })}
 					/>
 					<TextField
 						className="admin-property-form__input"
@@ -315,7 +276,7 @@ const UpdatePendingListing: FC = () => {
 						value={listing.commission}
 						required
 						fullWidth
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								commission: e.target.value,
@@ -329,7 +290,7 @@ const UpdatePendingListing: FC = () => {
 						value={listing.ownerContact}
 						required
 						fullWidth
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								ownerContact: e.target.value,
@@ -341,12 +302,10 @@ const UpdatePendingListing: FC = () => {
 						variant="outlined"
 						label="Other Features"
 						helperText="Separate with enter"
-						value={otherFeatures.join('\n')}
+						value={otherFeatures.join("\n")}
 						fullWidth
 						multiline
-						onChange={e =>
-							setOtherFeatures(e.target.value.split('\n'))
-						}
+						onChange={(e) => setOtherFeatures(e.target.value.split("\n"))}
 					/>
 					<TextField
 						className="admin-property-form__input"
@@ -355,9 +314,7 @@ const UpdatePendingListing: FC = () => {
 						type="number"
 						value={listing.price}
 						required
-						onChange={e =>
-							setListing({ ...listing, price: e.target.value })
-						}
+						onChange={(e) => setListing({ ...listing, price: e.target.value })}
 					/>
 					<TextField
 						className="admin-property-form__input"
@@ -365,7 +322,7 @@ const UpdatePendingListing: FC = () => {
 						label="Special Price"
 						type="number"
 						value={listing.specialPrice}
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								specialPrice: e.target.value,
@@ -379,7 +336,7 @@ const UpdatePendingListing: FC = () => {
 							required
 							label="Type"
 							value={listing.type}
-							onChange={e =>
+							onChange={(e) =>
 								setListing({
 									...listing,
 									type: e.target.value,
@@ -392,14 +349,14 @@ const UpdatePendingListing: FC = () => {
 						</Select>
 					</FormControl>
 
-					{(listing.type === 'Rental' || listing.type === 'PG') && (
+					{(listing.type === "Rental" || listing.type === "PG") && (
 						<>
 							<TextField
 								className="admin-property-form__input"
 								variant="outlined"
 								label="Security"
 								value={listing.security}
-								onChange={e =>
+								onChange={(e) =>
 									setListing({
 										...listing,
 										security: e.target.value,
@@ -412,7 +369,7 @@ const UpdatePendingListing: FC = () => {
 								variant="outlined"
 								label="Maintenance"
 								value={listing.maintenance}
-								onChange={e =>
+								onChange={(e) =>
 									setListing({
 										...listing,
 										maintenance: e.target.value,
@@ -429,9 +386,7 @@ const UpdatePendingListing: FC = () => {
 						type="number"
 						value={listing.size}
 						required
-						onChange={e =>
-							setListing({ ...listing, size: e.target.value })
-						}
+						onChange={(e) => setListing({ ...listing, size: e.target.value })}
 					/>
 					<FormControl className="admin-property-form__select">
 						<InputLabel>Unit</InputLabel>
@@ -439,36 +394,28 @@ const UpdatePendingListing: FC = () => {
 							required
 							label="Unit"
 							value={listing.unit}
-							onChange={e =>
+							onChange={(e) =>
 								setListing({
 									...listing,
 									unit: e.target.value,
 								})
 							}
 						>
-							<MenuItem value={'Sq. Ft.'}>Sq. Ft</MenuItem>
-							<MenuItem value={'Acre'}>Acre</MenuItem>
-							<MenuItem value={'Gaj'}>Gaj</MenuItem>
-							<MenuItem value={'Marla'}>Marla</MenuItem>
-							<MenuItem value={'Bigha'}>Bigha</MenuItem>
-							<MenuItem value={'Bigha-Pucca'}>
-								Bigha-Pucca
-							</MenuItem>
-							<MenuItem value={'Bigha-Kachha'}>
-								Bigha-Kachha
-							</MenuItem>
-							<MenuItem value={'Bigha-Kachha'}>
-								Bigha-Kachha
-							</MenuItem>
-							<MenuItem value={'Biswa'}>Biswa</MenuItem>
-							<MenuItem value={'Biswa'}>Biswa</MenuItem>
-							<MenuItem value={'Biswa-Pucca'}>
-								Biswa-Pucca
-							</MenuItem>
-							<MenuItem value={'Kanal'}>Kanal</MenuItem>
-							<MenuItem value={'Killa'}>Killa</MenuItem>
-							<MenuItem value={'Kattha'}>Kattha</MenuItem>
-							<MenuItem value={'Ghumaon'}>Ghumaon</MenuItem>
+							<MenuItem value={"Sq. Ft."}>Sq. Ft</MenuItem>
+							<MenuItem value={"Acre"}>Acre</MenuItem>
+							<MenuItem value={"Gaj"}>Gaj</MenuItem>
+							<MenuItem value={"Marla"}>Marla</MenuItem>
+							<MenuItem value={"Bigha"}>Bigha</MenuItem>
+							<MenuItem value={"Bigha-Pucca"}>Bigha-Pucca</MenuItem>
+							<MenuItem value={"Bigha-Kachha"}>Bigha-Kachha</MenuItem>
+							<MenuItem value={"Bigha-Kachha"}>Bigha-Kachha</MenuItem>
+							<MenuItem value={"Biswa"}>Biswa</MenuItem>
+							<MenuItem value={"Biswa"}>Biswa</MenuItem>
+							<MenuItem value={"Biswa-Pucca"}>Biswa-Pucca</MenuItem>
+							<MenuItem value={"Kanal"}>Kanal</MenuItem>
+							<MenuItem value={"Killa"}>Killa</MenuItem>
+							<MenuItem value={"Kattha"}>Kattha</MenuItem>
+							<MenuItem value={"Ghumaon"}>Ghumaon</MenuItem>
 						</Select>
 					</FormControl>
 					<TextField
@@ -476,9 +423,7 @@ const UpdatePendingListing: FC = () => {
 						variant="outlined"
 						label="Floor"
 						value={listing.floor}
-						onChange={e =>
-							setListing({ ...listing, floor: e.target.value })
-						}
+						onChange={(e) => setListing({ ...listing, floor: e.target.value })}
 					/>
 					<TextField
 						className="admin-property-form__input"
@@ -486,7 +431,7 @@ const UpdatePendingListing: FC = () => {
 						label="Bedrooms"
 						type="number"
 						value={listing.bedroom}
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								bedroom: e.target.value,
@@ -499,14 +444,14 @@ const UpdatePendingListing: FC = () => {
 						label="Bathroom"
 						type="number"
 						value={listing.bathroom}
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								bathroom: e.target.value,
 							})
 						}
 					/>
-					{(listing.type === 'Rental' || listing.type === 'Sale') && (
+					{(listing.type === "Rental" || listing.type === "Sale") && (
 						<>
 							<TextField
 								className="admin-property-form__input"
@@ -514,7 +459,7 @@ const UpdatePendingListing: FC = () => {
 								label="Living Room"
 								type="number"
 								value={listing.livingRoom}
-								onChange={e =>
+								onChange={(e) =>
 									setListing({
 										...listing,
 										livingRoom: e.target.value,
@@ -528,7 +473,7 @@ const UpdatePendingListing: FC = () => {
 								label="Lobby"
 								type="number"
 								value={listing.lobby}
-								onChange={e =>
+								onChange={(e) =>
 									setListing({
 										...listing,
 										lobby: e.target.value,
@@ -542,7 +487,7 @@ const UpdatePendingListing: FC = () => {
 								label="Dinning Room"
 								type="number"
 								value={listing.dinningRoom}
-								onChange={e =>
+								onChange={(e) =>
 									setListing({
 										...listing,
 										dinningRoom: e.target.value,
@@ -555,7 +500,7 @@ const UpdatePendingListing: FC = () => {
 								label="Store Room"
 								type="number"
 								value={listing.store}
-								onChange={e =>
+								onChange={(e) =>
 									setListing({
 										...listing,
 										store: e.target.value,
@@ -568,7 +513,7 @@ const UpdatePendingListing: FC = () => {
 								label="Pooja Room"
 								type="number"
 								value={listing.poojaRoom}
-								onChange={e =>
+								onChange={(e) =>
 									setListing({
 										...listing,
 										poojaRoom: e.target.value,
@@ -578,14 +523,14 @@ const UpdatePendingListing: FC = () => {
 						</>
 					)}
 
-					{listing.type === 'Sale' && (
+					{listing.type === "Sale" && (
 						<>
 							<TextField
 								className="admin-property-form__input"
 								variant="outlined"
 								label="Property Age"
 								value={listing.age}
-								onChange={e =>
+								onChange={(e) =>
 									setListing({
 										...listing,
 										age: e.target.value,
@@ -601,7 +546,7 @@ const UpdatePendingListing: FC = () => {
 						label="Kitchen"
 						type="number"
 						value={listing.kitchen}
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								kitchen: e.target.value,
@@ -615,7 +560,7 @@ const UpdatePendingListing: FC = () => {
 						label="Open Parking"
 						type="number"
 						value={listing.openParking}
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								openParking: e.target.value,
@@ -628,7 +573,7 @@ const UpdatePendingListing: FC = () => {
 						label="Covered Parking"
 						type="number"
 						value={listing.closeParking}
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								closeParking: e.target.value,
@@ -641,7 +586,7 @@ const UpdatePendingListing: FC = () => {
 						label="Balcony"
 						type="number"
 						value={listing.balcony}
-						onChange={e =>
+						onChange={(e) =>
 							setListing({
 								...listing,
 								balcony: e.target.value,
@@ -659,16 +604,14 @@ const UpdatePendingListing: FC = () => {
 							required
 							label="category"
 							value={listing.category}
-							onChange={e =>
+							onChange={(e) =>
 								setListing({
 									...listing,
 									category: e.target.value,
 								})
 							}
 						>
-							<MenuItem value="Residential Apartment">
-								Residential Apartment
-							</MenuItem>
+							<MenuItem value="Residential Apartment">Residential Apartment</MenuItem>
 
 							<MenuItem value="Independent House/Villa">
 								Independent House/Villa
@@ -676,17 +619,11 @@ const UpdatePendingListing: FC = () => {
 
 							<MenuItem value="Plot">Plot</MenuItem>
 
-							<MenuItem value="Commercial Office">
-								Commercial Office
-							</MenuItem>
+							<MenuItem value="Commercial Office">Commercial Office</MenuItem>
 
-							<MenuItem value="Commercial Office">
-								Commercial Plot
-							</MenuItem>
+							<MenuItem value="Commercial Office">Commercial Plot</MenuItem>
 
-							<MenuItem value="Serviced Apartments">
-								Serviced Apartments
-							</MenuItem>
+							<MenuItem value="Serviced Apartments">Serviced Apartments</MenuItem>
 
 							<MenuItem value="1 RK/ Studio Apartment">
 								1 RK/ Studio Apartment
@@ -705,7 +642,7 @@ const UpdatePendingListing: FC = () => {
 							required
 							label="Status"
 							value={listing.status}
-							onChange={e =>
+							onChange={(e) =>
 								setListing({
 									...listing,
 									status: e.target.value,
@@ -713,9 +650,7 @@ const UpdatePendingListing: FC = () => {
 							}
 						>
 							<MenuItem value="Unfurnished">Unfurnished</MenuItem>
-							<MenuItem value="Semifurnished">
-								Semifurnished
-							</MenuItem>
+							<MenuItem value="Semifurnished">Semifurnished</MenuItem>
 							<MenuItem value="Furnished">Furnished</MenuItem>
 						</Select>
 					</FormControl>
@@ -726,7 +661,7 @@ const UpdatePendingListing: FC = () => {
 							required
 							label="Direction"
 							value={listing.direction}
-							onChange={e =>
+							onChange={(e) =>
 								setListing({
 									...listing,
 									direction: e.target.value,
@@ -744,7 +679,7 @@ const UpdatePendingListing: FC = () => {
 						</Select>
 					</FormControl>
 
-					{listing.type === 'Sale' && (
+					{listing.type === "Sale" && (
 						<>
 							<FormControl className="admin-property-form__select">
 								<InputLabel>Purchase Type</InputLabel>
@@ -752,16 +687,14 @@ const UpdatePendingListing: FC = () => {
 									required
 									label="Purchase Type"
 									value={listing.purchaseType}
-									onChange={e =>
+									onChange={(e) =>
 										setListing({
 											...listing,
 											purchaseType: e.target.value,
 										})
 									}
 								>
-									<MenuItem value="New Booking">
-										New Booking
-									</MenuItem>
+									<MenuItem value="New Booking">New Booking</MenuItem>
 									<MenuItem value="Resale">Resale</MenuItem>
 								</Select>
 							</FormControl>
@@ -772,7 +705,7 @@ const UpdatePendingListing: FC = () => {
 									required
 									label="Construction Status"
 									value={listing.constructionStatus}
-									onChange={e =>
+									onChange={(e) =>
 										setListing({
 											...listing,
 											constructionStatus: e.target.value,
@@ -782,22 +715,20 @@ const UpdatePendingListing: FC = () => {
 									<MenuItem value="Under Construction">
 										Under Construction
 									</MenuItem>
-									<MenuItem value="Ready to Move">
-										Ready to Move
-									</MenuItem>
+									<MenuItem value="Ready to Move">Ready to Move</MenuItem>
 								</Select>
 							</FormControl>
 						</>
 					)}
 
-					{(listing.type === 'Sale' || listing.type === 'Rental') && (
+					{(listing.type === "Sale" || listing.type === "Rental") && (
 						<FormControl className="admin-property-form__select">
 							<InputLabel>Possession</InputLabel>
 							<Select
 								required
 								label="Possession"
 								value={listing.possession}
-								onChange={e =>
+								onChange={(e) =>
 									setListing({
 										...listing,
 										possession: e.target.value,
@@ -806,21 +737,13 @@ const UpdatePendingListing: FC = () => {
 							>
 								<MenuItem value="Immediate">Immediate</MenuItem>
 
-								<MenuItem value="Between 1 Month">
-									Between 1 Month
-								</MenuItem>
+								<MenuItem value="Between 1 Month">Between 1 Month</MenuItem>
 
-								<MenuItem value="Between 2 Month">
-									Between 2 Month
-								</MenuItem>
+								<MenuItem value="Between 2 Month">Between 2 Month</MenuItem>
 
-								<MenuItem value="Between 3 Month">
-									Between 3 Month
-								</MenuItem>
+								<MenuItem value="Between 3 Month">Between 3 Month</MenuItem>
 
-								<MenuItem value="Between 6 Months">
-									Between 6 Months
-								</MenuItem>
+								<MenuItem value="Between 6 Months">Between 6 Months</MenuItem>
 
 								<MenuItem value="2023">2023</MenuItem>
 
@@ -842,13 +765,9 @@ const UpdatePendingListing: FC = () => {
 					)}
 
 					{/*  --------------------------- ANCHOR Furnishing Details --------------------------- */}
-					{(listing.status === 'Furnished' ||
-						listing.status === 'Semifurnished') && (
+					{(listing.status === "Furnished" || listing.status === "Semifurnished") && (
 						<>
-							<h1>
-								Add Furnishing Details (Add amount of things
-								eg:- fans = 5)
-							</h1>
+							<h1>Add Furnishing Details (Add amount of things eg:- fans = 5)</h1>
 
 							<TextField
 								className="admin-property-form__input"
@@ -856,7 +775,7 @@ const UpdatePendingListing: FC = () => {
 								label="AC"
 								type="number"
 								value={furnishingDetails.ac}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										ac: +e.target.value,
@@ -870,7 +789,7 @@ const UpdatePendingListing: FC = () => {
 								label="stove"
 								type="number"
 								value={furnishingDetails.stove}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										stove: +e.target.value,
@@ -884,7 +803,7 @@ const UpdatePendingListing: FC = () => {
 								label="Modular Kitchen"
 								type="number"
 								value={furnishingDetails.modularKitchen}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										modularKitchen: +e.target.value,
@@ -898,7 +817,7 @@ const UpdatePendingListing: FC = () => {
 								label="Fans"
 								type="number"
 								value={furnishingDetails.fans}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										fans: +e.target.value,
@@ -912,7 +831,7 @@ const UpdatePendingListing: FC = () => {
 								label="Fridge"
 								type="number"
 								value={furnishingDetails.fridge}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										fridge: +e.target.value,
@@ -926,7 +845,7 @@ const UpdatePendingListing: FC = () => {
 								label="Light"
 								type="number"
 								value={furnishingDetails.light}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										light: +e.target.value,
@@ -940,7 +859,7 @@ const UpdatePendingListing: FC = () => {
 								label="Bed"
 								type="number"
 								value={furnishingDetails.beds}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										beds: +e.target.value,
@@ -954,7 +873,7 @@ const UpdatePendingListing: FC = () => {
 								label="microwave"
 								type="number"
 								value={furnishingDetails.microwave}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										microwave: +e.target.value,
@@ -968,7 +887,7 @@ const UpdatePendingListing: FC = () => {
 								label="dinning table"
 								type="number"
 								value={furnishingDetails.dinningTable}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										dinningTable: +e.target.value,
@@ -982,7 +901,7 @@ const UpdatePendingListing: FC = () => {
 								label="TV"
 								type="number"
 								value={furnishingDetails.tv}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										tv: +e.target.value,
@@ -996,7 +915,7 @@ const UpdatePendingListing: FC = () => {
 								label="Dressing Table"
 								type="number"
 								value={furnishingDetails.dressingTable}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										dressingTable: +e.target.value,
@@ -1010,7 +929,7 @@ const UpdatePendingListing: FC = () => {
 								label="TV Wall Panel"
 								type="number"
 								value={furnishingDetails.tvWallPanel}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										tvWallPanel: +e.target.value,
@@ -1024,7 +943,7 @@ const UpdatePendingListing: FC = () => {
 								label="wardrobe"
 								type="number"
 								value={furnishingDetails.wardrobe}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										wardrobe: +e.target.value,
@@ -1038,7 +957,7 @@ const UpdatePendingListing: FC = () => {
 								label="washing machine"
 								type="number"
 								value={furnishingDetails.washingMachine}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										washingMachine: +e.target.value,
@@ -1052,7 +971,7 @@ const UpdatePendingListing: FC = () => {
 								label="Geyser"
 								type="number"
 								value={furnishingDetails.geyser}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										geyser: +e.target.value,
@@ -1066,7 +985,7 @@ const UpdatePendingListing: FC = () => {
 								label="Curtains"
 								type="number"
 								value={furnishingDetails.curtains}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										curtains: +e.target.value,
@@ -1080,7 +999,7 @@ const UpdatePendingListing: FC = () => {
 								label="Sofa"
 								type="number"
 								value={furnishingDetails.sofa}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										sofa: +e.target.value,
@@ -1094,7 +1013,7 @@ const UpdatePendingListing: FC = () => {
 								label="water purifier"
 								type="number"
 								value={furnishingDetails.waterPurifier}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										waterPurifier: +e.target.value,
@@ -1108,7 +1027,7 @@ const UpdatePendingListing: FC = () => {
 								label="Exhaust"
 								type="number"
 								value={furnishingDetails.exhaust}
-								onChange={e =>
+								onChange={(e) =>
 									setFurnishingDetails({
 										...furnishingDetails,
 										exhaust: +e.target.value,
@@ -1123,251 +1042,183 @@ const UpdatePendingListing: FC = () => {
 					<div className="admin-property-form__facilities">
 						<CheckBox
 							label="Fire/Security Alarm"
-							checked={facilityChecker('Fire/Security Alarm')}
-							onChange={e =>
+							checked={facilityChecker("Fire/Security Alarm")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Fire/Security Alarm',
-									'alarm.png'
+									"Fire/Security Alarm",
+									"alarm.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="Power Backup"
-							checked={facilityChecker('Power Backup')}
-							onChange={e =>
+							checked={facilityChecker("Power Backup")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Power Backup',
-									'power-backup.png'
+									"Power Backup",
+									"power-backup.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="Intercome"
-							checked={facilityChecker('Intercome')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Intercome',
-									'intercome.png'
-								)
+							checked={facilityChecker("Intercome")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Intercome", "intercome.png")
 							}
 						/>
 
 						<CheckBox
 							label="Lift"
-							checked={facilityChecker('Lift')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Lift',
-									'lift.png'
-								)
-							}
+							checked={facilityChecker("Lift")}
+							onChange={(e) => checkboxHandler(e.target.checked, "Lift", "lift.png")}
 						/>
 
 						<CheckBox
 							label="Maintenance Staff"
-							checked={facilityChecker('Maintenance Staff')}
-							onChange={e =>
+							checked={facilityChecker("Maintenance Staff")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Maintenance Staff',
-									'maintenance.png'
+									"Maintenance Staff",
+									"maintenance.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="Park"
-							checked={facilityChecker('Park')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Park',
-									'park.png'
-								)
-							}
+							checked={facilityChecker("Park")}
+							onChange={(e) => checkboxHandler(e.target.checked, "Park", "park.png")}
 						/>
 
 						<CheckBox
 							label="Swimming Pool"
-							checked={facilityChecker('Swimming Pool')}
-							onChange={e =>
+							checked={facilityChecker("Swimming Pool")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Swimming Pool',
-									'swimming-pool.png'
+									"Swimming Pool",
+									"swimming-pool.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="Gym"
-							checked={facilityChecker('Gym')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Gym',
-									'gym.png'
-								)
-							}
+							checked={facilityChecker("Gym")}
+							onChange={(e) => checkboxHandler(e.target.checked, "Gym", "gym.png")}
 						/>
 
 						<CheckBox
 							label="Market"
-							checked={facilityChecker('Market')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Market',
-									'market.png'
-								)
+							checked={facilityChecker("Market")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Market", "market.png")
 							}
 						/>
 
 						<CheckBox
 							label="Water Storage"
-							checked={facilityChecker('Water Storage')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Water Storage',
-									'water-tank.png'
-								)
+							checked={facilityChecker("Water Storage")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Water Storage", "water-tank.png")
 							}
 						/>
 
 						<CheckBox
 							label="Piped Gas"
-							checked={facilityChecker('Piped Gas')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Piped Gas',
-									'piped-gas.png'
-								)
+							checked={facilityChecker("Piped Gas")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Piped Gas", "piped-gas.png")
 							}
 						/>
 
 						<CheckBox
 							label="Visitor Parking"
-							checked={facilityChecker('Visitor Parking')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Visitor Parking',
-									'parking.png'
-								)
+							checked={facilityChecker("Visitor Parking")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Visitor Parking", "parking.png")
 							}
 						/>
 
 						<CheckBox
 							label="Water supply 24/7"
-							checked={facilityChecker('Water supply 24/7')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Water supply 24/7',
-									'water.png'
-								)
+							checked={facilityChecker("Water supply 24/7")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Water supply 24/7", "water.png")
 							}
 						/>
 
 						<CheckBox
 							label="Security Guard"
-							checked={facilityChecker('Security Guard')}
-							onChange={e =>
+							checked={facilityChecker("Security Guard")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Security Guard',
-									'security-guard.png'
+									"Security Guard",
+									"security-guard.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="CCTV"
-							checked={facilityChecker('CCTV')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'CCTV',
-									'cctv.png'
-								)
-							}
+							checked={facilityChecker("CCTV")}
+							onChange={(e) => checkboxHandler(e.target.checked, "CCTV", "cctv.png")}
 						/>
 
 						<CheckBox
 							label="Gated Society"
-							checked={facilityChecker('Gated Society')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Gated Society',
-									'gate.png'
-								)
+							checked={facilityChecker("Gated Society")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Gated Society", "gate.png")
 							}
 						/>
 
 						<CheckBox
 							label="Street Light"
-							checked={facilityChecker('Street Light')}
-							onChange={e =>
+							checked={facilityChecker("Street Light")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Street Light',
-									'street-light.png'
+									"Street Light",
+									"street-light.png",
 								)
 							}
 						/>
 
 						<CheckBox
 							label="WiFi"
-							checked={facilityChecker('WiFi')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'WiFi',
-									'wifi.png'
-								)
-							}
+							checked={facilityChecker("WiFi")}
+							onChange={(e) => checkboxHandler(e.target.checked, "WiFi", "wifi.png")}
 						/>
 						<CheckBox
 							label="Club House"
-							checked={facilityChecker('Club House')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'Club House',
-									'club-house.png'
-								)
+							checked={facilityChecker("Club House")}
+							onChange={(e) =>
+								checkboxHandler(e.target.checked, "Club House", "club-house.png")
 							}
 						/>
 
 						<CheckBox
 							label="STP"
-							checked={facilityChecker('STP')}
-							onChange={e =>
-								checkboxHandler(
-									e.target.checked,
-									'STP',
-									'STP.png'
-								)
-							}
+							checked={facilityChecker("STP")}
+							onChange={(e) => checkboxHandler(e.target.checked, "STP", "STP.png")}
 						/>
 
 						<CheckBox
 							label="Ceiling Light"
-							checked={facilityChecker('Ceiling Light')}
-							onChange={e =>
+							checked={facilityChecker("Ceiling Light")}
+							onChange={(e) =>
 								checkboxHandler(
 									e.target.checked,
-									'Ceiling Light',
-									'ceiling-light.png'
+									"Ceiling Light",
+									"ceiling-light.png",
 								)
 							}
 						/>
@@ -1378,10 +1229,7 @@ const UpdatePendingListing: FC = () => {
 					<h1>Images</h1>
 					{listing.images.length > 0 ? (
 						listing.images.map((img: S3File) => (
-							<div
-								className="admin-property-form__preview-container"
-								key={img.key}
-							>
+							<div className="admin-property-form__preview-container" key={img.key}>
 								<img
 									className="admin-property-form__preview"
 									src={img.url}
@@ -1390,11 +1238,7 @@ const UpdatePendingListing: FC = () => {
 								<BPrimary
 									title={<DeleteIcon />}
 									type="button"
-									onClick={deleteFileHandler(
-										listing._id,
-										'images',
-										img.key
-									)}
+									onClick={deleteFileHandler(listing._id, "images", img.key)}
 								/>
 							</div>
 						))
@@ -1404,10 +1248,7 @@ const UpdatePendingListing: FC = () => {
 					<h1>Videos</h1>
 					{listing.videos.length > 0 ? (
 						listing.videos.map((vid: S3File) => (
-							<div
-								className="admin-property-form__preview-container"
-								key={vid.key}
-							>
+							<div className="admin-property-form__preview-container" key={vid.key}>
 								<video
 									controls
 									autoPlay
@@ -1421,11 +1262,7 @@ const UpdatePendingListing: FC = () => {
 								<BPrimary
 									title={<DeleteIcon />}
 									type="button"
-									onClick={deleteFileHandler(
-										listing._id,
-										'videos',
-										vid.key
-									)}
+									onClick={deleteFileHandler(listing._id, "videos", vid.key)}
 								/>
 							</div>
 						))
@@ -1437,19 +1274,14 @@ const UpdatePendingListing: FC = () => {
 					<BUpload
 						title="Image"
 						className="admin-property-form__upload-btn"
-						onChange={(e: any) =>
-							setImages([...images, ...e.target.files])
-						}
+						onChange={(e: any) => setImages([...images, ...e.target.files])}
 						accept="image/*"
 					/>
 					{images.map((img, i) => {
 						if (img instanceof File) {
 							const objectURL = URL.createObjectURL(img);
 							return (
-								<div
-									className="admin-property-form__preview-container"
-									key={i}
-								>
+								<div className="admin-property-form__preview-container" key={i}>
 									<img
 										className="admin-property-form__preview"
 										src={objectURL}
@@ -1458,11 +1290,7 @@ const UpdatePendingListing: FC = () => {
 									<BPrimary
 										title={<DeleteIcon />}
 										onClick={() =>
-											setImages(
-												images.filter(
-													(_, index) => index !== i
-												)
-											)
+											setImages(images.filter((_, index) => index !== i))
 										}
 									/>
 								</div>
@@ -1473,19 +1301,14 @@ const UpdatePendingListing: FC = () => {
 					<BUpload
 						title="Videos"
 						className="admin-property-form__upload-btn"
-						onChange={(e: any) =>
-							setVideos([...videos, ...e.target.files])
-						}
+						onChange={(e: any) => setVideos([...videos, ...e.target.files])}
 						accept="video/*"
 					/>
 					{videos.map((vid, i) => {
 						if (vid instanceof File) {
 							const objectURL = URL.createObjectURL(vid);
 							return (
-								<div
-									className="admin-property-form__preview-container"
-									key={i}
-								>
+								<div className="admin-property-form__preview-container" key={i}>
 									<video
 										controls
 										autoPlay
@@ -1493,20 +1316,13 @@ const UpdatePendingListing: FC = () => {
 										loop
 										className="admin-property-form__preview"
 									>
-										<source
-											src={objectURL}
-											type="video/mp4"
-										/>
+										<source src={objectURL} type="video/mp4" />
 									</video>
 
 									<BPrimary
 										title={<DeleteIcon />}
 										onClick={() =>
-											setVideos(
-												videos.filter(
-													(_, index) => index !== i
-												)
-											)
+											setVideos(videos.filter((_, index) => index !== i))
 										}
 									/>
 								</div>
@@ -1517,19 +1333,14 @@ const UpdatePendingListing: FC = () => {
 					<BUpload
 						title="Documents"
 						className="admin-property-form__upload-btn"
-						onChange={(e: any) =>
-							setDocuments([...documents, ...e.target.files])
-						}
+						onChange={(e: any) => setDocuments([...documents, ...e.target.files])}
 						accept="application/pdf"
 					/>
 					{documents.map((doc, i) => {
 						if (doc instanceof File) {
 							const objectURL = URL.createObjectURL(doc);
 							return (
-								<div
-									className="admin-property-form__preview-container"
-									key={i}
-								>
+								<div className="admin-property-form__preview-container" key={i}>
 									<iframe
 										src={objectURL}
 										title={objectURL}
@@ -1541,9 +1352,7 @@ const UpdatePendingListing: FC = () => {
 										title={<DeleteIcon />}
 										onClick={() =>
 											setDocuments(
-												documents.filter(
-													(_, index) => index !== i
-												)
+												documents.filter((_, index) => index !== i),
 											)
 										}
 									/>

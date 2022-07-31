@@ -2,16 +2,8 @@ import { useState, useEffect, FC } from "react";
 import { Link } from "react-router-dom";
 
 import { BPrimary } from "../../../../components/util/button/Button";
-import {
-	HPrimary,
-	HSecondary,
-	SSecondary,
-} from "../../../../components/util/typography/Typography";
+import { HPrimary } from "../../../../components/util/typography/Typography";
 import get from "../../../../api/get";
-
-import HotelIcon from "@mui/icons-material/Hotel";
-import ShowerIcon from "@mui/icons-material/Shower";
-import MapIcon from "@mui/icons-material/Map";
 
 import "./properties.scss";
 import Loader from "../../../../components/util/loader/Loader";

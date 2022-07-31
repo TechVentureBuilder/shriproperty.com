@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
-import { BPrimary } from '../../../../components/util/button/Button';
-import { HPrimary } from '../../../../components/util/typography/Typography';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Link } from "react-router-dom";
+import { BPrimary } from "../../../../components/util/button/Button";
+import { HPrimary } from "../../../../components/util/typography/Typography";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-import './listing.scss';
-import { FC } from 'react';
+import "./listing.scss";
+import { FC } from "react";
 
 const Listing: FC = () => {
 	return (
@@ -31,11 +31,7 @@ const Listing: FC = () => {
 				</div>
 				<div className="listing-content__btn">
 					<Link to="/listing">
-						<BPrimary
-							title="Submit your listing"
-							className="btn"
-							type="submit"
-						/>
+						<BPrimary title="Submit your listing" className="btn" type="submit" />
 					</Link>
 				</div>
 			</div>

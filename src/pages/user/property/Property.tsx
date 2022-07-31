@@ -68,7 +68,7 @@ const Property: FC<PropertyProps> = ({ propertyOtpModelOpened, setPropertyOtpMod
 					  });
 				setLoading(false);
 			})
-			.catch((err) => {
+			.catch(() => {
 				navigate("/404");
 			});
 	}, [id]);

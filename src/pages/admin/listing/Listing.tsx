@@ -125,7 +125,7 @@ const Listing: FC = () => {
 	 * Approve Listing
 	 * @param {string} id id of listing which is to be approved
 	 */
-	const approveHandler = (id: string) => {
+	const approveHandler = () => {
 		return (e: FormEvent) => {
 			e.preventDefault();
 
@@ -149,7 +149,7 @@ const Listing: FC = () => {
 	 */
 	const deleteFileHandler = (id: string, type: "images" | "videos", key: string) => {
 		return () => {
-			deleteRequest(`/listings/delete-file/${id}/${type}/${key}`).then((data) => {
+			deleteRequest(`/listings/delete-file/${id}/${type}/${key}`).then(() => {
 				setDeleteFile(true);
 			});
 		};
