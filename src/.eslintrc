@@ -66,6 +66,7 @@
 		"sonarjs/cognitive-complexity": "off",
 		"sonarjs/no-duplicate-string": "off",
 		"sonarjs/no-identical-functions": "off",
+		"sonarjs/no-nested-template-literals": "off",
 		"react-hooks/rules-of-hooks": "error",
 		"guard-for-in": "off",
 		"@typescript-eslint/quotes": ["error", "double"],
