@@ -17,11 +17,11 @@ import { patchRequest } from "../../../api/patch";
 import { TextField } from "@mui/material";
 import { BPrimary } from "../../../components/util/button/Button";
 import deleteRequest from "../../../api/delete";
-import "./tempUsers.scss";
+import "./guests.scss";
 import { Helmet } from "react-helmet-async";
 import useFormatDate from "../../../hooks/useFormatDate";
 
-interface TempUser {
+interface Guest {
 	_id: string;
 	name: string;
 	email: string;
@@ -32,9 +32,9 @@ interface TempUser {
 	createdAt: string;
 }
 
-const TempUsers = () => {
+const Guests = () => {
 	const formatDate = useFormatDate();
-	const [response, setResponse] = useState<TempUser[]>([]);
+	const [response, setResponse] = useState<Guest[]>([]);
 	const [callingStatus, setCallingStatus] = useState("");
 	const [callAgainDate, setCallAgainDate] = useState("");
 	const [talkProgress, setTalkProgress] = useState("");
@@ -48,12 +48,11 @@ const TempUsers = () => {
 			// sort data.data by date
 
 			data.data.sort(
-				(a: TempUser, b: TempUser) =>
-					+new Date(a.callAgainDate) - +new Date(b.callAgainDate),
+				(a: Guest, b: Guest) => +new Date(a.callAgainDate) - +new Date(b.callAgainDate),
 			);
 
 			// sort data.data by status
-			data.data.sort((a: TempUser, b: TempUser) =>
+			data.data.sort((a: Guest, b: Guest) =>
 				a.callingStatus > b.callingStatus ? 1 : b.callingStatus > a.callingStatus ? -1 : 0,
 			);
 
@@ -229,4 +228,4 @@ const TempUsers = () => {
 	);
 };
 
-export default TempUsers;
+export default Guests;
