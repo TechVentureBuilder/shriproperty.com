@@ -12,8 +12,7 @@ import AddProperty from "./pages/admin/property/form/Form";
 import { AuthFormSubmitContext, UserContext } from "./helpers/Context";
 
 const Account = lazy(() => import("./pages/user/account/Account"));
-
-const TempUsers = lazy(() => import("./pages/admin/tempUsers/TempUsers"));
+const Guests = lazy(() => import("./pages/admin/guests/Guests"));
 const UserUpdateProperty = lazy(() => import("./pages/user/updateProperty/UpdateProperty"));
 const NotFound = lazy(() => import("./pages/notFound/NotFound"));
 const Listings = lazy(() => import("./pages/admin/listings/Listings"));
@@ -73,7 +72,7 @@ const AdminRoutes: FC = () => {
 			<Routes>
 				<Route path="/" element={<Admin />} />
 
-				<Route path="guests" element={<TempUsers />} />
+				<Route path="guests" element={<Guests />} />
 
 				<Route path="property/add" element={<AddProperty />} />
 
