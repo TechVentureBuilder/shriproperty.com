@@ -1,7 +1,7 @@
+import { FC } from "react";
 import { Button, CircularProgress } from "@mui/material";
 
 import "./button.scss";
-import { FC } from "react";
 
 type ButtonTypes = "submit" | "reset" | "button";
 

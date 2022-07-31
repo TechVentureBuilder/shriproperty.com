@@ -3,14 +3,13 @@
  * @param {string} url url from request is to be made
  * @return {Promise<object>} response from the server
  */
-const putRequest = async url => {
+const putRequest = async (url) => {
 	const res = await fetch(`/api${url}`, {
-		method: 'PUT',
+		method: "PUT",
 		headers: {
-
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-			'x-api-key': process.env.REACT_APP_API_KEY,
+			"Content-Type": "application/json",
+			Accept: "application/json",
+			"x-api-key": process.env.REACT_APP_API_KEY,
 		},
 	});
 

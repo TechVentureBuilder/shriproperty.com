@@ -7,9 +7,9 @@ const getRequest = async (url: string) => {
 
 	const res = await fetch(`/api${url}`, {
 		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-			'x-api-key': apiKey,
+			"Content-Type": "application/json",
+			Accept: "application/json",
+			"x-api-key": apiKey,
 		},
 	});
 

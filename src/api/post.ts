@@ -8,15 +8,15 @@ const postRequest = async (url: string, body: any, file: boolean) => {
 	const apiKey = process.env.REACT_APP_API_KEY as string;
 
 	const res = await fetch(`/api${url}`, {
-		method: 'POST',
+		method: "POST",
 		headers: file
 			? {
-					'x-api-key': apiKey,
+					"x-api-key": apiKey,
 			  }
 			: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-					'x-api-key': apiKey,
+					"Content-Type": "application/json",
+					Accept: "application/json",
+					"x-api-key": apiKey,
 			  },
 		body: file ? body : JSON.stringify(body),
 	});

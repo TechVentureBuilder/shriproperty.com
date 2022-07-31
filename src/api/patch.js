@@ -6,11 +6,11 @@
  */
 export const patchRequest = async (url, body) => {
 	const res = await fetch(`/api${url}`, {
-		method: 'PATCH',
+		method: "PATCH",
 		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-			'x-api-key': process.env.REACT_APP_API_KEY,
+			"Content-Type": "application/json",
+			Accept: "application/json",
+			"x-api-key": process.env.REACT_APP_API_KEY,
 		},
 		body: JSON.stringify(body),
 	});
@@ -26,9 +26,9 @@ export const patchRequest = async (url, body) => {
  */
 export const patchFile = async (url, body) => {
 	const res = await fetch(`/api${url}`, {
-		method: 'PATCH',
+		method: "PATCH",
 		headers: {
-			'x-api-key': process.env.REACT_APP_API_KEY,
+			"x-api-key": process.env.REACT_APP_API_KEY,
 		},
 		body: body,
 	});
