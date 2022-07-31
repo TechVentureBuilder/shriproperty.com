@@ -1,8 +1,8 @@
-import { FC } from 'react';
-import { Link } from 'react-router-dom';
-import { BPrimary } from '../../util/button/Button';
+import { FC } from "react";
+import { Link } from "react-router-dom";
+import { BPrimary } from "../../util/button/Button";
 
-import './adminNav.scss';
+import "./adminNav.scss";
 
 const AdminNav: FC = () => {
 	return (
@@ -16,10 +16,7 @@ const AdminNav: FC = () => {
 			</Link>
 
 			<Link to={`${process.env.REACT_APP_ADMIN_ROUTE}/temp-users`}>
-				<BPrimary
-					title="Temporary Users"
-					className="admin-page__button"
-				/>
+				<BPrimary title="Temporary Users" className="admin-page__button" />
 			</Link>
 
 			<Link to={`${process.env.REACT_APP_ADMIN_ROUTE}/contacts`}>

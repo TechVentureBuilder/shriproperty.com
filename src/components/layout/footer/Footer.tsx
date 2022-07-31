@@ -1,9 +1,9 @@
-import './footer.scss';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
-import { FC } from 'react';
+import "./footer.scss";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import { FC } from "react";
 
 const Footer: FC = () => {
 	return (
@@ -12,10 +12,9 @@ const Footer: FC = () => {
 				<div className="footer-content__left">
 					<h1>About</h1>
 					<p>
-						Shri Property is committed to delivering a high level of
-						expertise, customer service, and attention to detail to
-						the marketing and sales of real estate, and rental
-						properties.
+						Shri Property is committed to delivering a high level of expertise, customer
+						service, and attention to detail to the marketing and sales of real estate,
+						and rental properties.
 					</p>
 					<div className="footer-content__left-social">
 						<a

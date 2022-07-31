@@ -1,18 +1,18 @@
-import { useState, useContext, FC } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Search from '@mui/icons-material/Search';
-import { Drawer } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { UserContext } from '../../../helpers/Context';
+import { useState, useContext, FC } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Search from "@mui/icons-material/Search";
+import { Drawer } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { UserContext } from "../../../helpers/Context";
 
-import './userNav.scss';
-import { BPrimary } from '../../util/button/Button';
+import "./userNav.scss";
+import { BPrimary } from "../../util/button/Button";
 
 const UserNav: FC = () => {
 	const navigate = useNavigate();
 
-	const [search, setSearch] = useState('');
+	const [search, setSearch] = useState("");
 	const [open, setOpen] = useState(false);
 
 	const user = useContext(UserContext);
@@ -43,10 +43,9 @@ const UserNav: FC = () => {
 						<input
 							type="text"
 							placeholder="Search"
-							onChange={e => setSearch(e.target.value)}
-							onKeyPress={e =>
-								e.key === 'Enter' &&
-								navigate(`/properties?s=${search}`)
+							onChange={(e) => setSearch(e.target.value)}
+							onKeyPress={(e) =>
+								e.key === "Enter" && navigate(`/properties?s=${search}`)
 							}
 						/>
 						<Link to={`/properties?s=${search}`}>
@@ -56,19 +55,16 @@ const UserNav: FC = () => {
 				</ul>
 
 				<div className="nav__btns">
-					<Link to={user.isLoggedIn ? '/account' : '/login'}>
+					<Link to={user.isLoggedIn ? "/account" : "/login"}>
 						<AccountCircleIcon />
 					</Link>
 
-					<Link to={user.isLoggedIn ? '/listing' : '/login'}>
+					<Link to={user.isLoggedIn ? "/listing" : "/login"}>
 						<BPrimary title="Add Listings" />
 					</Link>
 				</div>
 
-				<MenuIcon
-					onClick={() => setOpen(true)}
-					className="nav__hamburger-icon"
-				/>
+				<MenuIcon onClick={() => setOpen(true)} className="nav__hamburger-icon" />
 
 				<Drawer
 					anchor="right"
@@ -86,48 +82,33 @@ const UserNav: FC = () => {
 						</li>
 
 						<li>
-							<Link
-								onClick={() => setOpen(false)}
-								to="/properties"
-							>
+							<Link onClick={() => setOpen(false)} to="/properties">
 								Properties
 							</Link>
 						</li>
 
 						<li>
-							<a
-								onClick={() => setOpen(false)}
-								href="/#form-section"
-							>
+							<a onClick={() => setOpen(false)} href="/#form-section">
 								Contact Us
 							</a>
 						</li>
 
 						{user.isLoggedIn ? (
 							<li>
-								<Link
-									onClick={() => setOpen(false)}
-									to="/account"
-								>
+								<Link onClick={() => setOpen(false)} to="/account">
 									My Account
 								</Link>
 							</li>
 						) : (
 							<>
 								<li>
-									<Link
-										onClick={() => setOpen(false)}
-										to="/signup"
-									>
+									<Link onClick={() => setOpen(false)} to="/signup">
 										Signup
 									</Link>
 								</li>
 
 								<li>
-									<Link
-										onClick={() => setOpen(false)}
-										to="/login"
-									>
+									<Link onClick={() => setOpen(false)} to="/login">
 										Login
 									</Link>
 								</li>
