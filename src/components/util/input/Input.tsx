@@ -1,8 +1,8 @@
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-import "./input.scss";
 import { FC } from "react";
+import "./input.scss";
 
 interface CheckBoxProps {
 	/**

@@ -13,7 +13,8 @@
 		"sonarjs",
 		"no-secrets",
 		"jsonc",
-		"no-unsanitized"
+		"no-unsanitized",
+		"plugin:@typescript-eslint/recommended"
 	],
 	"extends": [
 		"plugin:react/recommended",
