@@ -81,7 +81,12 @@
 		"react/no-unused-prop-types": "error",
 		"react/no-unused-state": "error",
 		"react/prop-types": "error",
-		"react/require-default-props": "error",
+		"react/require-default-props": [
+			"error",
+			{
+				"functions": "defaultArguments"
+			}
+		],
 		"prettier/prettier": [
 			"error",
 			{
