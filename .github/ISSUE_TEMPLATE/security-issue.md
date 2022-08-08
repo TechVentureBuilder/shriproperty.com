@@ -2,7 +2,7 @@
 name: Security Issue
 about: Describe any security issue
 title: SECURITY -
-labels: important, security
+labels: client, security
 assignees: ''
 
 ---

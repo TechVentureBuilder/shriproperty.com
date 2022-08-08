@@ -2,7 +2,7 @@
 name: Refactor Code
 about: Tell us how we can refactor our code
 title: REFACTOR CODE -
-labels: refactor
+labels: client, refactor
 assignees: ''
 
 ---
