@@ -72,7 +72,7 @@ const Guests = () => {
 				callingStatus,
 				talkProgress,
 				// set data to null if there is no date
-				callAgainDate: callAgainDate ? new Date(callAgainDate) : null,
+				callAgainDate: callAgainDate ? new Date(callAgainDate) : undefined,
 			}).then((data: any) => {
 				if (data.success === false) {
 					setErrorMessage(data.message);
