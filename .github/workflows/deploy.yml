@@ -20,12 +20,13 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: npm install and build
               run: |
-                  npm install
+                  npm install --force
                   npm run build
               env:
                   CI: true
+                  DISABLE_ESLINT_PLUGIN: true
 
-    depoly:
+    deploy:
         needs: [build]
         runs-on: ubuntu-latest
 
