@@ -24,6 +24,7 @@ jobs:
                   npm run build
               env:
                   CI: true
+                  DISABLE_ESLINT_PLUGIN: true
 
     deploy:
         needs: [build]
