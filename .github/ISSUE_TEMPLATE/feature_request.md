@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for this project
 title: FEATURE -
-labels: client, feature, priority-high
+labels: client, feature
 assignees: ""
 ---
 
