@@ -14,6 +14,7 @@ jobs:
           labels: automerge
           
   automerge:
+    needs: [add_label]
     runs-on: ubuntu-latest
     steps:
       - id: automerge
