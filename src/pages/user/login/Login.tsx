@@ -163,7 +163,7 @@ const Login: FC = () => {
 				</form>
 			</Modal>
 
-			<Modal open={verifyOtpModel}>
+			<Modal open={verifyOtpModel} onClose={() => setVerifyOtpModel(false)}>
 				<form className="login-section__modal" onSubmit={verifyOtpHandler}>
 					<h2>Verify Otp</h2>
 					<SPrimary title="Please check your email" />
