@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Button, CircularProgress } from "@mui/material";
-
+import { Button } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import "./button.scss";
 
 type ButtonTypes = "submit" | "reset" | "button";
@@ -71,7 +71,8 @@ export const BPrimary: FC<BPrimaryProps> = ({
 	onClick,
 }) => {
 	return (
-		<Button
+		<LoadingButton
+			loading={loading}
 			style={style}
 			className={`${className} btn-primary ${!disabled && "btn-primary--enabled"}
 				`}
@@ -80,8 +81,8 @@ export const BPrimary: FC<BPrimaryProps> = ({
 			onClick={onClick}
 			disabled={disabled}
 		>
-			{loading ? <CircularProgress /> : title}
-		</Button>
+			{title}
+		</LoadingButton>
 	);
 };
 
