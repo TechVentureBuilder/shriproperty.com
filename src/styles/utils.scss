@@ -1,6 +1,8 @@
+@import "../styles/variable.scss";
+
 .line-through {
 	text-decoration: line-through;
-	text-decoration-color: $color-primary;
+	text-decoration-color: $color-secondary;
 }
 
 .hidden {

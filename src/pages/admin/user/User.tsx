@@ -14,6 +14,7 @@ import Loader from "../../../components/util/loader/Loader";
 import get from "../../../api/get";
 import deleteRequest from "../../../api/delete";
 import { Helmet } from "react-helmet-async";
+import useCurrency from "../../../hooks/useCurrency";
 
 interface UserFromAPI {
 	listings: Listing[];
@@ -34,7 +35,7 @@ const User: FC = () => {
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [openModal, setOpenModal] = useState(false);
 	const [submit, setSubmit] = useState(false);
-
+	const currency = useCurrency();
 	useEffect(() => {
 		get(`/users/single/${id}?listings=true&properties=true`).then((res) => {
 			setResponse(res.data);
@@ -145,7 +146,7 @@ const User: FC = () => {
 										{listing.address}
 									</TableCell>
 									<TableCell className="contact-table__cell" align="right">
-										{listing.price}
+										{currency(listing.price)}
 									</TableCell>
 
 									<TableCell className="contact-table__cell" align="right">
@@ -227,7 +228,7 @@ const User: FC = () => {
 										{property.address}
 									</TableCell>
 									<TableCell className="contact-table__cell" align="right">
-										{property.price}
+										{currency(property.price)}
 									</TableCell>
 
 									<TableCell className="contact-table__cell" align="right">

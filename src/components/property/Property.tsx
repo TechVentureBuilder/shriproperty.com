@@ -5,12 +5,13 @@ import HotelIcon from "@mui/icons-material/Hotel";
 import ShowerIcon from "@mui/icons-material/Shower";
 import { HSecondary, SSecondary } from "../../components/util/typography/Typography";
 import "./property.scss";
-
+import useCurrency from "../../hooks/useCurrency";
 interface PropertyProps {
 	property: Property;
 }
 
 const Property: FC<PropertyProps> = ({ property }) => {
+	const currency = useCurrency();
 	return (
 		<Link to={`/properties/${property._id}`}>
 			<div className="properties-section__property">
@@ -25,7 +26,7 @@ const Property: FC<PropertyProps> = ({ property }) => {
 				<HSecondary title={property.title} className="properties-section__property-title" />
 
 				<h4 className="properties-section__property-price">
-					₹ {property.price}
+					{currency(property.price)}
 					<span className="price-text">Click here for best price</span>
 				</h4>
 
