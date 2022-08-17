@@ -1017,25 +1017,6 @@ const Form: FC = () => {
 					/>
 
 					<CheckBox
-						label="CCTV"
-						onChange={(e) => checkboxHandler(e.target.checked, "CCTV", "cctv.png")}
-					/>
-
-					<CheckBox
-						label="Gated Society"
-						onChange={(e) =>
-							checkboxHandler(e.target.checked, "Gated Society", "gate.png")
-						}
-					/>
-
-					<CheckBox
-						label="Street Light"
-						onChange={(e) =>
-							checkboxHandler(e.target.checked, "Street Light", "street-light.png")
-						}
-					/>
-
-					<CheckBox
 						label="WiFi"
 						onChange={(e) => checkboxHandler(e.target.checked, "WiFi", "wifi.png")}
 					/>
