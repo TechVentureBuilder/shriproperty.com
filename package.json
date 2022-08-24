@@ -63,6 +63,6 @@
 		"eslint-plugin-sonarjs": "0.15.0",
 		"prettier": "2.7.1",
 		"prettier-eslint": "15.0.1",
-		"semantic-release": "19.0.4"
+		"semantic-release": "19.0.5"
 	}
 }
