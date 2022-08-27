@@ -1,14 +1,41 @@
-# Contributing
+## Contributing
 
-### :warning: Please follow [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md)
+[fork]: /fork
+[pr]: /compare
+[code-of-conduct]: CODE_OF_CONDUCT.md
 
-Before starting working on any new feature please dicuess that first in issues/discussions or email it on ayushchugh2006@gmail.com
+Hi there! We're thrilled that you'd like to contribute to this project. Your help is essential for keeping it great.
 
-- [Fork](https://github.com/shriproperty/server/fork) this repository
-- Work on your issue/feature
-- Before commiting the changes run tests using `yarn test`
-- Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for writing commit messages
-- Create a new [pull request](https://github.com/shriproperty/server/compare) in `dev` branch
-- Request [Ayush Chugh](https://github.com/aayushchugh) or [Arpit Chugh](https://github.com/arpitchugh) as review on the pull request
-- Wait until your changes are approved
-- Congrats your pull request is merged
+Please note that this project is released with a [Contributor Code of Conduct][code-of-conduct]. By participating in this project you agree to abide by its terms.
+
+
+## Issues and PRs
+
+If you have suggestions for how this project could be improved, or want to report a bug, open an issue! We'd love all and any contributions. If you have questions, too, we'd love to hear them.
+
+We'd also love PRs. If you're thinking of a large PR, we advise opening up an issue first to talk about it, though! Look at the links below if you're not sure how to open a PR.
+
+## Submitting a pull request
+
+1. [Fork][fork] and clone the repository.
+2. Configure and install the dependencies: `yarn install`.
+3. Create a new branch: `git checkout -b my-branch-name`.
+4. Work on your issue/feature
+5. Before commiting the changes run tests using `yarn test`
+6. Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for writing commit messages
+7. Push to your fork and [submit a pull request][pr] in `dev` branch
+8. Request [Ayush Chugh](https://github.com/aayushchugh) or [Arpit Chugh](https://github.com/arpitchugh) as review on the pull request
+9. Pat your self on the back and wait for your pull request to be approved and merged.
+
+Here are a few things you can do that will increase the likelihood of your pull request being accepted:
+
+- Keep your changes as focused as possible. If there are multiple changes you would like to make that are not dependent upon each other, consider submitting them as separate pull requests.
+- Follow [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+
+Work in Progress pull requests are also welcome to get feedback early on, or if there is something blocked you.
+
+## Resources
+
+- [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)
+- [Using Pull Requests](https://help.github.com/articles/about-pull-requests/)
+- [GitHub Help](https://help.github.com)
