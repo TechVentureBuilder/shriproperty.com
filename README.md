@@ -12,11 +12,46 @@ Shri Property is committed to delivering a high level of expertise, customer ser
 
 ## Tech Stack
 
-**Client:** React, Mui, Sass, Typescript
+- React
+- Typescript
+- MUI
+- SCSS
 
-**Server:** Node, Typescript, Express, Zod, Mongodb
+## Run Locally
 
-**Admin App:** React Native, Typescript
+You need to clone the [server](https://github.com/shriproperty/server) first and start it
+
+Clone the project
+
+```bash
+  git clone git@github.com:shriproperty/client.git
+```
+
+Go to the project directory
+
+```bash
+  cd client
+```
+
+Install dependencies
+
+```bash
+    yarn
+```
+
+Start the server
+
+```bash
+    yarn start
+```
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+- `REACT_APP_API_KEY`
+- `REACT_APP_ADMIN_ROUTE`
 
 ## Authors
 
