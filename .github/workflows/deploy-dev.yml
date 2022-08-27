@@ -3,7 +3,7 @@ name: Deploy server
 on:
     push:
         branches:
-            - main
+            - dev
 
 jobs:
     build:
@@ -39,8 +39,8 @@ jobs:
                   password: ${{ secrets.PASSWORD }}
                   port: ${{ secrets.PORT }}
                   script: |
-                      cd ~/client
-                      git pull origin main
+                      cd ~/dev/client
+                      git pull origin dev
                       yarn install
                       yarn run build
-                      pm2 restart Server
+                      pm2 restart Dev
