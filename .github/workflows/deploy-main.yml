@@ -44,3 +44,17 @@ jobs:
                       yarn install
                       yarn run build
                       pm2 restart Server
+
+    release:
+        needs: [deploy]
+        name: Release
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: "16.x"
+            - run: npm i --force
+            - run: npx semantic-release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
