@@ -1,7 +1,7 @@
 name: "🔒 Security Issue"
 description: "Found a security issue report it here"
-title: ":lock: <title>"
-labels: [":lock: enhancement", ":bust_in_silhouette: client"]
+title: "[SECURITY] :lock: <title>"
+labels: [":lock: security", ":bust_in_silhouette: client"]
 assignees: "aayushchugh"
 body:
     - type: textarea
