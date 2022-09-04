@@ -7,7 +7,7 @@
 		"@emotion/react": "11.10.4",
 		"@emotion/styled": "11.10.4",
 		"@mui/icons-material": "5.10.3",
-		"@mui/lab": "5.0.0-alpha.97",
+		"@mui/lab": "^5.0.0-alpha.97",
 		"@mui/material": "5.10.3",
 		"@testing-library/jest-dom": "5.16.5",
 		"@testing-library/react": "13.4.0",
@@ -46,6 +46,11 @@
 		]
 	},
 	"devDependencies": {
+		"@semantic-release/changelog": "6.0.1",
+		"@semantic-release/git": "10.0.1",
+		"@semantic-release/github": "8.0.6",
+		"@semantic-release/npm": "9.0.1",
+		"@semantic-release/release-notes-generator": "10.0.3",
 		"@typescript-eslint/eslint-plugin": "5.36.1",
 		"@typescript-eslint/parser": "5.36.1",
 		"eslint": "8.23.0",
@@ -64,11 +69,6 @@
 		"eslint-plugin-sonarjs": "0.15.0",
 		"prettier": "2.7.1",
 		"prettier-eslint": "15.0.1",
-		"semantic-release": "19.0.5",
-		"@semantic-release/changelog": "6.0.1",
-		"@semantic-release/git": "10.0.1",
-		"@semantic-release/github": "8.0.6",
-		"@semantic-release/npm": "9.0.1",
-		"@semantic-release/release-notes-generator": "10.0.3"
+		"semantic-release": "19.0.5"
 	}
 }
