@@ -14,7 +14,7 @@
 		"no-secrets",
 		"jsonc",
 		"no-unsanitized",
-		"plugin:@typescript-eslint/recommended"
+		"@typescript-eslint"
 	],
 	"extends": [
 		"plugin:react/recommended",
@@ -23,7 +23,8 @@
 		"plugin:jsonc/base",
 		"plugin:no-unsanitized/DOM",
 		"plugin:prettier/recommended",
-		"plugin:sonarjs/recommended"
+		"plugin:sonarjs/recommended",
+		"plugin:@typescript-eslint/recommended"
 	],
 	"parserOptions": {
 		"ecmaFeatures": {
@@ -43,7 +44,7 @@
 		"no-console": "error",
 		"valid-jsdoc": "off",
 		"linebreak-style": "off",
-				"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-explicit-any": "off",
 		"react/destructuring-assignment": "error",
 		"object-curly-spacing": "off",
 		"indent": "off",

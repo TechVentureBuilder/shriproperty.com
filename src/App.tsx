@@ -3,7 +3,8 @@ import { FC, lazy, Suspense, useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import get from "./api/get";
-import "./app.scss";
+import "./app.less";
+import "./app.css";
 import Loader from "./components/util/loader/Loader";
 
 import Contacts from "./pages/admin/contacts/Contacts";
