@@ -65,7 +65,7 @@
 		"comma-dangle": "off",
 		"new-cap": "off",
 		"require-await": "error",
-		"require-jsdoc": "error",
+		"require-jsdoc": "off",
 		"sonarjs/cognitive-complexity": "off",
 		"sonarjs/no-duplicate-string": "off",
 		"sonarjs/no-identical-functions": "off",

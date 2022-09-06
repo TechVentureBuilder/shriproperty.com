@@ -1,4 +1,4 @@
-import { CssBaseline } from "@mui/material";
+// import { CssBaseline } from "@mui/material";
 import { FC, lazy, Suspense, useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
@@ -36,7 +36,7 @@ const UserNav = lazy(() => import("./components/layout/userNav/UserNav"));
 
 const AdminNav = lazy(() => import("./components/layout/adminNav/AdminNav"));
 
-const Footer = lazy(() => import("./components/layout/footer/Footer"));
+// const Footer = lazy(() => import("./components/layout/footer/Footer"));
 
 const Properties = lazy(() => import("./pages/user/properties/Properties"));
 const AllImages = lazy(() => import("./pages/user/allimages/Images"));
@@ -44,6 +44,7 @@ const Hero = lazy(() => import("./pages/user/home/hero/Hero"));
 const PropertiesSection = lazy(() => import("./pages/user/home/properties/Properties"));
 const Category = lazy(() => import("./pages/user/home/category/Category"));
 const ListingSection = lazy(() => import("./pages/user/home/listing/Listing"));
+const Contact = lazy(() => import("./pages/user/contact"));
 
 const Property = lazy(() => import("./pages/user/property/Property"));
 
@@ -51,7 +52,7 @@ const App: FC = () => {
 	return (
 		<HelmetProvider>
 			<Suspense fallback={<Loader fullScreen />}>
-				<CssBaseline />
+				{/* <CssBaseline /> */}
 				<Router>
 					<Routes>
 						<Route
@@ -158,6 +159,7 @@ const UserRoutes: FC = () => {
 							</main>
 						}
 					/>
+					<Route path="/contact" element={<Contact />} />
 					<Route path="/properties" element={<Properties />} />
 					<Route
 						path="/properties/:id"
@@ -184,7 +186,7 @@ const UserRoutes: FC = () => {
 					<Route path="/404" element={<NotFound />} />
 					<Route path="*" element={<Navigate replace to="/404" />} />
 				</Routes>
-				<Footer />
+				{/* <Footer /> */}
 			</UserContext.Provider>
 		</AuthFormSubmitContext.Provider>
 	);
