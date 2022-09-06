@@ -1,20 +1,13 @@
-name: "🔒 Security Issue"
-description: "Found a security issue report it here"
-title: "[SECURITY] :lock: <title>"
-labels: [":lock: security"]
+name: "🧪 Test"
+description: "Issue related to tests"
+title: "[TEST] :test_tube: <title>"
+labels: [":test_tube: tests"]
 body:
     - type: textarea
       id: description
       attributes:
           label: Description
-          description: A concise description of the security issue
-      validations:
-          required: true
-    - type: textarea
-      id: how_to_solve
-      attributes:
-          label: How can we solve this
-          description: Please tell us how can we solve this issue
+          description: A concise description if you want us to write new tests or check on failing tests
       validations:
           required: false
     - type: textarea
