@@ -32,7 +32,7 @@ const Admin = lazy(() => import("./pages/admin/Admin"));
 const UpdateProperty = lazy(() => import("./pages/admin/property/update/Update"));
 const Listing = lazy(() => import("./pages/user/listing/Listing"));
 
-const UserNav = lazy(() => import("./components/layout/userNav/UserNav"));
+const UserNav = lazy(() => import("./components/layout/userNav"));
 
 const AdminNav = lazy(() => import("./components/layout/adminNav/AdminNav"));
 
