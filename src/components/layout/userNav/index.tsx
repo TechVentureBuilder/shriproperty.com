@@ -17,7 +17,7 @@ const UserNav: FC = () => {
 		<Layout>
 			<Header
 				className="p-0 flex justify-between items-center"
-				style={{ position: "fixed", width: "100%", backgroundColor: "white" }}
+				style={{ width: "100%", backgroundColor: "white" }}
 			>
 				<div>
 					<img src="/images/logo/logo.png" alt="Logo" className="w-18 h-20 ml-10" />

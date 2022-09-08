@@ -11,6 +11,8 @@ import Contacts from "./pages/admin/contacts/Contacts";
 import AddProperty from "./pages/admin/property/form/Form";
 
 import { AuthFormSubmitContext, UserContext } from "./helpers/Context";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const Account = lazy(() => import("./pages/user/account/Account"));
 const Guests = lazy(() => import("./pages/admin/guests/Guests"));
@@ -50,20 +52,22 @@ const Property = lazy(() => import("./pages/user/property/Property"));
 
 const App: FC = () => {
 	return (
-		<HelmetProvider>
-			<Suspense fallback={<Loader fullScreen />}>
-				{/* <CssBaseline /> */}
-				<Router>
-					<Routes>
-						<Route
-							path={`${process.env.REACT_APP_ADMIN_ROUTE}/*`}
-							element={<AdminRoutes />}
-						/>
-						<Route path="*" element={<UserRoutes />} />
-					</Routes>
-				</Router>
-			</Suspense>
-		</HelmetProvider>
+		<Provider store={store}>
+			<HelmetProvider>
+				<Suspense fallback={<Loader fullScreen />}>
+					{/* <CssBaseline /> */}
+					<Router>
+						<Routes>
+							<Route
+								path={`${process.env.REACT_APP_ADMIN_ROUTE}/*`}
+								element={<AdminRoutes />}
+							/>
+							<Route path="*" element={<UserRoutes />} />
+						</Routes>
+					</Router>
+				</Suspense>
+			</HelmetProvider>
+		</Provider>
 	);
 };
 

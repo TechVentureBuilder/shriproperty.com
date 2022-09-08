@@ -169,14 +169,4 @@ declare global {
 		facilities: Facility[];
 		sold: boolean;
 	}
-
-	interface Contact {
-		_id: string;
-		name: string;
-		email: string;
-		phone: string;
-		status: "Pending" | "In Progress" | "Completed";
-		subject: string;
-		message: string;
-	}
 }

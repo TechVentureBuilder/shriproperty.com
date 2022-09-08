@@ -18,6 +18,7 @@ import { patchRequest } from "../../../api/patch";
 import deleteRequest from "../../../api/delete";
 
 import "./contacts.scss";
+import { IContact } from "../../../types/interfaces";
 
 const Users: FC = () => {
 	const [response, setResponse] = useState([]);
@@ -111,7 +112,7 @@ const Users: FC = () => {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{response.map((contact: Contact) => (
+					{response.map((contact: IContact) => (
 						<TableRow key={contact._id}>
 							<TableCell className="contact-table__cell" align="right">
 								{contact.name}
@@ -153,7 +154,7 @@ const Users: FC = () => {
 							</TableCell>
 
 							<TableCell className="contact-table__cell" align="right">
-								<form onSubmit={deleteHandler(contact._id)}>
+								<form onSubmit={deleteHandler(contact._id as string)}>
 									<button type="submit">
 										<DeleteIcon />
 									</button>
@@ -161,7 +162,7 @@ const Users: FC = () => {
 							</TableCell>
 
 							<TableCell className="contact-table__cell" align="right">
-								<form onSubmit={updateHandler(contact._id)}>
+								<form onSubmit={updateHandler(contact._id as string)}>
 									<button type="submit">
 										<DoneIcon />
 									</button>

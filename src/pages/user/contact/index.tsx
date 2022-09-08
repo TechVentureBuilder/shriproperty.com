@@ -1,6 +1,16 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, InputNumber } from "antd";
+import { postContactAction } from "../../../actions/contacts.action";
+import { useAppDispatch } from "../../../hooks/useAddDispatch";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import { IContact } from "../../../types/interfaces";
+import { TRootState } from "../../../types/types";
 
 function Contact() {
+	const dispatch = useAppDispatch();
+	const { postLoading } = useAppSelector((state: TRootState) => state.contacts);
+
+	const [form] = Form.useForm<IContact>();
+
 	const validateMessage = {
 		required: "${label} is required!",
 		types: {
@@ -8,8 +18,14 @@ function Contact() {
 			number: "${label} is not a valid number!",
 		},
 		number: {
-			range: "${label} must {max} digits",
+			range: "${label} must 10 digits",
 		},
+	};
+
+	const submitHandler = (values: IContact) => {
+		dispatch(postContactAction(values)).then(() => {
+			form.resetFields();
+		});
 	};
 
 	return (
@@ -24,8 +40,13 @@ function Contact() {
 				</div>
 
 				<div className="w-1/2">
-					<Form validateMessages={validateMessage} layout="vertical">
-						<Form.Item label="Name" name="name" rules={[{ required: true }]}>
+					<Form
+						validateMessages={validateMessage}
+						layout="vertical"
+						form={form}
+						onFinish={submitHandler}
+					>
+						<Form.Item label="Name" name="name">
 							<Input placeholder="Shri Property" size="large" />
 						</Form.Item>
 
@@ -45,9 +66,16 @@ function Contact() {
 						<Form.Item
 							label="Phone Number"
 							name="phone"
-							rules={[{ required: true, type: "number", min: 10, max: 10 }]}
+							rules={[
+								{
+									required: true,
+									type: "number",
+									min: 1000000000,
+									max: 9999999999,
+								},
+							]}
 						>
-							<Input placeholder="9465663009" size="large" />
+							<InputNumber className="w-full" placeholder="9465663009" size="large" />
 						</Form.Item>
 
 						<Form.Item
@@ -72,7 +100,7 @@ function Contact() {
 							/>
 						</Form.Item>
 
-						<Button type="primary" size="large">
+						<Button type="primary" size="large" htmlType="submit" loading={postLoading}>
 							Submit
 						</Button>
 					</Form>
