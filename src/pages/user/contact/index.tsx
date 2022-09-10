@@ -1,4 +1,5 @@
 import { Button, Form, Input, InputNumber } from "antd";
+import { useState } from "react";
 import { postContactAction } from "../../../actions/contacts.action";
 import { useAppDispatch } from "../../../hooks/useAddDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
@@ -8,6 +9,8 @@ import { TRootState } from "../../../types/types";
 function Contact() {
 	const dispatch = useAppDispatch();
 	const { postLoading } = useAppSelector((state: TRootState) => state.contacts);
+
+	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
 
 	const [form] = Form.useForm<IContact>();
 
@@ -28,6 +31,15 @@ function Contact() {
 		});
 	};
 
+	const checkFieldValidation = () => {
+		const missingRequiredField = Object.values(form.getFieldsValue()).some(
+			(field) => field === undefined || field === "",
+		);
+
+		if (!missingRequiredField) setIsRequiredFieldMissing(false);
+		else setIsRequiredFieldMissing(true);
+	};
+
 	return (
 		<main className="p-10">
 			<section className="flex w-full justify-around shadow-lg p-10 rounded-lg">
@@ -45,8 +57,9 @@ function Contact() {
 						layout="vertical"
 						form={form}
 						onFinish={submitHandler}
+						onChange={checkFieldValidation}
 					>
-						<Form.Item label="Name" name="name">
+						<Form.Item label="Name" name="name" rules={[{ required: true }]}>
 							<Input placeholder="Shri Property" size="large" />
 						</Form.Item>
 
@@ -100,7 +113,13 @@ function Contact() {
 							/>
 						</Form.Item>
 
-						<Button type="primary" size="large" htmlType="submit" loading={postLoading}>
+						<Button
+							type="primary"
+							size="large"
+							htmlType="submit"
+							loading={postLoading}
+							disabled={isRequiredFieldMissing}
+						>
 							Submit
 						</Button>
 					</Form>
