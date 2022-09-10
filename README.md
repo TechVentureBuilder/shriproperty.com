@@ -1,4 +1,6 @@
-![Logo](https://shriproperty.com/images/logo/logo.png)
+<div align="center">
+<img src="https://shriproperty.com/images/logo/logo.png" align="center" height="220" width="200" />
+</div>
 
 # Shri Property
 
@@ -12,14 +14,14 @@ Shri Property is committed to delivering a high level of expertise, customer ser
 
 ## Tech Stack
 
-- React
-- Typescript
-- MUI
-- SCSS
+-   React
+-   Typescript
+-   MUI
+-   SCSS
 
 ## Run Locally
 
-You need to clone the [server](https://github.com/shriproperty/server) first and start it
+You need to clone the [client](https://github.com/shriproperty/client) first and start it
 
 Clone the project
 
@@ -45,13 +47,12 @@ Start the server
     yarn start
 ```
 
-
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
 
-- `REACT_APP_API_KEY`
-- `REACT_APP_ADMIN_ROUTE`
+-   `REACT_APP_API_KEY`
+-   `REACT_APP_ADMIN_ROUTE`
 
 ## Authors
 
