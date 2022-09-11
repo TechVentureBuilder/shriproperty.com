@@ -6,5 +6,12 @@
 		"**/*.code-search": true,
 		"**/build": true
 	},
-	"conventionalCommits.scopes": ["auth", "property", "workflows", "store", "style"]
+	"conventionalCommits.scopes": [
+		"auth",
+		"property",
+		"workflows",
+		"store",
+		"style",
+		"API integration"
+	]
 }

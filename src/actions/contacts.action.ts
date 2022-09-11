@@ -5,8 +5,12 @@ import api from "../utils/api.util";
 
 export function postContactAction(payload: IContact) {
 	return async (dispatch: Dispatch) => {
-		dispatch(contactsReducers.setPostLoading(true));
-		await api.post("/contacts", payload);
-		dispatch(contactsReducers.setPostLoading(false));
+		try {
+			dispatch(contactsReducers.setPostLoading(true));
+			const res: { message: string } = await api.post("/contacts", payload);
+			return res;
+		} finally {
+			dispatch(contactsReducers.setPostLoading(false));
+		}
 	};
 }

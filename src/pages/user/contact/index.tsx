@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber } from "antd";
+import { Button, Form, Input, InputNumber, message } from "antd";
 import { useState } from "react";
 import { postContactAction } from "../../../actions/contacts.action";
 import { useAppDispatch } from "../../../hooks/useAddDispatch";
@@ -25,10 +25,10 @@ function Contact() {
 		},
 	};
 
-	const submitHandler = (values: IContact) => {
-		dispatch(postContactAction(values)).then(() => {
-			form.resetFields();
-		});
+	const submitHandler = async (values: IContact) => {
+		const res = await dispatch(postContactAction(values));
+		form.resetFields();
+		message.success(res.message);
 	};
 
 	const checkFieldValidation = () => {
