@@ -1,5 +1,6 @@
-import { Button, Form, Input, InputNumber, message } from "antd";
 import { useState } from "react";
+import { Button, Form, Input, InputNumber, message } from "antd";
+import { Helmet } from "react-helmet-async";
 import { postContactAction } from "../../../actions/contacts.action";
 import { useAppDispatch } from "../../../hooks/useAddDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
@@ -41,9 +42,15 @@ function Contact() {
 	};
 
 	return (
-		<main className="p-10">
-			<section className="flex w-full justify-around shadow-lg p-10 rounded-lg">
-				<div className="w-1/3 h-auto">
+		<main className="p-10 flex items-center justify-center md:h-screen">
+			<Helmet>
+				<title>Contact US | Shriproperty</title>
+				<link rel="canonical" href="https://shriproperty.com/contact" />
+				<meta name="description" content="Contact us for any query or suggestion" />
+			</Helmet>
+
+			<section className="flex w-full justify-around shadow-2xl p-10 rounded-lg max-w-screen-2xl">
+				<div className="w-1/3 h-auto hidden md:block">
 					<img
 						src="/images/illustrations/mailbox.svg"
 						alt="banner"
@@ -51,7 +58,7 @@ function Contact() {
 					/>
 				</div>
 
-				<div className="w-1/2">
+				<div className="w-full md:w-1/2">
 					<Form
 						validateMessages={validateMessage}
 						layout="vertical"
