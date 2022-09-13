@@ -78,15 +78,25 @@
 		"react/boolean-prop-naming": "error",
 		"react/hook-use-state": "error",
 		"react/no-access-state-in-setstate": "error",
-		"react/no-children-prop": "error",
-		"react/no-unknown-property": "error",
-		"react/no-unused-prop-types": "error",
-		"react/no-unused-state": "error",
+		"react/no-children-prop": "warn",
+		"react/no-unknown-property": "warn",
+		"react/no-unused-prop-types": "warn",
+		"react/no-unused-state": "warn",
 		"react/prop-types": "error",
 		"react/require-default-props": [
 			"error",
 			{
 				"functions": "defaultArguments"
+			}
+		],
+		"@typescript-eslint/ban-types": [
+			"error",
+			{
+				"types": {
+					// un-ban a type that's banned by default
+					"{}": false
+				},
+				"extendDefaults": true
 			}
 		],
 		"prettier/prettier": [

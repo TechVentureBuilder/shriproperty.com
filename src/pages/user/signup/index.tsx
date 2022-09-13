@@ -1,21 +1,17 @@
 import { useState } from "react";
-import { Button, Form, Input, InputNumber, message } from "antd";
+import { Form, Input, InputNumber, Button } from "antd";
+
 import { Helmet } from "react-helmet-async";
-import { postContactAction } from "../../../actions/contacts.action";
-import { useAppDispatch } from "../../../hooks/useAddDispatch";
-import { useAppSelector } from "../../../hooks/useAppSelector";
-import { IContact } from "../../../types/interfaces";
-import { TRootState } from "../../../types/types";
+import { IUser } from "../../../types/interfaces";
+import VerifyAccountModal from "./verifyAccountModal";
 import useIsRequiredFieldMissing from "../../../hooks/useIsRequiredFieldMissing";
 
-function Contact() {
-	const dispatch = useAppDispatch();
-	const { postLoading } = useAppSelector((state: TRootState) => state.contacts);
+function Signup() {
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
+	const [isVerificationModalVisible, setIsVerificationModalVisible] = useState(false);
+	const [form] = Form.useForm<IUser>();
 
 	const validateFields = useIsRequiredFieldMissing();
-
-	const [form] = Form.useForm<IContact>();
 
 	const validateMessage = {
 		required: "${label} is required!",
@@ -28,25 +24,27 @@ function Contact() {
 		},
 	};
 
-	const submitHandler = async (values: IContact) => {
-		const res = await dispatch(postContactAction(values));
-		form.resetFields();
-		message.success(res.message);
-	};
-
 	return (
-		<main className="p-10 flex items-center justify-center md:h-screen">
-			<Helmet>
-				<title>Contact US | Shriproperty</title>
-				<link rel="canonical" href="https://shriproperty.com/contact" />
-				<meta name="description" content="Contact us for any query or suggestion" />
-			</Helmet>
+		<main className="p-10 flex items-center justify-center">
+			<VerifyAccountModal
+				isVisible={isVerificationModalVisible}
+				setIsVisible={setIsVerificationModalVisible}
+			/>
 
 			<section className="flex w-full justify-around shadow-2xl p-10 rounded-lg max-w-screen-2xl">
+				<Helmet>
+					<title>Signup | Shri Property</title>
+					<link rel="canonical" href="https://shriproperty.com/signup" />
+					<meta
+						name="description"
+						content="Signup on Shri Property to get exclusive feature of listing your own properties"
+					/>
+				</Helmet>
+
 				<div className="w-1/3 h-auto hidden md:block">
 					<img
-						src="/images/illustrations/mailbox.svg"
-						alt="banner"
+						src="/images/illustrations/signup.svg"
+						alt="illustration"
 						className="h-full w-full"
 					/>
 				</div>
@@ -56,7 +54,6 @@ function Contact() {
 						validateMessages={validateMessage}
 						layout="vertical"
 						form={form}
-						onFinish={submitHandler}
 						onChange={() => validateFields(form, setIsRequiredFieldMissing)}
 					>
 						<Form.Item label="Name" name="name" rules={[{ required: true }]}>
@@ -66,18 +63,13 @@ function Contact() {
 						<Form.Item
 							label="Email"
 							name="email"
-							rules={[
-								{
-									required: true,
-									type: "email",
-								},
-							]}
+							rules={[{ required: true, type: "email" }]}
 						>
 							<Input placeholder="info@shriproperty.com" size="large" />
 						</Form.Item>
 
 						<Form.Item
-							label="Phone Number"
+							label="Phone"
 							name="phone"
 							rules={[
 								{
@@ -91,36 +83,38 @@ function Contact() {
 							<InputNumber className="w-full" placeholder="9465663009" size="large" />
 						</Form.Item>
 
-						<Form.Item
-							label="Subject"
-							name="subject"
-							rules={[{ required: true, type: "string", min: 10, max: 100 }]}
-						>
-							<Input placeholder="3BHK house for sale in SBP" size="large" />
+						<Form.Item label="Password" name="password" rules={[{ required: true }]}>
+							<Input.Password placeholder="somestrongpassword" size="large" />
 						</Form.Item>
 
 						<Form.Item
-							label="Message"
-							name="message"
-							rules={[{ required: true, type: "string", max: 300 }]}
+							label="Confirm Password"
+							name="cpassword"
+							rules={[
+								{ required: true },
+								({ getFieldValue }) => ({
+									validator(_, value) {
+										if (!value || getFieldValue("password") === value) {
+											return Promise.resolve();
+										}
+										return Promise.reject(
+											new Error("Password and confirm password do not match"),
+										);
+									},
+								}),
+							]}
+							dependencies={["password"]}
 						>
-							<Input.TextArea
-								showCount
-								maxLength={300}
-								rows={5}
-								placeholder="Detailed message"
-								size="large"
-							/>
+							<Input.Password placeholder="somestrongpassword" size="large" />
 						</Form.Item>
 
 						<Button
 							type="primary"
 							size="large"
 							htmlType="submit"
-							loading={postLoading}
 							disabled={isRequiredFieldMissing}
 						>
-							Submit
+							Signup
 						</Button>
 					</Form>
 				</div>
@@ -129,4 +123,4 @@ function Contact() {
 	);
 }
 
-export default Contact;
+export default Signup;

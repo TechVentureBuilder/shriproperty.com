@@ -20,8 +20,8 @@ const UserUpdateProperty = lazy(() => import("./pages/user/updateProperty/Update
 const NotFound = lazy(() => import("./pages/notFound/NotFound"));
 const Listings = lazy(() => import("./pages/admin/listings/Listings"));
 const AdminListing = lazy(() => import("./pages/admin/listing/Listing"));
-const Signup = lazy(() => import("./pages/user/signup/Signup"));
-const Login = lazy(() => import("./pages/user/login/Login"));
+const Signup = lazy(() => import("./pages/user/signup"));
+const Login = lazy(() => import("./pages/user/login"));
 const Form = lazy(() => import("./pages/user/home/form/Form"));
 const Users = lazy(() => import("./pages/admin/users/Users"));
 const User = lazy(() => import("./pages/admin/user/User"));
