@@ -8,6 +8,11 @@ module.exports = {
 				secondary: "rgba(0, 0, 0, 0.85)",
 			},
 		},
+		extend: {
+			backgroundImage: {
+				hero: "url(./assets/images/background/hero.webp)",
+			},
+		},
 	},
 	plugins: [],
 };

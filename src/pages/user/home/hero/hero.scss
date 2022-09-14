@@ -8,9 +8,6 @@
 	height: 100vh;
 	background-size: cover;
 	background-position: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
 	color: $color-white;
 	@media screen and (max-width: 600px) {
 		padding: 0 3rem;

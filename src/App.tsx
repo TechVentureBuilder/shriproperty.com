@@ -42,7 +42,7 @@ const AdminNav = lazy(() => import("./components/layout/adminNav/AdminNav"));
 
 const Properties = lazy(() => import("./pages/user/properties/Properties"));
 const AllImages = lazy(() => import("./pages/user/allimages/Images"));
-const Hero = lazy(() => import("./pages/user/home/hero/Hero"));
+const Hero = lazy(() => import("./pages/user/home/hero"));
 const PropertiesSection = lazy(() => import("./pages/user/home/properties/Properties"));
 const Category = lazy(() => import("./pages/user/home/category/Category"));
 const ListingSection = lazy(() => import("./pages/user/home/listing/Listing"));
