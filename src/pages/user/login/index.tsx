@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { Helmet } from "react-helmet-async";
-import { IUser } from "../../../types/interfaces";
+import { IPostLoginPayload, postLogin } from "../../../actions/auth.action";
+import { useAppDispatch } from "../../../hooks/useAddDispatch";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-	const [form] = Form.useForm<IUser>();
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+
+	const [form] = Form.useForm<IPostLoginPayload>();
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
 
 	const validateMessage = {
@@ -25,6 +30,15 @@ function Login() {
 
 		if (!missingRequiredField) setIsRequiredFieldMissing(false);
 		else setIsRequiredFieldMissing(true);
+	};
+
+	const submitHandler = (values: IPostLoginPayload) => {
+		dispatch(postLogin(values)).then((res) => {
+			localStorage.setItem("accessToken", res.accessToken);
+			localStorage.setItem("refreshToken", res.refreshToken);
+			message.success("Login Successful");
+			navigate("/");
+		});
 	};
 
 	return (
@@ -49,6 +63,7 @@ function Login() {
 						validateMessages={validateMessage}
 						layout="vertical"
 						form={form}
+						onFinish={submitHandler}
 						onChange={checkFieldValidation}
 					>
 						<Form.Item

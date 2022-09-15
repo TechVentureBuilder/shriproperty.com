@@ -12,13 +12,13 @@ export interface IContact {
 }
 
 export interface IUser {
-	_id?: string;
-	uid?: number;
+	_id: string;
+	uid: number;
 	name: string;
 	email: string;
 	phone: number;
 	password: string;
 	verified: boolean;
-	createdAt?: string;
-	updatedAt?: string;
+	createdAt: string;
+	updatedAt: string;
 }

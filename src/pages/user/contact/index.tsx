@@ -102,11 +102,11 @@ function Contact() {
 						<Form.Item
 							label="Message"
 							name="message"
-							rules={[{ required: true, type: "string", max: 300 }]}
+							rules={[{ required: true, type: "string", max: 500 }]}
 						>
 							<Input.TextArea
 								showCount
-								maxLength={300}
+								maxLength={500}
 								rows={5}
 								placeholder="Detailed message"
 								size="large"

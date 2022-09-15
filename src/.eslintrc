@@ -41,7 +41,7 @@
 
 	"rules": {
 		"semi": "error",
-		"no-console": "error",
+		"no-console": "warn",
 		"valid-jsdoc": "off",
 		"linebreak-style": "off",
 		"@typescript-eslint/no-explicit-any": "off",
@@ -51,7 +51,7 @@
 		"jsx-quotes": ["error", "prefer-double"],
 		"no-tabs": "off",
 		"space-infix-ops": "off",
-		"no-trailing-spaces": "error",
+		"no-trailing-spaces": "off",
 		"space-before-blocks": "error",
 		"react/react-in-jsx-scope": "off",
 		"camelcase": "error",
@@ -61,7 +61,7 @@
 		"spaced-comment": "off",
 		"prefer-destructuring": ["error", { "object": true, "array": true }],
 		"no-unused-vars": "off",
-		"@typescript-eslint/no-unused-vars": ["error"],
+		"@typescript-eslint/no-unused-vars": ["warn"],
 		"comma-dangle": "off",
 		"new-cap": "off",
 		"require-await": "error",

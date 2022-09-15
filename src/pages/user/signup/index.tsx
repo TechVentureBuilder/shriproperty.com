@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { Form, Input, InputNumber, Button } from "antd";
-
+import { Form, Input, InputNumber, Button, message } from "antd";
 import { Helmet } from "react-helmet-async";
-import { IUser } from "../../../types/interfaces";
 import VerifyAccountModal from "./verifyAccountModal";
 import useIsRequiredFieldMissing from "../../../hooks/useIsRequiredFieldMissing";
+import { useAppDispatch } from "../../../hooks/useAddDispatch";
+import { IPostSignupPayload, postSignup } from "../../../actions/auth.action";
 
 function Signup() {
+	const dispatch = useAppDispatch();
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
 	const [isVerificationModalVisible, setIsVerificationModalVisible] = useState(false);
-	const [form] = Form.useForm<IUser>();
+	const [userEmail, setUserEmail] = useState("");
+	const [signupLoading, setSignupLoading] = useState(false);
+	const [form] = Form.useForm<IPostSignupPayload>();
 
 	const validateFields = useIsRequiredFieldMissing();
 
@@ -24,11 +27,25 @@ function Signup() {
 		},
 	};
 
+	const submitHandler = async (values: IPostSignupPayload) => {
+		try {
+			setSignupLoading(true);
+			await dispatch(postSignup(values));
+			message.success("Account created successfully");
+
+			setUserEmail(values.email);
+			setIsVerificationModalVisible(true);
+		} finally {
+			setSignupLoading(false);
+		}
+	};
+
 	return (
 		<main className="p-10 flex items-center justify-center">
 			<VerifyAccountModal
 				isVisible={isVerificationModalVisible}
 				setIsVisible={setIsVerificationModalVisible}
+				email={userEmail}
 			/>
 
 			<section className="flex w-full justify-around shadow-2xl p-10 rounded-lg max-w-screen-2xl">
@@ -54,6 +71,7 @@ function Signup() {
 						validateMessages={validateMessage}
 						layout="vertical"
 						form={form}
+						onFinish={submitHandler}
 						onChange={() => validateFields(form, setIsRequiredFieldMissing)}
 					>
 						<Form.Item label="Name" name="name" rules={[{ required: true }]}>
@@ -113,6 +131,7 @@ function Signup() {
 							size="large"
 							htmlType="submit"
 							disabled={isRequiredFieldMissing}
+							loading={signupLoading}
 						>
 							Signup
 						</Button>
