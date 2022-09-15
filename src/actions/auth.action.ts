@@ -41,8 +41,8 @@ export function postLogin(payload: IPostLoginPayload) {
 	return async () => {
 		interface IResponse {
 			message: string;
-			accessToken: string;
-			refreshToken: string;
+			access_token: string;
+			refresh_token: string;
 		}
 
 		const res: IResponse = await api.post("/auth/login", payload);

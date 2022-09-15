@@ -34,8 +34,8 @@ function Login() {
 
 	const submitHandler = (values: IPostLoginPayload) => {
 		dispatch(postLogin(values)).then((res) => {
-			localStorage.setItem("accessToken", res.accessToken);
-			localStorage.setItem("refreshToken", res.refreshToken);
+			localStorage.setItem("accessToken", res.access_token);
+			localStorage.setItem("refreshToken", res.refresh_token);
 			message.success("Login Successful");
 			navigate("/");
 		});
