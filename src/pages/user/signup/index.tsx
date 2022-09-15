@@ -48,7 +48,7 @@ function Signup() {
 				email={userEmail}
 			/>
 
-			<section className="flex w-full justify-around shadow-2xl p-10 rounded-lg max-w-screen-2xl">
+			<section className="flex w-full justify-around items-center shadow-2xl p-10 rounded-lg max-w-screen-2xl min-h-[80vh]">
 				<Helmet>
 					<title>Signup | Shri Property</title>
 					<link rel="canonical" href="https://shriproperty.com/signup" />

@@ -34,8 +34,8 @@ function Login() {
 
 	const submitHandler = (values: IPostLoginPayload) => {
 		dispatch(postLogin(values)).then((res) => {
-			localStorage.setItem("accessToken", res.access_token);
-			localStorage.setItem("refreshToken", res.refresh_token);
+			localStorage.setItem("access_token", res.access_token);
+			localStorage.setItem("refresh_token", res.refresh_token);
 			message.success("Login Successful");
 			navigate("/");
 		});
@@ -43,7 +43,7 @@ function Login() {
 
 	return (
 		<main className="p-10 flex items-center justify-center">
-			<section className="flex w-full justify-around items-center shadow-2xl p-10 rounded-lg max-w-screen-2xl">
+			<section className="flex w-full justify-around items-center shadow-2xl p-10 rounded-lg max-w-screen-2xl min-h-[80vh]">
 				<Helmet>
 					<title>Login | Shri Property</title>
 					<link rel="canonical" href="https://shriproperty.com/login" />

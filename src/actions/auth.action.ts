@@ -1,3 +1,6 @@
+import { Dispatch } from "@reduxjs/toolkit";
+import { userActions } from "../slices/user.slice";
+import { IUser } from "../types/interfaces";
 import api from "../utils/api.util";
 
 export interface IPostSignupPayload {
@@ -48,5 +51,34 @@ export function postLogin(payload: IPostLoginPayload) {
 		const res: IResponse = await api.post("/auth/login", payload);
 
 		return res;
+	};
+}
+
+export function getCurrentUser() {
+	return async (dispatch: Dispatch) => {
+		try {
+			const accessToken = localStorage.getItem("access_token");
+
+			interface IResponse {
+				message: string;
+				user: IUser;
+			}
+
+			const res: IResponse = await api.get("/auth/me", {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			});
+
+			if (res.user) {
+				dispatch(userActions.replaceUser({ user: res.user, isLoggedIn: true }));
+			} else {
+				dispatch(userActions.replaceUser({ user: null, isLoggedIn: false }));
+			}
+
+			return Promise.resolve(res);
+		} catch (err) {
+			return Promise.reject(err);
+		}
 	};
 }

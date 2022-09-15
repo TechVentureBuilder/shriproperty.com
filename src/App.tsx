@@ -2,7 +2,6 @@
 import { FC, lazy, Suspense, useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
-import get from "./api/get";
 import "./app.less";
 import "./app.css";
 import Loader from "./components/util/loader/Loader";
@@ -13,6 +12,8 @@ import AddProperty from "./pages/admin/property/form/Form";
 import { AuthFormSubmitContext, UserContext } from "./helpers/Context";
 import { Provider } from "react-redux";
 import store from "./store";
+import { useAppDispatch } from "./hooks/useAddDispatch";
+import { getCurrentUser } from "./actions/auth.action";
 
 const Account = lazy(() => import("./pages/user/account/Account"));
 const Guests = lazy(() => import("./pages/admin/guests/Guests"));
@@ -99,6 +100,8 @@ const AdminRoutes: FC = () => {
 
 // created a different router to hide navbar in admin routes
 const UserRoutes: FC = () => {
+	const dispatch = useAppDispatch();
+
 	const [user, setUser] = useState<LoggedInUser | LoggedOutUser>({
 		loaded: false,
 		isLoggedIn: false,
@@ -109,22 +112,15 @@ const UserRoutes: FC = () => {
 	const [userUpdated, setUserUpdated] = useState(false);
 
 	useEffect(() => {
-		get("/auth/is-logged-in")
-			.then((res: any) => {
-				setUser({
-					loaded: true,
-					isLoggedIn: res.success,
-					data: res.data,
-				});
-				setAuthFormSubmit(false);
-				setUserUpdated(false);
-			})
-			.catch(() => {
-				setUser({ loaded: true, isLoggedIn: false, data: {} });
-				setAuthFormSubmit(false);
-				setUserUpdated(false);
-			});
-	}, [authFormSubmit, userUpdated]);
+		const accessToken = localStorage.getItem("access_token");
+		const refreshToken = localStorage.getItem("refresh_token");
+
+		if (!accessToken || !refreshToken) return;
+
+		dispatch(getCurrentUser()).catch(() => {
+			dispatch(getCurrentUser());
+		});
+	}, []);
 
 	return (
 		<AuthFormSubmitContext.Provider value={{ authFormSubmit, setAuthFormSubmit }}>

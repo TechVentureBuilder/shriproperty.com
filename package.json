@@ -2,7 +2,6 @@
 	"name": "client",
 	"version": "2.1.0",
 	"private": true,
-	"proxy": "https://dev.shriproperty.com/",
 	"dependencies": {
 		"@craco/craco": "6.4.5",
 		"@emotion/react": "11.10.4",
