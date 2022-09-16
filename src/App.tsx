@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-d
 import "./app.less";
 import "./app.css";
 import Loader from "./components/util/loader/Loader";
+import ContactUsForm from "./components/contactUsForm";
 
 import Contacts from "./pages/admin/contacts/Contacts";
 import AddProperty from "./pages/admin/property/form/Form";
@@ -23,7 +24,6 @@ const Listings = lazy(() => import("./pages/admin/listings/Listings"));
 const AdminListing = lazy(() => import("./pages/admin/listing/Listing"));
 const Signup = lazy(() => import("./pages/user/signup"));
 const Login = lazy(() => import("./pages/user/login"));
-const Form = lazy(() => import("./pages/user/home/form/Form"));
 const Users = lazy(() => import("./pages/admin/users/Users"));
 const User = lazy(() => import("./pages/admin/user/User"));
 const PendingListings = lazy(() => import("./pages/user/pendingListings/PendingListings"));
@@ -155,7 +155,9 @@ const UserRoutes: FC = () => {
 								<PropertiesSection />
 								<Category />
 								<ListingSection />
-								<Form />
+								<section className="py-10 px-36">
+									<ContactUsForm />
+								</section>
 							</main>
 						}
 					/>
