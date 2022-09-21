@@ -7,8 +7,6 @@ module.exports = {
 				primary: "#9e7160",
 				secondary: "rgba(0, 0, 0, 0.85)",
 			},
-		},
-		extend: {
 			backgroundImage: {
 				hero: "url(./assets/images/background/hero.webp)",
 			},

@@ -14,7 +14,8 @@
 		"no-secrets",
 		"jsonc",
 		"no-unsanitized",
-		"@typescript-eslint"
+		"@typescript-eslint",
+		"jsx-a11y"
 	],
 	"extends": [
 		"plugin:react/recommended",
@@ -24,7 +25,8 @@
 		"plugin:no-unsanitized/DOM",
 		"plugin:prettier/recommended",
 		"plugin:sonarjs/recommended",
-		"plugin:@typescript-eslint/recommended"
+		"plugin:@typescript-eslint/recommended",
+		"plugin:jsx-a11y/recommended"
 	],
 	"parserOptions": {
 		"ecmaFeatures": {
