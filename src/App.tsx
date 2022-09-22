@@ -45,7 +45,6 @@ const Properties = lazy(() => import("./pages/user/properties/Properties"));
 const AllImages = lazy(() => import("./pages/user/allimages/Images"));
 const Hero = lazy(() => import("./pages/user/home/hero"));
 const PropertiesSection = lazy(() => import("./pages/user/home/properties/Properties"));
-const Category = lazy(() => import("./pages/user/home/category/Category"));
 const ListingSection = lazy(() => import("./pages/user/home/listing/Listing"));
 const Contact = lazy(() => import("./pages/user/contact"));
 
@@ -153,7 +152,6 @@ const UserRoutes: FC = () => {
 								</Helmet>
 								<Hero />
 								<PropertiesSection />
-								<Category />
 								<ListingSection />
 								<section className="py-10 px-36">
 									<ContactUsForm />
