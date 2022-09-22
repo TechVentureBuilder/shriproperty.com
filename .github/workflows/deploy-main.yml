@@ -15,7 +15,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Use node js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
             - name: npm install and build
@@ -51,7 +51,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
-            - uses: actions/setup-node@v2
+            - uses: actions/setup-node@v3
               with:
                   node-version: "16.x"
             - run: npm i --force
