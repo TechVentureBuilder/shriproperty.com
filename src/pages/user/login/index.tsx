@@ -1,16 +1,21 @@
 import { useState } from "react";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Typography } from "antd";
 import { Helmet } from "react-helmet-async";
 import { IPostLoginPayload, postLogin } from "../../../actions/auth.action";
 import { useAppDispatch } from "../../../hooks/useAddDispatch";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import ForgotPasswordModal from "./components/forgotPasswordModal";
+import useIsRequiredFieldMissing from "../../../hooks/useIsRequiredFieldMissing";
+import ResetPasswordModal from "../../../components/resetPasswordModal";
 
 function Login() {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
+	const checkRequiredField = useIsRequiredFieldMissing();
 
 	const [form] = Form.useForm<IPostLoginPayload>();
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
+	const [isForgotPasswordModalVisible, setIsForgotPasswordModalVisible] = useState(false);
 
 	const validateMessage = {
 		required: "${label} is required!",
@@ -21,15 +26,6 @@ function Login() {
 		number: {
 			range: "${label} must 10 digits",
 		},
-	};
-
-	const checkFieldValidation = () => {
-		const missingRequiredField = Object.values(form.getFieldsValue()).some(
-			(field) => field === undefined || field === "",
-		);
-
-		if (!missingRequiredField) setIsRequiredFieldMissing(false);
-		else setIsRequiredFieldMissing(true);
 	};
 
 	const submitHandler = (values: IPostLoginPayload) => {
@@ -50,6 +46,13 @@ function Login() {
 					<meta name="description" content="Login on Shri Property" />
 				</Helmet>
 
+				<ForgotPasswordModal
+					isVisible={isForgotPasswordModalVisible}
+					setIsVisible={setIsForgotPasswordModalVisible}
+				/>
+
+				<ResetPasswordModal />
+
 				<div className="w-1/3 h-auto hidden md:block">
 					<img
 						src="/images/illustrations/login.svg"
@@ -64,7 +67,7 @@ function Login() {
 						layout="vertical"
 						form={form}
 						onFinish={submitHandler}
-						onChange={checkFieldValidation}
+						onChange={() => checkRequiredField(form, setIsRequiredFieldMissing)}
 					>
 						<Form.Item
 							label="Email"
@@ -78,13 +81,29 @@ function Login() {
 							<Input.Password placeholder="mypasssword" size="large" />
 						</Form.Item>
 
+						<Typography.Paragraph className="!mb-0">
+							Don&#39;t have an account?{" "}
+							<Typography.Link className="text-primary font-semibold">
+								<Link to="/signup">Signup</Link>
+							</Typography.Link>
+						</Typography.Paragraph>
+
+						<Typography.Paragraph>
+							<Typography.Link
+								className="text-primary font-semibold"
+								onClick={() => setIsForgotPasswordModalVisible(true)}
+							>
+								Forgot Password?
+							</Typography.Link>
+						</Typography.Paragraph>
+
 						<Button
 							type="primary"
 							size="large"
 							htmlType="submit"
 							disabled={isRequiredFieldMissing}
 						>
-							Login
+							Sign In
 						</Button>
 					</Form>
 				</div>

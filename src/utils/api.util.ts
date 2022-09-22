@@ -3,7 +3,7 @@ import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 
 const api: AxiosInstance = axios.create({
 	baseURL: process.env.REACT_APP_API_URL,
-	timeout: 4000,
+	timeout: 10000,
 });
 
 api.interceptors.response.use(

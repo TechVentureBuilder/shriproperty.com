@@ -1,4 +1,6 @@
 import { Dispatch } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
+import { authActions } from "../slices/auth.slice";
 import { userActions } from "../slices/user.slice";
 import { IUser } from "../types/interfaces";
 import api from "../utils/api.util";
@@ -79,6 +81,73 @@ export function getCurrentUser() {
 			return Promise.resolve(res);
 		} catch (err) {
 			return Promise.reject(err);
+		}
+	};
+}
+
+/**
+ * this action will send a verification code to the given email
+ * @param email email on which password reset link is sent
+ */
+export function postForgotPassword(email: string) {
+	return async (dispatch: Dispatch) => {
+		try {
+			const res = await api.post("/auth/forgotpassword", { email });
+
+			dispatch(authActions.replaceEmail(email));
+			dispatch(authActions.setIsResetPasswordModalVisible(true));
+
+			return Promise.resolve(res);
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	};
+}
+
+interface IPatchResetPasswordPayload {
+	pathParams: {
+		/**
+		 * email on which password reset code is sent
+		 */
+		email: string;
+
+		/**
+		 * password reset code which was sent to email
+		 */
+		passwordResetCode: string;
+	};
+	body: {
+		/**
+		 * new password
+		 */
+		password: string;
+
+		/**
+		 * confirm new password
+		 */
+		cpassword: string;
+	};
+}
+
+/**
+ * this action will reset the password of the user
+ * @param {object} pathParams email and password reset code
+ * @param {object} body new password and confirm password
+ */
+export function patchResetPassword(
+	pathParams: IPatchResetPasswordPayload["pathParams"],
+	body: IPatchResetPasswordPayload["body"],
+) {
+	return async () => {
+		try {
+			const res = await api.patch(
+				`/auth/resetpassword/${pathParams.email}/${pathParams.passwordResetCode}`,
+				body,
+			);
+
+			return Promise.resolve(res);
+		} catch (err) {
+			return Promise.reject<AxiosError<{ error: string }>>(err);
 		}
 	};
 }
