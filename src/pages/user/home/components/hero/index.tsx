@@ -1,11 +1,11 @@
 import { Button, Typography } from "antd";
 import styles from "./index.module.less";
 import { Link } from "react-router-dom";
-import buyHome from "../../../../assets/images/categories/buyHome.webp";
-import pgRentalImg from "../../../../assets/images/categories/pgRental.webp";
-import listPropertyImg from "../../../../assets/images/categories/listProperty.webp";
-import plotImg from "../../../../assets/images/categories/plot.webp";
-import commercialPropertyImg from "../../../../assets/images/categories/commercialProperty.webp";
+import buyHome from "../../../../../assets/images/categories/buyHome.webp";
+import pgRentalImg from "../../../../../assets/images/categories/pgRental.webp";
+import listPropertyImg from "../../../../../assets/images/categories/listProperty.webp";
+import plotImg from "../../../../../assets/images/categories/plot.webp";
+import commercialPropertyImg from "../../../../../assets/images/categories/commercialProperty.webp";
 
 function Hero() {
 	return (

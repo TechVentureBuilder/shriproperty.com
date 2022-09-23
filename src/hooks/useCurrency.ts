@@ -1,16 +1,33 @@
-const useCurrency = () => {
+/**
+ * Format currency
+ * @example
+ * ```jsx
+ *  const currency = useCurrency();
+ *  <h1>{currency(500)}</h1>
+ * ```
+ */
+function useFormatCurrency() {
 	/**
+	 * This function will format the currency according to the locale
 	 * @param {number} unFormattedCurrency unformatted date
-	 * @return {string} if unFormattedCurrency cannot be converted to `Date` than will return null else formattedDate
+	 * @example
+	 * ```jsx
+	 *  const currency = useCurrency();
+	 *  <h1>{currency(500)}</h1>
+	 * ```
 	 */
-	return (unFormattedCurrency: string) => {
-		const inputToNumber = parseInt(unFormattedCurrency);
+	return (unFormattedCurrency: number | string) => {
+		const inputToNumber =
+			typeof unFormattedCurrency === "string"
+				? parseInt(unFormattedCurrency)
+				: unFormattedCurrency;
+
 		return new Intl.NumberFormat(navigator.language, {
 			style: "currency",
 			currency: "INR",
 			maximumSignificantDigits: 3,
 		}).format(inputToNumber);
 	};
-};
+}
 
-export default useCurrency;
+export default useFormatCurrency;

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { BPrimary } from "../../../../components/util/button/Button";
-import { HPrimary } from "../../../../components/util/typography/Typography";
+import { BPrimary } from "../../../../../components/util/button/Button";
+import { HPrimary } from "../../../../../components/util/typography/Typography";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import "./listing.scss";

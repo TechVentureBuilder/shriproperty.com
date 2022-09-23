@@ -14,7 +14,7 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import StraightenIcon from "@mui/icons-material/Straighten";
 import { Helmet } from "react-helmet-async";
 import { fakeProperty } from "../../../helpers/fakeData";
-import useCurrency from "../../../hooks/useCurrency";
+import useFormatCurrency from "../../../hooks/useCurrency";
 
 interface PropertyProps {
 	propertyOtpModelOpened: boolean;
@@ -39,7 +39,7 @@ const Property: FC<PropertyProps> = ({ propertyOtpModelOpened, setPropertyOtpMod
 	const [errorModalMessage, setErrorModalMessage] = useState("");
 	const [errorVerifyModalOpen, setErrorVerifyModalOpen] = useState(false);
 	const [errorVerifyModalMessage, setErrorVerifyModalMessage] = useState("");
-	const currency = useCurrency();
+	const currency = useFormatCurrency();
 
 	useEffect(() => {
 		// Verify token

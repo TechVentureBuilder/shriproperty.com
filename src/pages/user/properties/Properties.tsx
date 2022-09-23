@@ -5,9 +5,9 @@ import { Helmet } from "react-helmet-async";
 import get from "../../../api/get";
 import Loader from "../../../components/util/loader/Loader";
 import NotFound from "../../notFound/NotFound";
-import Property from "../../../components/property/Property";
+import Property from "../../../components/property";
 
-import "../home/properties/properties.scss";
+import "./properties.scss";
 
 const Properties: FC = () => {
 	const [searchParams] = useSearchParams();
@@ -82,7 +82,7 @@ const Properties: FC = () => {
 						<>
 							<div className="properties-section__properties">
 								{response.map((property: Property) => (
-									<Property property={property} key={property._id} />
+									<Property key={property._id} />
 								))}
 							</div>
 						</>
