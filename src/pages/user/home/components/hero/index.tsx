@@ -1,4 +1,4 @@
-import { Button, Typography } from "antd";
+import { Button, Typography, Image } from "antd";
 import styles from "./index.module.less";
 import { Link } from "react-router-dom";
 import buyHome from "../../../../../assets/images/categories/buyHome.webp";
@@ -32,39 +32,51 @@ function Hero() {
 				</div>
 			</section>
 			<section className="flex justify-between px-36 -mt-32 mb-32">
-				<div className="h-[18rem] w-[28rem] mr-5 after:rounded-3xl cursor-pointer relative after:bg-black after:bg-opacity-10 after:content-[''] after:top-0 after:left-0 after:right-0 after:bottom-0 after:absolute hover:after:bg-opacity-20 after:transition">
-					<img src={buyHome} alt="buy your home" className="h-full w-full rounded-3xl " />
+				<div className="h-[15rem] w-[22rem] mr-12">
+					<img
+						src={buyHome}
+						alt="buy your home"
+						className="h-full w-full rounded-3xl object-contain"
+					/>
 					<Typography.Paragraph className="text-2xl mt-2">
 						Buy your home
 					</Typography.Paragraph>
 				</div>
-				<div className="h-[18rem] w-[28rem] mr-5 after:rounded-3xl cursor-pointer relative after:bg-black after:bg-opacity-10 after:content-[''] after:top-0 after:left-0 after:right-0 after:bottom-0 after:absolute hover:after:bg-opacity-20 after:transition">
-					<img src={pgRentalImg} alt="pg/rental" className="h-full w-full rounded-3xl" />
+				<div className="h-[15rem] w-[22rem] mr-12">
+					<img
+						src={pgRentalImg}
+						alt="pg/rental"
+						className="h-full w-full rounded-3xl object-contain"
+					/>
 					<Typography.Paragraph className="text-2xl mt-2">
 						PG/Rentals
 					</Typography.Paragraph>
 				</div>
-				<div className="h-[18rem] w-[28rem] mr-5 after:rounded-3xl cursor-pointer relative after:bg-black after:bg-opacity-10 after:content-[''] after:top-0 after:left-0 after:right-0 after:bottom-0 after:absolute hover:after:bg-opacity-20 after:transition">
+				<div className="h-[15rem] w-[22rem] mr-12">
 					<img
 						src={listPropertyImg}
 						alt="List your property"
-						className="h-full w-full rounded-3xl"
+						className="h-full w-full rounded-3xl object-contain"
 					/>
 					<Typography.Paragraph className="text-2xl mt-2">
 						List your property
 					</Typography.Paragraph>
 				</div>
-				<div className="h-[18rem] w-[28rem] mr-5 after:rounded-3xl cursor-pointer relative after:bg-black after:bg-opacity-10 after:content-[''] after:top-0 after:left-0 after:right-0 after:bottom-0 after:absolute hover:after:bg-opacity-20 after:transition">
-					<img src={plotImg} alt="plot" className="h-full w-full rounded-3xl" />
+				<div className="h-[15rem] w-[22rem] mr-12">
+					<img
+						src={plotImg}
+						alt="plot"
+						className="h-full w-full rounded-3xl object-contain"
+					/>
 					<Typography.Paragraph className="text-2xl mt-2">
 						Plot to build your own dream
 					</Typography.Paragraph>
 				</div>
-				<div className="h-[18rem] w-[28rem] mr-5 after:rounded-3xl cursor-pointer relative after:bg-black after:bg-opacity-10 after:content-[''] after:top-0 after:left-0 after:right-0 after:bottom-0 after:absolute hover:after:bg-opacity-20 after:transition">
+				<div className="h-[15rem] w-[22rem] mr-12">
 					<img
 						src={commercialPropertyImg}
 						alt="commercial property"
-						className="h-full w-full rounded-3xl"
+						className="h-full w-full rounded-3xl object-contain"
 					/>
 					<Typography.Paragraph className="text-2xl mt-2">
 						Commercial property
