@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 import { authActions } from "../slices/auth.slice";
 import { userActions } from "../slices/user.slice";
 import { IUser } from "../types/interfaces";
-import api from "../utils/api.util";
+import API from "../utils/api.util";
 
 export interface IPostSignupPayload {
 	name: string;
@@ -15,7 +15,7 @@ export interface IPostSignupPayload {
 
 export function postSignup(payload: IPostSignupPayload) {
 	return async () => {
-		return await api.post("/auth/signup", payload);
+		return await API.post("/auth/signup", payload);
 	};
 }
 
@@ -33,7 +33,7 @@ export interface IGetVerifyAccountPathParams {
 
 export function getVerifyAccount(pathParams: IGetVerifyAccountPathParams) {
 	return async () => {
-		return await api.get(`/auth/verify/${pathParams.email}/${pathParams.verificationCode}`);
+		return await API.get(`/auth/verify/${pathParams.email}/${pathParams.verificationCode}`);
 	};
 }
 
@@ -50,7 +50,7 @@ export function postLogin(payload: IPostLoginPayload) {
 			refresh_token: string;
 		}
 
-		const res: IResponse = await api.post("/auth/login", payload);
+		const res: IResponse = await API.post("/auth/login", payload);
 
 		return res;
 	};
@@ -66,7 +66,7 @@ export function getCurrentUser() {
 				user: IUser;
 			}
 
-			const res: IResponse = await api.get("/auth/me", {
+			const res: IResponse = await API.get("/auth/me", {
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 				},
@@ -92,7 +92,7 @@ export function getCurrentUser() {
 export function postForgotPassword(email: string) {
 	return async (dispatch: Dispatch) => {
 		try {
-			const res = await api.post("/auth/forgotpassword", { email });
+			const res = await API.post("/auth/forgotpassword", { email });
 
 			dispatch(authActions.replaceEmail(email));
 			dispatch(authActions.setIsResetPasswordModalVisible(true));
@@ -140,7 +140,7 @@ export function patchResetPassword(
 ) {
 	return async () => {
 		try {
-			const res = await api.patch(
+			const res = await API.patch(
 				`/auth/resetpassword/${pathParams.email}/${pathParams.passwordResetCode}`,
 				body,
 			);

@@ -1,5 +1,5 @@
 {
-	"cSpell.words": ["craco", "reduxjs"],
+	"cSpell.words": ["craco", "IAPI", "reduxjs"],
 	"search.exclude": {
 		"**/node_modules": true,
 		"**/bower_components": true,

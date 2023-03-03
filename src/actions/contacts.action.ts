@@ -1,14 +1,19 @@
 import { Dispatch } from "@reduxjs/toolkit";
-import { contactsReducers } from "../slices/contacts.slice";
-import { IContact } from "../types/interfaces";
-import api from "../utils/api.util";
+import { IContact, contactsReducers } from "../slices/contacts.slice";
+import API, { IAPIResponseError, IAPIResponseSuccess } from "../utils/api.util";
+import { AxiosError } from "axios";
+import { message } from "antd";
 
-export function postContactAction(payload: IContact) {
+export function postContactActionHandler(payload: IContact) {
 	return async (dispatch: Dispatch) => {
 		try {
 			dispatch(contactsReducers.setPostLoading(true));
-			const res: { message: string } = await api.post("/contacts", payload);
-			return res;
+			const res = await API.post<IAPIResponseSuccess>("/contacts", payload);
+
+			message.success("Contact request submitted successfully");
+			return Promise.resolve(res.data);
+		} catch (err) {
+			return Promise.reject(err as AxiosError<IAPIResponseError>);
 		} finally {
 			dispatch(contactsReducers.setPostLoading(false));
 		}

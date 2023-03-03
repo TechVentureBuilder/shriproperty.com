@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Button, Form, Input, InputNumber, message } from "antd";
-import { postContactAction } from "../../actions/contacts.action";
+import { Button, Form, Input, InputNumber } from "antd";
+import { postContactActionHandler } from "../../actions/contacts.action";
 import { useAppDispatch } from "../../hooks/useAddDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { IContact } from "../../types/interfaces";
 import { TRootState } from "../../types/types";
 import useIsRequiredFieldMissing from "../../hooks/useIsRequiredFieldMissing";
+import { IContact } from "../../slices/contacts.slice";
 
 function ContactUsForm() {
 	const dispatch = useAppDispatch();
@@ -28,9 +28,8 @@ function ContactUsForm() {
 	};
 
 	const submitHandler = async (values: IContact) => {
-		const res = await dispatch(postContactAction(values));
+		await dispatch(postContactActionHandler(values));
 		form.resetFields();
-		message.success(res.message);
 	};
 
 	return (

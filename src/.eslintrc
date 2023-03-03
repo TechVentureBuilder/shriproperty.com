@@ -14,8 +14,7 @@
 		"no-secrets",
 		"jsonc",
 		"no-unsanitized",
-		"@typescript-eslint",
-		"jsx-a11y"
+		"@typescript-eslint"
 	],
 	"extends": [
 		"plugin:react/recommended",
@@ -25,8 +24,7 @@
 		"plugin:no-unsanitized/DOM",
 		"plugin:prettier/recommended",
 		"plugin:sonarjs/recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:jsx-a11y/recommended"
+		"plugin:@typescript-eslint/recommended"
 	],
 	"parserOptions": {
 		"ecmaFeatures": {
@@ -42,6 +40,7 @@
 	},
 
 	"rules": {
+		"prefer-promise-reject-errors": "off",
 		"semi": "error",
 		"no-console": "warn",
 		"valid-jsdoc": "off",
@@ -50,10 +49,11 @@
 		"react/destructuring-assignment": "error",
 		"object-curly-spacing": "off",
 		"indent": "off",
+		"@typescript-eslint/no-non-null-assertion": "off",
 		"jsx-quotes": ["error", "prefer-double"],
 		"no-tabs": "off",
 		"space-infix-ops": "off",
-		"no-trailing-spaces": "off",
+		"no-trailing-spaces": "error",
 		"space-before-blocks": "error",
 		"react/react-in-jsx-scope": "off",
 		"camelcase": "error",
@@ -67,7 +67,6 @@
 		"comma-dangle": "off",
 		"new-cap": "off",
 		"require-await": "error",
-		"no-invalid-this": "off",
 		"require-jsdoc": "off",
 		"sonarjs/cognitive-complexity": "off",
 		"sonarjs/no-duplicate-string": "off",
@@ -81,27 +80,11 @@
 		"react/boolean-prop-naming": "error",
 		"react/hook-use-state": "error",
 		"react/no-access-state-in-setstate": "error",
-		"react/no-children-prop": "warn",
-		"react/no-unknown-property": "warn",
-		"react/no-unused-prop-types": "warn",
-		"react/no-unused-state": "warn",
+		"react/no-children-prop": "error",
+		"react/no-unknown-property": "error",
+		"react/no-unused-prop-types": "error",
+		"react/no-unused-state": "error",
 		"react/prop-types": "error",
-		"react/require-default-props": [
-			"error",
-			{
-				"functions": "defaultArguments"
-			}
-		],
-		"@typescript-eslint/ban-types": [
-			"error",
-			{
-				"types": {
-					// un-ban a type that's banned by default
-					"{}": false
-				},
-				"extendDefaults": true
-			}
-		],
 		"prettier/prettier": [
 			"error",
 			{
