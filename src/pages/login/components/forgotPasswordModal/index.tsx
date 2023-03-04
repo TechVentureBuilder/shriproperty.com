@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal, Form, Input } from "antd";
 import useIsRequiredFieldMissing from "../../../../hooks/useIsRequiredFieldMissing";
-import { useAppDispatch } from "../../../../hooks/useAddDispatch";
+import { useAppDispatch } from "../../../../hooks/useAppDispatch";
 import { postForgotPassword } from "../../../../actions/auth.action";
 
 interface IForgotPasswordModalProps {

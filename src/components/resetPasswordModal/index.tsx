@@ -1,11 +1,11 @@
 import { Form, Input, message, Modal } from "antd";
 import { useState } from "react";
 import { patchResetPassword } from "../../actions/auth.action";
-import { useAppDispatch } from "../../hooks/useAddDispatch";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import useIsRequiredFieldMissing from "../../hooks/useIsRequiredFieldMissing";
 import { authActions } from "../../slices/auth.slice";
-import { TRootState } from "../../types/types";
+import { TRootState } from "../../store";
 
 function ResetPasswordModal() {
 	const dispatch = useAppDispatch();

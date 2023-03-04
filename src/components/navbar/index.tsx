@@ -4,7 +4,7 @@ import { Drawer, Form, Input, Layout, Menu } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./index.module.less";
 import { ItemType } from "antd/lib/menu/hooks/useItems";
-import logo from "../../../assets/images/logo/logo.png";
+import logo from "../../assets/images/logo/logo.png";
 
 const { Header } = Layout;
 

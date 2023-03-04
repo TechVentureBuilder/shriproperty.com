@@ -1,6 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IUser } from "../types/interfaces";
 import { replaceUserReducer } from "../reducers/user.reducer";
+
+export interface IUser {
+	_id: string;
+	uid: string;
+	name: string;
+	email: string;
+	phone: string;
+	exp: number;
+	iat: number;
+	listings: [];
+	properties: [];
+	createdAt: string;
+	updatedAt: string;
+}
 
 export interface IUserState {
 	currentUser: null | IUser;

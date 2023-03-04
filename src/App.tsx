@@ -4,13 +4,13 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import "./app.less";
 import "./app.css";
-import Loader from "./components/util/loader/Loader";
 
 import { AuthFormSubmitContext, UserContext } from "./helpers/Context";
 import { Provider } from "react-redux";
 import store from "./store";
-import { useAppDispatch } from "./hooks/useAddDispatch";
+import { useAppDispatch } from "./hooks/useAppDispatch";
 import { getCurrentUser } from "./actions/auth.action";
+import FullPageLoader from "./components/fullPageLoader";
 
 const Account = lazy(() => import("./pages/account/Account"));
 const UserUpdateProperty = lazy(() => import("./pages/updateProperty/UpdateProperty"));
@@ -21,10 +21,11 @@ const PendingListings = lazy(() => import("./pages/pendingListings/PendingListin
 const UpdatePendingListing = lazy(
 	() => import("./pages/updatePendingListings/UpdatePendingListing"),
 );
+const VerifyAccount = lazy(() => import("./pages/verify"));
 
 const Listing = lazy(() => import("./pages/listing/Listing"));
 
-const UserNav = lazy(() => import("./components/layout/userNav"));
+const UserNav = lazy(() => import("./components/navbar"));
 
 // const Footer = lazy(() => import("./components/layout/footer/Footer"));
 
@@ -41,7 +42,7 @@ const App: FC = () => {
 	return (
 		<Provider store={store}>
 			<HelmetProvider>
-				<Suspense fallback={<Loader fullScreen />}>
+				<Suspense fallback={<FullPageLoader />}>
 					{/* <CssBaseline /> */}
 					<Router>
 						<UserNav />
@@ -83,6 +84,7 @@ const App: FC = () => {
 							<Route path="/allimages/:id" element={<AllImages />} />
 							<Route path="/signup" element={<Signup />} />
 							<Route path="/login" element={<Login />} />
+							<Route path="/verify" element={<VerifyAccount />} />
 							<Route path="/account" element={<Account />} />
 							<Route path="/account/pending-listings" element={<PendingListings />} />
 							<Route path="/property/update/:id" element={<UserUpdateProperty />} />

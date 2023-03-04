@@ -1,9 +1,9 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { authActions } from "../slices/auth.slice";
-import { userActions } from "../slices/user.slice";
-import { IUser } from "../types/interfaces";
-import API from "../utils/api.util";
+import { IUser, userActions } from "../slices/user.slice";
+import API, { IAPIResponseError, IAPIResponseSuccess } from "../utils/api.util";
+import { message } from "antd";
 
 export interface IPostSignupPayload {
 	name: string;
@@ -13,27 +13,49 @@ export interface IPostSignupPayload {
 	cpassword: string;
 }
 
-export function postSignup(payload: IPostSignupPayload) {
-	return async () => {
-		return await API.post("/auth/signup", payload);
+export function postSignupHandler(payload: IPostSignupPayload) {
+	return async (dispatch: Dispatch) => {
+		try {
+			dispatch(authActions.setAuthSignupLoading(true));
+			const res = await API.post<IAPIResponseSuccess>("/auth/signup", payload);
+
+			message.success("Account created successfully. Please verify your email");
+
+			return Promise.resolve(res);
+		} catch (err) {
+			return Promise.reject(err as AxiosError<IAPIResponseError>);
+		} finally {
+			dispatch(authActions.setAuthSignupLoading(false));
+		}
 	};
 }
 
-export interface IGetVerifyAccountPathParams {
-	/**
-	 * email on which verification code is sent
-	 */
-	email: string;
-
-	/**
-	 * verification code sent to email
-	 */
+export interface IGetVerifyAccountPayload {
 	verificationCode: string;
+	token: string;
 }
 
-export function getVerifyAccount(pathParams: IGetVerifyAccountPathParams) {
-	return async () => {
-		return await API.get(`/auth/verify/${pathParams.email}/${pathParams.verificationCode}`);
+export function getVerifyAccountHandler(payload: IGetVerifyAccountPayload) {
+	return async (dispatch: Dispatch) => {
+		try {
+			dispatch(authActions.setAuthVerifyLoading(true));
+			const res = await API.get<IAPIResponseSuccess>(
+				`/auth/verify/${payload.verificationCode}`,
+				{
+					headers: {
+						Authorization: `Bearer ${payload.token}`,
+					},
+				},
+			);
+
+			message.success("Account verified successfully");
+
+			return Promise.resolve(res);
+		} catch (err) {
+			return Promise.reject(err as AxiosError<IAPIResponseError>);
+		} finally {
+			dispatch(authActions.setAuthVerifyLoading(false));
+		}
 	};
 }
 

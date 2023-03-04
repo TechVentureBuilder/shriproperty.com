@@ -1,53 +1,27 @@
 import { useState } from "react";
-import { Form, Input, InputNumber, Button, message } from "antd";
+import { Form, Input, InputNumber, Button } from "antd";
 import { Helmet } from "react-helmet-async";
-import VerifyAccountModal from "./verifyAccountModal";
 import useIsRequiredFieldMissing from "../../hooks/useIsRequiredFieldMissing";
-import { useAppDispatch } from "../../hooks/useAddDispatch";
-import { IPostSignupPayload, postSignup } from "../../actions/auth.action";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { IPostSignupPayload, postSignupHandler } from "../../actions/auth.action";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { TRootState } from "../../store";
 
 function Signup() {
 	const dispatch = useAppDispatch();
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
-	const [isVerificationModalVisible, setIsVerificationModalVisible] = useState(false);
-	const [userEmail, setUserEmail] = useState("");
-	const [signupLoading, setSignupLoading] = useState(false);
 	const [form] = Form.useForm<IPostSignupPayload>();
+
+	const { signupLoading } = useAppSelector((state: TRootState) => state.auth);
 
 	const validateFields = useIsRequiredFieldMissing();
 
-	const validateMessage = {
-		required: "${label} is required!",
-		types: {
-			email: "${label} is not a valid email!",
-			number: "${label} is not a valid number!",
-		},
-		number: {
-			range: "${label} must 10 digits",
-		},
-	};
-
 	const submitHandler = async (values: IPostSignupPayload) => {
-		try {
-			setSignupLoading(true);
-			await dispatch(postSignup(values));
-			message.success("Account created successfully");
-
-			setUserEmail(values.email);
-			setIsVerificationModalVisible(true);
-		} finally {
-			setSignupLoading(false);
-		}
+		await dispatch(postSignupHandler(values));
 	};
 
 	return (
 		<main className="p-10 flex items-center justify-center">
-			<VerifyAccountModal
-				isVisible={isVerificationModalVisible}
-				setIsVisible={setIsVerificationModalVisible}
-				email={userEmail}
-			/>
-
 			<section className="flex w-full justify-around items-center shadow-2xl p-10 rounded-lg max-w-screen-2xl min-h-[80vh]">
 				<Helmet>
 					<title>Signup | Shri Property</title>
@@ -68,20 +42,31 @@ function Signup() {
 
 				<div className="w-full md:w-1/2">
 					<Form
-						validateMessages={validateMessage}
 						layout="vertical"
 						form={form}
 						onFinish={submitHandler}
 						onChange={() => validateFields(form, setIsRequiredFieldMissing)}
 					>
-						<Form.Item label="Name" name="name" rules={[{ required: true }]}>
+						<Form.Item
+							label="Name"
+							name="name"
+							rules={[
+								{ required: true, message: "Name is required" },
+								{ whitespace: true, message: "Name can't be empty" },
+								{ min: 3, message: "Name must be atleast 3 characters long" },
+							]}
+						>
 							<Input placeholder="Shri Property" size="large" />
 						</Form.Item>
 
 						<Form.Item
 							label="Email"
 							name="email"
-							rules={[{ required: true, type: "email" }]}
+							rules={[
+								{ required: true, message: "Email is required" },
+								{ type: "email", message: "Please enter a valid email" },
+								{ whitespace: true, message: "Email can't be empty" },
+							]}
 						>
 							<Input placeholder="info@shriproperty.com" size="large" />
 						</Form.Item>
@@ -92,7 +77,11 @@ function Signup() {
 							rules={[
 								{
 									required: true,
+									message: "Phone number is required",
+								},
+								{
 									type: "number",
+									message: "Please enter a valid phone number",
 									min: 1000000000,
 									max: 9999999999,
 								},
@@ -101,7 +90,14 @@ function Signup() {
 							<InputNumber className="w-full" placeholder="9465663009" size="large" />
 						</Form.Item>
 
-						<Form.Item label="Password" name="password" rules={[{ required: true }]}>
+						<Form.Item
+							label="Password"
+							name="password"
+							rules={[
+								{ required: true, message: "Password is required" },
+								{ whitespace: true, message: "Password can't be empty" },
+							]}
+						>
 							<Input.Password placeholder="somestrongpassword" size="large" />
 						</Form.Item>
 
@@ -109,7 +105,8 @@ function Signup() {
 							label="Confirm Password"
 							name="cpassword"
 							rules={[
-								{ required: true },
+								{ required: true, message: "Confirm password is required" },
+								{ whitespace: true, message: "Confirm password can't be empty" },
 								({ getFieldValue }) => ({
 									validator(_, value) {
 										if (!value || getFieldValue("password") === value) {

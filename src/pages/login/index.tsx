@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Form, Input, Button, message, Typography } from "antd";
 import { Helmet } from "react-helmet-async";
 import { IPostLoginPayload, postLogin } from "../../actions/auth.action";
-import { useAppDispatch } from "../../hooks/useAddDispatch";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useNavigate, Link } from "react-router-dom";
 import ForgotPasswordModal from "./components/forgotPasswordModal";
 import useIsRequiredFieldMissing from "../../hooks/useIsRequiredFieldMissing";

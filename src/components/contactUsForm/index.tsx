@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Button, Form, Input, InputNumber } from "antd";
 import { postContactActionHandler } from "../../actions/contacts.action";
-import { useAppDispatch } from "../../hooks/useAddDispatch";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { TRootState } from "../../types/types";
 import useIsRequiredFieldMissing from "../../hooks/useIsRequiredFieldMissing";
 import { IContact } from "../../slices/contacts.slice";
+import { TRootState } from "../../store";
 
 function ContactUsForm() {
 	const dispatch = useAppDispatch();

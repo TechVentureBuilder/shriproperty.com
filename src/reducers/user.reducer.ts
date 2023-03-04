@@ -1,6 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { IUserState } from "../slices/user.slice";
-import { IUser } from "../types/interfaces";
+import { IUser, IUserState } from "../slices/user.slice";
 
 export function replaceUserReducer(
 	state: IUserState,
