@@ -1,6 +1,6 @@
 import { Button, Form, InputNumber } from "antd";
 import { FC, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import FullPageLoader from "../../components/fullPageLoader";
 import useIsRequiredFieldMissing from "../../hooks/useIsRequiredFieldMissing";
 import { IGetVerifyAccountPayload, getVerifyAccountHandler } from "../../actions/auth.action";
@@ -15,6 +15,7 @@ const VerifyAccount: FC = () => {
 
 	const dispatch = useAppDispatch();
 	const validateFields = useIsRequiredFieldMissing();
+	const navigate = useNavigate();
 
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
 	const { verifyLoading } = useAppSelector((state: TRootState) => state.auth);
@@ -26,13 +27,19 @@ const VerifyAccount: FC = () => {
 	}, [verificationCode]);
 
 	const onSubmitHandler = async (values: IGetVerifyAccountPayload) => {
-		if (token && verificationCode) {
-			await dispatch(
-				getVerifyAccountHandler({
-					verificationCode: values.verificationCode || verificationCode,
-					token,
-				}),
-			);
+		try {
+			if (token && verificationCode) {
+				await dispatch(
+					getVerifyAccountHandler({
+						verificationCode: values.verificationCode || verificationCode,
+						token,
+					}),
+				);
+
+				navigate("/login");
+			}
+		} finally {
+			return;
 		}
 	};
 
