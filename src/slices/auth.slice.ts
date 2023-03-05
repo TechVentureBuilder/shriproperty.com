@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
 	replaceEmailReducer,
+	setAuthLoginLoadingReducer,
 	setAuthSignupLoadingReducer,
 	setAuthVerifyLoadingReducer,
 	setIsResetPasswordModalVisibleReducer,
@@ -10,6 +11,7 @@ export interface IAuthState {
 	email: string;
 	isResetPasswordModalVisible: boolean;
 	signupLoading: boolean;
+	loginLoading: boolean;
 	verifyLoading: boolean;
 }
 
@@ -17,6 +19,7 @@ const initialState: IAuthState = {
 	email: "",
 	isResetPasswordModalVisible: false,
 	signupLoading: false,
+	loginLoading: false,
 	verifyLoading: false,
 };
 
@@ -27,6 +30,7 @@ const authSlice = createSlice({
 		replaceEmail: replaceEmailReducer,
 		setIsResetPasswordModalVisible: setIsResetPasswordModalVisibleReducer,
 		setAuthSignupLoading: setAuthSignupLoadingReducer,
+		setAuthLoginLoading: setAuthLoginLoadingReducer,
 		setAuthVerifyLoading: setAuthVerifyLoadingReducer,
 	},
 });

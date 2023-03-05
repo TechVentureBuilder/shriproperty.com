@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Form, Input, InputNumber, Button } from "antd";
+import { Form, Input, InputNumber, Button, Typography } from "antd";
 import { Helmet } from "react-helmet-async";
 import useIsRequiredFieldMissing from "../../hooks/useIsRequiredFieldMissing";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { IPostSignupPayload, postSignupHandler } from "../../actions/auth.action";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { TRootState } from "../../store";
+import { Link } from "react-router-dom";
 
 function Signup() {
 	const dispatch = useAppDispatch();
@@ -122,6 +123,13 @@ function Signup() {
 						>
 							<Input.Password placeholder="somestrongpassword" size="large" />
 						</Form.Item>
+
+						<Typography.Paragraph>
+							Already have an account?{" "}
+							<Typography.Link className="text-primary font-semibold">
+								<Link to="/login">Login</Link>
+							</Typography.Link>
+						</Typography.Paragraph>
 
 						<Button
 							type="primary"

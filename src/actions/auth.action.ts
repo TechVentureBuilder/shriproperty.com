@@ -64,17 +64,33 @@ export interface IPostLoginPayload {
 	password: string;
 }
 
-export function postLogin(payload: IPostLoginPayload) {
-	return async () => {
-		interface IResponse {
-			message: string;
-			access_token: string;
-			refresh_token: string;
+export function postLoginHandler(payload: IPostLoginPayload) {
+	return async (dispatch: Dispatch) => {
+		try {
+			dispatch(authActions.setAuthLoginLoading(true));
+
+			interface IResponse extends IAPIResponseSuccess {
+				access_token: string;
+				refresh_token: string;
+			}
+
+			const res = await API.post<IResponse>("/auth/login", payload);
+
+			console.log("====================================");
+			console.log(res);
+			console.log("====================================");
+
+			localStorage.setItem("access_token", res.data.access_token);
+			localStorage.setItem("refresh_token", res.data.refresh_token);
+
+			message.success("Logged in successfully");
+
+			return Promise.resolve(res);
+		} catch (err) {
+			return Promise.reject(err as AxiosError<IAPIResponseError>);
+		} finally {
+			dispatch(authActions.setAuthLoginLoading(false));
 		}
-
-		const res: IResponse = await API.post("/auth/login", payload);
-
-		return res;
 	};
 }
 

@@ -22,6 +22,10 @@ export const setAuthSignupLoadingReducer = (state: IAuthState, action: PayloadAc
 	state.signupLoading = action.payload;
 };
 
+export const setAuthLoginLoadingReducer = (state: IAuthState, action: PayloadAction<boolean>) => {
+	state.loginLoading = action.payload;
+};
+
 export const setAuthVerifyLoadingReducer = (state: IAuthState, action: PayloadAction<boolean>) => {
 	state.verifyLoading = action.payload;
 };

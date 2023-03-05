@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { Form, Input, Button, message, Typography } from "antd";
+import { Form, Input, Button, Typography } from "antd";
 import { Helmet } from "react-helmet-async";
-import { IPostLoginPayload, postLogin } from "../../actions/auth.action";
+import { IPostLoginPayload, postLoginHandler } from "../../actions/auth.action";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useNavigate, Link } from "react-router-dom";
 import ForgotPasswordModal from "./components/forgotPasswordModal";
 import useIsRequiredFieldMissing from "../../hooks/useIsRequiredFieldMissing";
 import ResetPasswordModal from "../../components/resetPasswordModal";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { TRootState } from "../../store";
 
 function Login() {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const checkRequiredField = useIsRequiredFieldMissing();
+
+	const { loginLoading } = useAppSelector((state: TRootState) => state.auth);
 
 	const [form] = Form.useForm<IPostLoginPayload>();
 	const [isRequiredFieldMissing, setIsRequiredFieldMissing] = useState(true);
@@ -28,13 +32,9 @@ function Login() {
 		},
 	};
 
-	const submitHandler = (values: IPostLoginPayload) => {
-		dispatch(postLogin(values)).then((res) => {
-			localStorage.setItem("access_token", res.access_token);
-			localStorage.setItem("refresh_token", res.refresh_token);
-			message.success("Login Successful");
-			navigate("/");
-		});
+	const submitHandler = async (values: IPostLoginPayload) => {
+		await dispatch(postLoginHandler(values));
+		navigate("/");
 	};
 
 	return (
@@ -102,6 +102,7 @@ function Login() {
 							size="large"
 							htmlType="submit"
 							disabled={isRequiredFieldMissing}
+							loading={loginLoading}
 						>
 							Sign In
 						</Button>

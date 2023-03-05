@@ -18,7 +18,7 @@ API.interceptors.request.use((config: AxiosRequestConfig) => {
 
 API.interceptors.response.use(
 	(res: AxiosResponse) => {
-		return Promise.resolve(res.data);
+		return Promise.resolve(res);
 	},
 	async (err: AxiosError<IAPIResponseError>) => {
 		interface APIResponse extends IAPIResponseSuccess {
